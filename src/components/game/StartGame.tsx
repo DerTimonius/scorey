@@ -1,9 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSetAtom } from 'jotai/react';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from './ui/button';
-import { Card, CardAction, CardHeader, CardTitle } from './ui/card';
+import { gameAtom, playerAtom } from '@/lib/jotai';
+import { type Player, WinningConditionEnum } from '@/lib/types';
+import { Button } from '../ui/button';
+import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
 import {
   Form,
   FormControl,
@@ -11,8 +14,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './ui/form';
-import { Input } from './ui/input';
+} from '../ui/form';
+import { Input } from '../ui/input';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
 const playerSchema = z.object({
   name: z.string().min(1, {
@@ -27,16 +31,23 @@ const formSchema = z.object({
   players: z.array(playerSchema).min(1, {
     message: 'At least one player is required.',
   }),
+  startValue: z.number(),
+  winningCondition: WinningConditionEnum,
+  threshold: z.number().optional(),
 });
 
 export const StartGame = () => {
   const [showForm, setShowForm] = useState(false);
+  const setGame = useSetAtom(gameAtom);
+  const setPlayers = useSetAtom(playerAtom);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: '',
       players: [{ name: '' }],
+      startValue: 0,
+      winningCondition: 'maxNumber',
     },
   });
 
@@ -45,8 +56,23 @@ export const StartGame = () => {
     name: 'players',
   });
 
-  function onSubmit() {
-    console.log('created game');
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const { gameName, players, startValue, winningCondition } = values;
+
+    setGame({
+      name: gameName,
+      winningCondition,
+      startValue,
+    });
+
+    const playerArr = players.map((p, idx) => ({
+      ...p,
+      order: idx,
+      id: crypto.randomUUID() as string,
+      rounds: [],
+      currVal: startValue,
+    })) satisfies Player[];
+    setPlayers(playerArr);
   }
 
   if (!showForm) {
@@ -117,6 +143,66 @@ export const StartGame = () => {
                 Add Player
               </Button>
             ) : null}
+          </div>
+
+          <div>
+            <h3 className="mb-4 font-medium text-lg">Game options</h3>
+
+            <FormField
+              control={form.control}
+              name="startValue"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Game starts at (points)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="100" type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="winningCondition"
+              render={({ field }) => (
+                <FormItem className="my-4">
+                  <FormLabel>Who wins?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col"
+                    >
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem value="minNumber" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Player with fewest points
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem value="maxNumber" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Player with most points
+                        </FormLabel>
+                      </FormItem>
+                      {/* <FormItem className="flex items-center gap-3"> */}
+                      {/*   <FormControl> */}
+                      {/*     <RadioGroupItem value="threshold" /> */}
+                      {/*   </FormControl> */}
+                      {/*   <FormLabel className="font-normal"> */}
+                      {/*     When threshold is crossed */}
+                      {/*   </FormLabel> */}
+                      {/* </FormItem> */}
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           <CardAction className="flex justify-end gap-4">

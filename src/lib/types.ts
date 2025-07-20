@@ -1,0 +1,21 @@
+import z from 'zod';
+
+const winningConditions = ['minNumber', 'maxNumber', 'threshold'] as const;
+
+export const WinningConditionEnum = z.enum(winningConditions);
+export type WinningCondition = z.infer<typeof WinningConditionEnum>;
+
+export interface Player {
+  id: string;
+  order: number;
+  name: string;
+  rounds: number[];
+  currVal: number;
+}
+
+export interface Game {
+  name: string;
+  finished?: boolean;
+  winningCondition: WinningCondition;
+  startValue: number;
+}
