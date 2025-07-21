@@ -15,6 +15,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
+import { Checkbox } from '../ui/checkbox';
 import {
   Form,
   FormControl,
@@ -24,6 +25,7 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import {
   Select,
@@ -49,10 +51,13 @@ const formSchema = z.object({
   }),
   startValue: z.number(),
   winningCondition: WinningConditionEnum,
-  threshold: z.number().optional(),
+  endsAtScore: z.boolean(),
+  scoreToEnd: z.number().optional(),
+  endsAtRound: z.boolean(),
+  roundToEnd: z.number().optional(),
 });
 
-export const StartGame = () => {
+export function GameForm() {
   const [showForm, setShowForm] = useState(false);
   const setGame = useSetAtom(gameAtom);
   const setPlayers = useSetAtom(playerAtom);
@@ -64,6 +69,8 @@ export const StartGame = () => {
       players: [{ name: '', color: DEFAULT_COLOR }],
       startValue: 0,
       winningCondition: 'maxNumber',
+      endsAtRound: false,
+      endsAtScore: false,
     },
   });
 
@@ -73,12 +80,25 @@ export const StartGame = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const { gameName, players, startValue, winningCondition } = values;
+    const {
+      gameName,
+      players,
+      startValue,
+      winningCondition,
+      endsAtScore,
+      endsAtRound,
+      scoreToEnd,
+      roundToEnd,
+    } = values;
 
     setGame({
       name: gameName,
       winningCondition,
       startValue,
+      endsAtRound,
+      roundToEnd: endsAtRound ? (roundToEnd ?? 10) : 0,
+      endsAtScore,
+      scoreToEnd: endsAtScore ? (scoreToEnd ?? 100) : 0,
     });
 
     const playerArr = players.map((p, idx) => ({
@@ -203,7 +223,6 @@ export const StartGame = () => {
 
           <div>
             <h3 className="mb-4 font-medium text-lg">Game options</h3>
-
             <FormField
               control={form.control}
               name="startValue"
@@ -245,20 +264,86 @@ export const StartGame = () => {
                           Player with most points
                         </FormLabel>
                       </FormItem>
-                      {/* <FormItem className="flex items-center gap-3"> */}
-                      {/*   <FormControl> */}
-                      {/*     <RadioGroupItem value="threshold" /> */}
-                      {/*   </FormControl> */}
-                      {/*   <FormLabel className="font-normal"> */}
-                      {/*     When threshold is crossed */}
-                      {/*   </FormLabel> */}
-                      {/* </FormItem> */}
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+          </div>
+
+          <div>
+            <h3 className="mb-4 font-medium text-lg">Advanced settings</h3>{' '}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={form.watch('endsAtRound')}
+                  id="endsAtRound"
+                  onCheckedChange={(checked) => {
+                    form.setValue('endsAtRound', Boolean(checked));
+                  }}
+                />
+                <Label htmlFor="endsAtRound">
+                  Game ends after a certain round has been played
+                </Label>
+              </div>
+              {form.watch('endsAtRound') ? (
+                <FormField
+                  control={form.control}
+                  name="roundToEnd"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Round to be finished</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="10"
+                          type="number"
+                          {...field}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value))
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ) : null}
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={form.watch('endsAtScore')}
+                  id="endsAtScore"
+                  onCheckedChange={(checked) => {
+                    form.setValue('endsAtScore', Boolean(checked));
+                  }}
+                />
+                <Label htmlFor="endsAtScore">
+                  Game ends after a player hits a certain score
+                </Label>
+              </div>
+              {form.watch('endsAtScore') ? (
+                <FormField
+                  control={form.control}
+                  name="scoreToEnd"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Game ends at points</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="100"
+                          type="number"
+                          {...field}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value))
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ) : null}
+            </div>
           </div>
 
           <CardAction className="flex justify-end gap-4">
@@ -271,4 +356,4 @@ export const StartGame = () => {
       </Form>
     </Card>
   );
-};
+}

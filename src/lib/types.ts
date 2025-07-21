@@ -1,6 +1,6 @@
 import z from 'zod';
 
-const winningConditions = ['minNumber', 'maxNumber', 'threshold'] as const;
+const winningConditions = ['minNumber', 'maxNumber'] as const;
 
 export const WinningConditionEnum = z.enum(winningConditions);
 export type WinningCondition = z.infer<typeof WinningConditionEnum>;
@@ -19,6 +19,10 @@ export interface Game {
   finished?: boolean;
   winningCondition: WinningCondition;
   startValue: number;
+  endsAtScore: boolean;
+  scoreToEnd: number;
+  endsAtRound: boolean;
+  roundToEnd: number;
 }
 
 export const colorsArray = [

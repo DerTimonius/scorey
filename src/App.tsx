@@ -1,15 +1,15 @@
 import './index.css';
 import { useAtomValue } from 'jotai/react';
+import { GameForm } from './components/game/GameForm';
 import { GameStats } from './components/game/GameStats';
-import { ShowGame } from './components/game/ShowGame';
-import { StartGame } from './components/game/StartGame';
+import { GameState } from './components/game/GameState';
 import { gameAtom } from './lib/jotai';
 
 function App() {
   const game = useAtomValue(gameAtom);
 
   if (game) {
-    return game.finished ? <GameStats /> : <ShowGame />;
+    return game.finished ? <GameStats /> : <GameState />;
   }
 
   return (
@@ -18,7 +18,7 @@ function App() {
         <h1 className="font-bold text-8xl">Scorey</h1>
         <p>Keep score of any game</p>
       </div>
-      <StartGame />
+      <GameForm />
     </main>
   );
 }
