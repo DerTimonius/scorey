@@ -1,15 +1,48 @@
+import { cva, type VariantProps } from 'class-variance-authority';
 import type * as React from 'react';
-
+import { DEFAULT_COLOR } from '@/lib/constants';
+import type { VariantColor } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
-function Card({ className, ...props }: React.ComponentProps<'div'>) {
+const cardVariants = cva(
+  'flex flex-col gap-6 rounded-base border-2 border-border py-6 font-base text-foreground shadow-shadow',
+  {
+    variants: {
+      color: {
+        red: 'bg-red-background',
+        orange: 'bg-orange-background',
+        amber: 'bg-amber-background',
+        yellow: 'bg-yellow-background',
+        lime: 'bg-lime-background',
+        green: 'bg-green-background',
+        emerald: 'bg-emerald-background',
+        teal: 'bg-teal-background',
+        cyan: 'bg-cyan-background',
+        sky: 'bg-sky-background',
+        blue: 'bg-blue-background',
+        indigo: 'bg-indigo-background',
+        violet: 'bg-violet-background',
+        purple: 'bg-purple-background',
+        fuchsia: 'bg-fuchsia-background',
+        pink: 'bg-pink-background',
+        rose: 'bg-rose-background',
+      } satisfies VariantColor,
+    },
+    defaultVariants: {
+      color: DEFAULT_COLOR,
+    },
+  },
+);
+
+function Card({
+  className,
+  color,
+  ...props
+}: React.ComponentProps<'div'> & VariantProps<typeof cardVariants>) {
   return (
     <div
       data-slot="card"
-      className={cn(
-        'flex flex-col gap-6 rounded-base border-2 border-border bg-background py-6 font-base text-foreground shadow-shadow',
-        className,
-      )}
+      className={cn(cardVariants({ color }), className)}
       {...props}
     />
   );

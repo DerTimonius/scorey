@@ -2,20 +2,21 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer } from '@/components/ui/chart';
-
-const chartConfig = {
-  desktop: {
-    label: 'val',
-    color: 'var(--chart-1)',
-  },
-} satisfies ChartConfig;
+import type { Color } from '@/lib/types';
 
 interface PlayerChartProps {
   label: string;
   data: { round: string; val: number }[];
+  chartConfig: ChartConfig;
+  color: Color;
 }
 
-export function PlayerChart({ label, data }: PlayerChartProps) {
+export function PlayerChart({
+  label,
+  data,
+  chartConfig,
+  color,
+}: PlayerChartProps) {
   return (
     <Card className="w-full bg-secondary-background text-foreground">
       <CardHeader>
@@ -36,9 +37,9 @@ export function PlayerChart({ label, data }: PlayerChartProps) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => `Round ${value}`}
             />
-            <Bar dataKey="val" fill="var(--color-desktop)" radius={8}>
+            <Bar dataKey="val" fill={`var(--chart-${color})`} radius={8}>
               <LabelList
                 position="top"
                 offset={12}

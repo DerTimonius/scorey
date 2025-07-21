@@ -4,54 +4,159 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(94.61% 0.043 211.12);
-  --secondary-background: oklch(100% 0 0);
-  --foreground: oklch(0% 0 0);
-  --main-foreground: oklch(0% 0 0);
-  --main: oklch(76.89% 0.139164 219.13);
+  --white: oklch(100% 0 0);
+  --black: oklch(0% 0 0);
   --border: oklch(0% 0 0);
   --ring: oklch(0% 0 0);
   --overlay: oklch(0% 0 0 / 0.8);
   --shadow: 4px 4px 0px 0px var(--border);
-  --chart-1: #00c8f0;
-  --chart-2: #ff7a05;
-  --chart-3: #7a83ff;
-  --chart-4: #ff4d50;
-  --chart-5: #facc00;
   --chart-active-dot: #000;
-}
 
-.dark {
-  --background: oklch(27.11% 0.0303 225.38);
-  --secondary-background: oklch(23.93% 0 0);
-  --foreground: oklch(92.49% 0 0);
-  --main-foreground: oklch(0% 0 0);
-  --main: oklch(64.37% 0.1162 218.75);
-  --border: oklch(0% 0 0);
-  --ring: oklch(100% 0 0);
-  --shadow: 4px 4px 0px 0px var(--border);
-  --chart-1: #009dbd;
-  --chart-2: #eb6d00;
-  --chart-3: #7a83ff;
-  --chart-4: #ff6669;
-  --chart-5: #e0b700;
-  --chart-active-dot: #fff;
+  /* COLORS */
+  --cyan-background: oklch(94.61% 0.043 211.12);
+  --cyan-main: oklch(76.89% 0.139164 219.13);
+  --chart-cyan: #00c8f0;
+
+  --red-background: oklch(93.3% 0.0339 17.77);
+  --red-main: oklch(67.28% 0.2147 24.22);
+  --chart-red: #ff4d50;
+
+  --orange-background: oklch(95.38% 0.0357 72.89);
+  --orange-main: oklch(72.27% 0.1894 50.19);
+  --chart-orange: #ff7a05;
+
+  --amber-background: oklch(96.22% 0.0569 95.61);
+  --amber-main: oklch(84.08% 0.1725 84.2);
+  --chart-amber: #ffbf00;
+
+  --yellow-background: oklch(96.79% 0.0654 102.26);
+  --yellow-main: oklch(86.03% 0.176 92.36);
+  --chart-yellow: #facc00;
+
+  --lime-background: oklch(95.37% 0.0549 125.19);
+  --lime-main: oklch(83.29% 0.2331 132.51);
+  --chart-lime: #8ae500;
+
+  --green-background: oklch(96.47% 0.0401 157.79);
+  --green-main: oklch(79.76% 0.2044 153.08);
+  --chart-green: #00d696;
+
+  --emerald-background: oklch(95.31% 0.0496 169.04);
+  --emerald-main: oklch(77.54% 0.1681 162.78);
+  --chart-emerald: #00d696;
+
+  --teal-background: oklch(95.08% 0.0481 184.07);
+  --teal-main: oklch(78.57% 0.1422 180.36);
+  --chart-teal: #00d6bd;
+
+  --sky-background: oklch(94.27% 0.0268 242.57);
+  --sky-main: oklch(66.9% 0.18368 248.8066);
+  --chart-sky: #0099ff;
+
+  --blue-background: oklch(93.46% 0.0305 255.11);
+  --blue-main: oklch(67.47% 0.1726 259.49);
+  --chart-blue: #5294ff;
+
+  --indigo-background: oklch(92.13% 0.0388 282.36);
+  --indigo-main: oklch(66.34% 0.1806 277.2);
+  --chart-indigo: #7a83ff;
+
+  --violet-background: oklch(93.88% 0.033 300.19);
+  --violet-main: oklch(70.28% 0.1753 295.36);
+  --chart-violet: #a985ff;
+
+  --purple-background: oklch(94.11% 0.036556 308.0303);
+  --purple-main: oklch(71.9% 0.198 310.03);
+  --chart-purple: #ca7aff;
+
+  --fuchsia-background: oklch(94.79% 0.0407 320.6);
+  --fuchsia-main: oklch(73.43% 0.2332 321.41);
+  --chart-fuchsia: #e96bff;
+
+  --pink-background: oklch(95.16% 0.0242 343.23);
+  --pink-main: oklch(71.5% 0.197 354.23);
+  --chart-pink: #fc64ab;
+
+  --rose-background: oklch(93.37% 0.0339 12.05);
+  --rose-main: oklch(70.79% 0.1862 16.25);
+  --chart-rose: #ff6678;
 }
 
 @theme inline {
-  --color-main: var(--main);
-  --color-background: var(--background);
-  --color-secondary-background: var(--secondary-background);
-  --color-foreground: var(--foreground);
-  --color-main-foreground: var(--main-foreground);
+  --color-cyan-main: var(--cyan-main);
+  --color-cyan-background: var(--cyan-background);
+  --color-chart-cyan: var(--chart-cyan);
+
+  --color-red-main: var(--red-main);
+  --color-red-background: var(--red-background);
+  --color-chart-red: var(--chart-red);
+
+  --color-orange-main: var(--orange-main);
+  --color-orange-background: var(--orange-background);
+  --color-chart-orange: var(--chart-orange);
+
+  --color-amber-main: var(--amber-main);
+  --color-amber-background: var(--amber-background);
+  --color-chart-amber: var(--chart-amber);
+
+  --color-yellow-main: var(--yellow-main);
+  --color-yellow-background: var(--yellow-background);
+  --color-chart-yellow: var(--chart-yellow);
+
+  --color-lime-main: var(--lime-main);
+  --color-lime-background: var(--lime-background);
+  --color-chart-lime: var(--chart-lime);
+
+  --color-green-main: var(--green-main);
+  --color-green-background: var(--green-background);
+  --color-chart-green: var(--chart-green);
+
+  --color-emerald-main: var(--emerald-main);
+  --color-emerald-background: var(--emerald-background);
+  --color-chart-emerald: var(--chart-emerald);
+
+  --color-teal-main: var(--teal-main);
+  --color-teal-background: var(--teal-background);
+  --color-chart-teal: var(--chart-teal);
+
+  --color-sky-main: var(--sky-main);
+  --color-sky-background: var(--sky-background);
+  --color-chart-sky: var(--chart-sky);
+
+  --color-blue-main: var(--blue-main);
+  --color-blue-background: var(--blue-background);
+  --color-chart-blue: var(--chart-blue);
+
+  --color-indigo-main: var(--indigo-main);
+  --color-indigo-background: var(--indigo-background);
+  --color-chart-indigo: var(--chart-indigo);
+
+  --color-violet-main: var(--violet-main);
+  --color-violet-background: var(--violet-background);
+  --color-chart-violet: var(--chart-violet);
+
+  --color-purple-main: var(--purple-main);
+  --color-purple-background: var(--purple-background);
+  --color-chart-purple: var(--chart-purple);
+
+  --color-fuchsia-main: var(--fuchsia-main);
+  --color-fuchsia-background: var(--fuchsia-background);
+  --color-chart-fuchsia: var(--chart-fuchsia);
+
+  --color-pink-main: var(--pink-main);
+  --color-pink-background: var(--pink-background);
+  --color-chart-pink: var(--chart-pink);
+
+  --color-rose-main: var(--rose-main);
+  --color-rose-background: var(--rose-background);
+  --color-chart-rose: var(--chart-rose);
+
+  --color-secondary-background: var(--white);
+  --color-foreground: var(--black);
+  --color-main-foreground: var(--black);
   --color-border: var(--border);
   --color-overlay: var(--overlay);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
 
   --spacing-boxShadowX: 4px;
   --spacing-boxShadowY: 4px;
@@ -65,7 +170,7 @@
 
 @layer base {
   body {
-    @apply text-foreground font-base bg-background;
+    @apply text-foreground font-base;
   }
 
   h1,

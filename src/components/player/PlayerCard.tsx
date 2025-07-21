@@ -47,7 +47,7 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
   };
 
   return (
-    <Card>
+    <Card color={player.color}>
       <CardHeader>
         <CardTitle className="text-center text-3xl">{player.name}</CardTitle>
       </CardHeader>
@@ -80,7 +80,11 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
                 }}
                 type="number"
               />
-              <Button onClick={handleSubmit} variant="noShadow">
+              <Button
+                color={player.color}
+                onClick={handleSubmit}
+                variant="ghost"
+              >
                 Save
               </Button>
             </div>
@@ -88,22 +92,24 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
         ) : (
           <div className="flex justify-around gap-6">
             <Button
+              color={player.color}
               disabled={hasMoreRounds}
               onClick={() => {
                 setType('descrease');
                 inputRef.current?.focus();
               }}
-              variant="noShadow"
+              variant="ghost"
             >
               -
             </Button>
             <Button
+              color={player.color}
               disabled={hasMoreRounds}
               onClick={() => {
                 setType('increase');
                 inputRef.current?.focus();
               }}
-              variant="noShadow"
+              variant="ghost"
             >
               +
             </Button>

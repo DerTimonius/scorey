@@ -1,5 +1,12 @@
-import { CartesianGrid, Legend, Line, LineChart, XAxis } from 'recharts';
-
+import { Circle, Hexagon, Plus, Square, Triangle } from 'lucide-react';
+import {
+  CartesianGrid,
+  type DotProps,
+  Legend,
+  Line,
+  LineChart,
+  XAxis,
+} from 'recharts';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -22,6 +29,28 @@ interface GameChartProps {
   chartConfig: ChartConfig;
 }
 
+const LucideIcons = [Circle, Triangle, Square, Hexagon, Plus];
+const CustomDot = (props: DotProps & { index: number }) => {
+  const { cx, cy, stroke, index } = props;
+
+  if (cx === undefined || cy === undefined || index === undefined) {
+  }
+
+  const IconComponent = LucideIcons[index % LucideIcons.length];
+  const iconSize = 10;
+
+  return (
+    <g transform={`translate(${cx}, ${cy})`}>
+      <IconComponent
+        size={iconSize}
+        color={stroke}
+        fill={stroke}
+        y={-iconSize / 2}
+        x={-iconSize / 2}
+      />
+    </g>
+  );
+};
 export function GameChart({
   data,
   players,
@@ -34,10 +63,7 @@ export function GameChart({
     <Card className="bg-secondary-background text-foreground">
       <CardContent>
         <ChartContainer
-          className={cn(
-            'min-w-2xl [&_.recharts-layer_path]:stroke-black [&_.recharts-layer_path]:dark:stroke-white',
-            containerClasses,
-          )}
+          className={cn('min-w-2xl ', containerClasses)}
           config={chartConfig}
         >
           <LineChart
@@ -55,18 +81,22 @@ export function GameChart({
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value: string) => value.slice(0, 3)}
+              tickFormatter={(value: string) => `Round ${value}`}
             />
-            <Legend />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            {players.map((player) => {
+            <Legend iconType="plainline" />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent labelKey="round" />}
+            />
+            {players.map((player, idx) => {
               return (
                 <Line
                   dataKey={player.name}
                   key={player.name}
                   type="monotone"
+                  stroke={`var(--chart-${player.color})`}
                   strokeWidth={2}
-                  dot={true}
+                  dot={(props) => <CustomDot {...props} index={idx} />}
                 />
               );
             })}

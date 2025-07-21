@@ -3,8 +3,16 @@ import { useSetAtom } from 'jotai/react';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { getBgFromColor } from '@/lib/colorHelper';
+import { DEFAULT_COLOR } from '@/lib/constants';
 import { gameAtom, playerAtom } from '@/lib/jotai';
-import { type Player, WinningConditionEnum } from '@/lib/types';
+import {
+  ColorEnum,
+  colorsArray,
+  type Player,
+  WinningConditionEnum,
+} from '@/lib/types';
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
 import {
@@ -17,11 +25,19 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 
 const playerSchema = z.object({
   name: z.string().min(1, {
     message: 'Player name is required.',
   }),
+  color: ColorEnum,
 });
 
 const formSchema = z.object({
@@ -45,7 +61,7 @@ export const StartGame = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: '',
-      players: [{ name: '' }],
+      players: [{ name: '', color: DEFAULT_COLOR }],
       startValue: 0,
       winningCondition: 'maxNumber',
     },
@@ -103,42 +119,82 @@ export const StartGame = () => {
           <div>
             <h3 className="mb-4 font-medium text-lg">Players</h3>
             {fields.map((field, index) => (
-              <FormField
-                key={field.id}
-                control={form.control}
-                name={`players.${index}.name`}
-                render={({ field }) => (
-                  <FormItem className="flex items-end space-x-2 pb-4">
-                    <div className="grid flex-1 gap-1">
-                      <FormLabel>Player {index + 1} Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="min-w-72"
-                          placeholder={`Player ${index + 1}`}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </div>
-                    {fields.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="reverse"
-                        onClick={() => remove(index)}
-                      >
-                        Remove
-                      </Button>
-                    )}
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-row items-center gap-2" key={field.id}>
+                <FormField
+                  key={field.id}
+                  control={form.control}
+                  name={`players.${index}.name`}
+                  render={({ field }) => (
+                    <FormItem className="flex items-end space-x-2 pb-4">
+                      <div className="grid flex-1 gap-1">
+                        <FormLabel>Player {index + 1} Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            className="min-w-72"
+                            placeholder={`Player ${index + 1}`}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  key={field.id}
+                  control={form.control}
+                  name={`players.${index}.color`}
+                  render={({ field }) => (
+                    <FormItem className="flex items-end space-x-2 pb-4">
+                      <div className="grid flex-1 gap-1">
+                        <FormLabel>Color</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="Select a color" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {colorsArray.map((color) => (
+                              <SelectItem
+                                key={color}
+                                className="capitalize"
+                                value={color}
+                              >
+                                <span
+                                  className={cn(
+                                    'h-2.5 w-2.5 rounded-full',
+                                    getBgFromColor(color),
+                                  )}
+                                ></span>
+                                {color}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => remove(index)}
+                >
+                  Remove
+                </Button>
+              </div>
             ))}
 
             {fields.length < 15 ? (
               <Button
                 type="button"
-                variant="neutral"
-                onClick={() => append({ name: '' })}
+                variant="secondary"
+                onClick={() => append({ name: '', color: DEFAULT_COLOR })}
               >
                 Add Player
               </Button>
@@ -207,7 +263,7 @@ export const StartGame = () => {
 
           <CardAction className="flex justify-end gap-4">
             <Button type="submit">Create Game</Button>
-            <Button variant="neutral" onClick={() => setShowForm(false)}>
+            <Button variant="secondary" onClick={() => setShowForm(false)}>
               Cancel
             </Button>
           </CardAction>

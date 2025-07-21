@@ -11,6 +11,7 @@ export interface Player {
   name: string;
   rounds: number[];
   currVal: number;
+  color: Color;
 }
 
 export interface Game {
@@ -19,3 +20,29 @@ export interface Game {
   winningCondition: WinningCondition;
   startValue: number;
 }
+
+export const colorsArray = [
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
+] as const;
+
+export const ColorEnum = z.enum(colorsArray);
+export type Color = z.infer<typeof ColorEnum>;
+
+export type VariantType<T extends string> = Record<T, string>;
+export type VariantColor = VariantType<Color>;

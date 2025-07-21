@@ -47,7 +47,7 @@ export function ShowGame() {
       </div>
       <div className="flex flex-row gap-8">
         <Button onClick={handleFinishGame}>Finish game</Button>
-        <Button onClick={handleResetGame} variant="neutral">
+        <Button onClick={handleResetGame} variant="secondary">
           Reset game
         </Button>
       </div>

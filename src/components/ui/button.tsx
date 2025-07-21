@@ -2,22 +2,42 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import type * as React from 'react';
-
+import { DEFAULT_COLOR } from '@/lib/constants';
+import type { VariantColor } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-all gap-2 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center text-black justify-center whitespace-nowrap rounded-base text-sm font-base ring-offset-white transition-all gap-2 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default:
-          'text-main-foreground bg-main border-2 border-border shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none',
-        noShadow: 'text-main-foreground bg-main border-2 border-border',
-        neutral:
-          'bg-secondary-background text-foreground border-2 border-border shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none',
-        reverse:
-          'text-main-foreground bg-main border-2 border-border hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow',
+        primary:
+          'border-2 border-border shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none',
+        ghost: 'border-2 border-border',
+        secondary:
+          '!bg-white border-2 border-border shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none',
+        // reverse:
+        // 'text-main-foreground bg-main border-2 border-border hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow',
       },
+      color: {
+        red: 'bg-red-main',
+        orange: 'bg-orange-main',
+        amber: 'bg-amber-main',
+        yellow: 'bg-yellow-main',
+        lime: 'bg-lime-main',
+        green: 'bg-green-main',
+        emerald: 'bg-emerald-main',
+        teal: 'bg-teal-main',
+        cyan: 'bg-cyan-main',
+        sky: 'bg-sky-main',
+        blue: 'bg-blue-main',
+        indigo: 'bg-indigo-main',
+        violet: 'bg-violet-main',
+        purple: 'bg-purple-main',
+        fuchsia: 'bg-fuchsia-main',
+        pink: 'bg-pink-main',
+        rose: 'bg-rose-main',
+      } satisfies VariantColor,
       size: {
         default: 'h-10 px-4 py-2',
         sm: 'h-9 px-3',
@@ -26,8 +46,9 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'primary',
       size: 'default',
+      color: DEFAULT_COLOR,
     },
   },
 );
@@ -37,6 +58,7 @@ function Button({
   variant,
   size,
   asChild = false,
+  color,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
@@ -47,7 +69,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, color }), className)}
       {...props}
     />
   );

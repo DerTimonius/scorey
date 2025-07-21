@@ -124,7 +124,7 @@ function createChartConfig(players: Player[]): ChartConfig {
   return players.reduce((acc, player) => {
     acc[player.name] = {
       label: player.name,
-      color: 'var(--chart-1)',
+      color: `var(--chart-${player.color})`,
     };
 
     return acc;
