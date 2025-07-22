@@ -11,7 +11,7 @@ export function Layout({
       <Navbar />
       <main
         className={cn(
-          'flex h-screen flex-col items-center justify-center gap-18',
+          'flex h-screen flex-col items-center justify-center gap-18 overflow-scroll font-sans',
           className,
         )}
       >

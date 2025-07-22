@@ -27,7 +27,7 @@
   "new-game": "Neues Spiel",
   "player-stats": "Runden für {{name}}",
   "game-stats": {
-    "winner-message": "Und der Gewinner ist {{winnerName}} mit {{winnerScore}} Punkten!",
+    "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!",
     "player-score": "- {{playerName}}: {{playerScore}} Punkte",
     "how-it-happened": "Wie es dazu kam"
   }

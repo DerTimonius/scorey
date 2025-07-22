@@ -51,15 +51,13 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
   return (
     <Card color={player.color}>
       <CardHeader>
-        <CardTitle className="text-center text-3xl">{player.name}</CardTitle>
+        <CardTitle className="text-center text-2xl">{player.name}</CardTitle>
       </CardHeader>
       <div
         className={cn('flex flex-col items-center justify-around gap-2 px-3')}
       >
         <div className="flex flex-col items-center">
-          <p className="font-semibold text-lg">
-            {t('game:state.current-score')}
-          </p>
+          <p className="font-semibold">{t('game:state.current-score')}</p>
           <NumberFlow
             className="font-extrabold text-4xl"
             value={player.currVal}

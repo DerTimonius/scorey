@@ -21,7 +21,7 @@ export function PlayerChart({
   return (
     <Card className="w-full bg-secondary-background text-foreground">
       <CardHeader>
-        <CardTitle>{label}</CardTitle>
+        <CardTitle className="text-sm">{label}</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

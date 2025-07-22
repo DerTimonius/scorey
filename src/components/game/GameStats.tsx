@@ -39,7 +39,7 @@ export function GameStats() {
     <Layout className="min-h-min py-12">
       <Card className="w-[80vw]">
         <CardHeader>
-          <CardTitle className="text-center text-5xl">
+          <CardTitle className="text-center font-display text-5xl">
             {t('game:game-stats.winner-message', {
               winnerName: winner.name,
               winnerScore: winner.currVal,

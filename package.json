@@ -16,6 +16,8 @@
     "typecheck": "tsc --noEmit --project tsconfig.app.json"
   },
   "dependencies": {
+    "@fontsource-variable/victor-mono": "^5.2.6",
+    "@fontsource/rampart-one": "^5.2.6",
     "@hookform/resolvers": "^5.1.1",
     "@number-flow/react": "^0.5.10",
     "@radix-ui/react-alert-dialog": "^1.1.14",

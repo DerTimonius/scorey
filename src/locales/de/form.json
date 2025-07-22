@@ -18,7 +18,7 @@
     "index": "Optionen",
     "who-wins": {
       "question": "Wer gewinnt das Spiel?",
-      "min": "Spieler mit der wenigsten Punkten",
+      "min": "Spieler mit den wenigsten Punkten",
       "max": "Spieler mit den meisten Punkten"
     },
     "game-start": "Spiel beginnt mit (Punkten)"

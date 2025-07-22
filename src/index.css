@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource/rampart-one";
+@import "@fontsource-variable/victor-mono";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -83,6 +85,9 @@
 }
 
 @theme inline {
+  --font-display: "Rampart One", sans-serif;
+  --font-sans: "Victor Mono Variable", sans-serif;
+
   --color-cyan-main: var(--cyan-main);
   --color-cyan-background: var(--cyan-background);
   --color-chart-cyan: var(--chart-cyan);

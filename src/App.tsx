@@ -17,8 +17,8 @@ function App() {
 
   return (
     <Layout>
-      <div>
-        <h1 className="font-bold text-8xl">Scorey</h1>
+      <div className="flex flex-col gap-4">
+        <h1 className="font-bold font-display text-8xl">Scorey</h1>
         <p>{t('game:tagline')}</p>
       </div>
       <GameForm />

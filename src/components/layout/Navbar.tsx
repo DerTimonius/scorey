@@ -8,7 +8,7 @@ export function Navbar() {
 
   return (
     <nav className="flex h-16 flex-row items-center justify-around border-border border-b-2 bg-cyan-background">
-      <p className="font-extrabold text-4xl">Scorey</p>
+      <p className="font-display font-extrabold text-4xl">Scorey</p>
       <div className="flex gap-4">
         <Button onClick={() => changeLanguage('de')} variant="tertiary">
           DE

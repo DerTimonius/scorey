@@ -55,25 +55,28 @@ export function GameState() {
 
   return (
     <Layout>
-      <div>
-        <h1 className="font-extrabold text-4xl">{game.name}</h1>
+      <div className="flex flex-col gap-3">
+        <h1 className="font-display font-extrabold text-6xl">{game.name}</h1>
         <h2 className="font-bold text-2xl">
-          {t('game:state.round-number', { roundNum: minLength + 1 })}
+          {t('game:state.round-number', { roundNum: minLength + 1 })}{' '}
           {game.endsAtRound
             ? t('game:state.rounds-to-go', {
                 roundsToGo: game.roundToEnd - minLength,
-              })
+              }).replace(
+                'Runden',
+                game.roundToEnd - minLength === 1 ? 'Runde' : 'Runden',
+              )
             : null}
         </h2>
         {game.endsAtRound ? (
-          <h3 className="font-semibold text-xl">
+          <h3 className="font-semibold text-lg">
             {t('game:state.game-ends-after-round', {
-              roundToGo: game.roundToEnd,
+              roundToEnd: game.roundToEnd,
             })}
           </h3>
         ) : null}
         {game.endsAtScore ? (
-          <h3 className="font-semibold text-xl">
+          <h3 className="font-semibold text-lg">
             {t('game:state:game-ends-at-points', {
               scoreToEnd: game.scoreToEnd,
             })}
