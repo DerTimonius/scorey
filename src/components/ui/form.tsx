@@ -10,6 +10,7 @@ import {
   useFormContext,
   useFormState,
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Label } from '@/components/ui/label';
 
@@ -40,6 +41,7 @@ function FormField<
 }
 
 const useFormField = () => {
+  const { t } = useTranslation();
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState } = useFormContext();
@@ -47,7 +49,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
-    throw new Error('useFormField should be used within <FormField>');
+    throw new Error(t('game:form-errors.use-form-field-error'));
   }
 
   const { id } = itemContext;

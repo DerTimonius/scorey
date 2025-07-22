@@ -1,6 +1,7 @@
 import NumberFlow from '@number-flow/react';
 import { useSetAtom } from 'jotai/react';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,7 @@ interface PlayerCardProps {
 }
 
 export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
+  const { t } = useTranslation();
   const [value, setValue] = useState(1);
   const [type, setType] = useState<'increase' | 'descrease'>();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -55,7 +57,9 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
         className={cn('flex flex-col items-center justify-around gap-2 px-3')}
       >
         <div className="flex flex-col items-center">
-          <p className="font-semibold text-lg">Current score</p>
+          <p className="font-semibold text-lg">
+            {t('game:state.current-score')}
+          </p>
           <NumberFlow
             className="font-extrabold text-4xl"
             value={player.currVal}
@@ -64,7 +68,7 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
         {type ? (
           <div className="flex flex-col items-center gap-2">
             <label htmlFor="value" className="capitalize">
-              {type} by
+              {t(type === 'increase' ? 'game:increase-by' : 'game:decrease-by')}
             </label>
             <div className="flex items-center justify-between px-2">
               <input
@@ -72,7 +76,7 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
                 id="value"
                 ref={inputRef}
                 value={value}
-                onChange={(e) => setValue(parseInt(e.target.value))}
+                onChange={(e) => setValue(Number.parseInt(e.target.value))}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     handleSubmit();
@@ -85,7 +89,7 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
                 onClick={handleSubmit}
                 variant="ghost"
               >
-                Save
+                {t('action:save')}
               </Button>
             </div>
           </div>

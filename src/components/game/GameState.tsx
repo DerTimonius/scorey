@@ -1,7 +1,9 @@
 import { useAtom } from 'jotai/react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { gameAtom, playerAtom } from '@/lib/jotai';
 import { cn } from '@/lib/utils';
+import { Layout } from '../layout/Layout';
 import { PlayerCard } from '../player/PlayerCard';
 import {
   AlertDialog,
@@ -19,6 +21,7 @@ import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 
 export function GameState() {
+  const { t } = useTranslation();
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
   const [enforceRounds, setEnforceRounds] = useState(true);
@@ -51,23 +54,29 @@ export function GameState() {
   if (!game) return;
 
   return (
-    <main className="my-4 flex min-h-screen w-screen flex-col items-center justify-center gap-18">
+    <Layout>
       <div>
         <h1 className="font-extrabold text-4xl">{game.name}</h1>
         <h2 className="font-bold text-2xl">
-          Round {minLength + 1}
+          {t('game:state.round-number', { roundNum: minLength + 1 })}
           {game.endsAtRound
-            ? ` (${game.roundToEnd - minLength} rounds to go)`
+            ? t('game:state.rounds-to-go', {
+                roundsToGo: game.roundToEnd - minLength,
+              })
             : null}
         </h2>
         {game.endsAtRound ? (
           <h3 className="font-semibold text-xl">
-            Game ends after round {game.roundToEnd}
+            {t('game:state.game-ends-after-round', {
+              roundToGo: game.roundToEnd,
+            })}
           </h3>
         ) : null}
         {game.endsAtScore ? (
           <h3 className="font-semibold text-xl">
-            Game ends after a player reaches {game.scoreToEnd} points
+            {t('game:state:game-ends-at-points', {
+              scoreToEnd: game.scoreToEnd,
+            })}
           </h3>
         ) : null}
         <div className="flex items-center space-x-2">
@@ -77,7 +86,7 @@ export function GameState() {
             checked={enforceRounds}
           />
           <Label htmlFor="enforce-round">
-            Only play when every player is on the same round
+            {t('game:state.enforce-rounds-label')}
           </Label>
         </div>
       </div>
@@ -101,19 +110,19 @@ export function GameState() {
       <div className="flex flex-row gap-8">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button>Finish game</Button>
+            <Button>{t('game:finish-game.button')}</Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogTitle>{t('game:finish-game.title')}</AlertDialogTitle>
               <AlertDialogDescription>
-                Did everyone finish the game? This action cannot be undone.
+                {t('game:finish-game.description')}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
               <AlertDialogAction onClick={handleFinishGame}>
-                Finish game
+                {t('game:finish-game.button')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -121,26 +130,26 @@ export function GameState() {
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="secondary">Reset game</Button>
+            <Button variant="secondary">{t('game:reset-game.button')}</Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>
-                Are you sure, you want to reset this game?
-              </AlertDialogTitle>
+              <AlertDialogTitle>{t('game:reset-game.title')}</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone.
+                {t('game:reset-game.description')}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
               <AlertDialogAction asChild>
-                <Button onClick={handleResetGame}>Reset game</Button>
+                <Button onClick={handleResetGame}>
+                  {t('game:reset-game.button')}
+                </Button>
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </div>
-    </main>
+    </Layout>
   );
 }

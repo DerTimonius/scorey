@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSetAtom } from 'jotai/react';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { getBgFromColor } from '@/lib/colorHelper';
 import { DEFAULT_COLOR } from '@/lib/constants';
@@ -35,32 +36,44 @@ import {
   SelectValue,
 } from '../ui/select';
 
-const playerSchema = z.object({
-  name: z.string().min(1, {
-    message: 'Player name is required.',
-  }),
-  color: ColorEnum,
-});
-
-const formSchema = z.object({
-  gameName: z.string().min(1, {
-    message: 'Game name is required.',
-  }),
-  players: z.array(playerSchema).min(1, {
-    message: 'At least one player is required.',
-  }),
-  startValue: z.number(),
-  winningCondition: WinningConditionEnum,
-  endsAtScore: z.boolean(),
-  scoreToEnd: z.number().optional(),
-  endsAtRound: z.boolean(),
-  roundToEnd: z.number().optional(),
-});
+const gamenamePlaceholders = [
+  'Flip 7',
+  'Wingspan',
+  'Everdell',
+  'Terraforming Mars',
+  'Spicy',
+  'Great Western Trail',
+  'Brass: Birmingham',
+  'Root',
+];
 
 export function GameForm() {
+  const { t } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const setGame = useSetAtom(gameAtom);
   const setPlayers = useSetAtom(playerAtom);
+
+  const playerSchema = z.object({
+    name: z.string().min(1, {
+      message: t('form:player-name.required'),
+    }),
+    color: ColorEnum,
+  });
+
+  const formSchema = z.object({
+    gameName: z.string().min(1, {
+      message: t('form:game-name.required'),
+    }),
+    players: z.array(playerSchema).min(1, {
+      message: t('form:at-least-one-player-required'),
+    }),
+    startValue: z.number(),
+    winningCondition: WinningConditionEnum,
+    endsAtScore: z.boolean(),
+    scoreToEnd: z.number().optional(),
+    endsAtRound: z.boolean(),
+    roundToEnd: z.number().optional(),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -112,13 +125,19 @@ export function GameForm() {
   }
 
   if (!showForm) {
-    return <Button onClick={() => setShowForm(true)}>Start game</Button>;
+    return (
+      <Button onClick={() => setShowForm(true)}>
+        {t('game:start-game.button')}
+      </Button>
+    );
   }
 
   return (
     <Card className="px-4 py-3">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Start new game</CardTitle>
+        <CardTitle className="text-center text-2xl">
+          {t('form:game-info')}
+        </CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -127,9 +146,16 @@ export function GameForm() {
             name="gameName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Game Name</FormLabel>
+                <FormLabel>{t('form:game-name.label')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter game name" {...field} />
+                  <Input
+                    placeholder={
+                      gamenamePlaceholders[
+                        Math.floor(Math.random() * gamenamePlaceholders.length)
+                      ]
+                    }
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -137,7 +163,7 @@ export function GameForm() {
           />
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">Players</h3>
+            <h3 className="mb-4 font-medium text-lg">{t('form:players')}</h3>
             {fields.map((field, index) => (
               <div className="flex flex-row items-center gap-2" key={field.id}>
                 <FormField
@@ -147,11 +173,15 @@ export function GameForm() {
                   render={({ field }) => (
                     <FormItem className="flex items-end space-x-2 pb-4">
                       <div className="grid flex-1 gap-1">
-                        <FormLabel>Player {index + 1} Name</FormLabel>
+                        <FormLabel>
+                          {t('form:player-name.label', { index: index + 1 })}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             className="min-w-72"
-                            placeholder={`Player ${index + 1}`}
+                            placeholder={t('form:player-name.placeholder', {
+                              index: index + 1,
+                            })}
                             {...field}
                           />
                         </FormControl>
@@ -167,14 +197,17 @@ export function GameForm() {
                   render={({ field }) => (
                     <FormItem className="flex items-end space-x-2 pb-4">
                       <div className="grid flex-1 gap-1">
-                        <FormLabel>Color</FormLabel>
+                        <FormLabel>{t('color:color')}</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
                           <FormControl>
                             <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Select a color" />
+                              <SelectValue
+                                className="capitalize"
+                                placeholder={t('color:select-color')}
+                              />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -190,7 +223,7 @@ export function GameForm() {
                                     getBgFromColor(color),
                                   )}
                                 ></span>
-                                {color}
+                                {t(`color:${color}`)}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -205,7 +238,7 @@ export function GameForm() {
                   variant="ghost"
                   onClick={() => remove(index)}
                 >
-                  Remove
+                  {t('action:remove')}
                 </Button>
               </div>
             ))}
@@ -216,19 +249,21 @@ export function GameForm() {
                 variant="secondary"
                 onClick={() => append({ name: '', color: DEFAULT_COLOR })}
               >
-                Add Player
+                {t('form:add-player')}
               </Button>
             ) : null}
           </div>
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">Game options</h3>
+            <h3 className="mb-4 font-medium text-lg">
+              {t('form:options.index')}
+            </h3>
             <FormField
               control={form.control}
               name="startValue"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Game starts at (points)</FormLabel>
+                  <FormLabel>{t('form:options.game-start')}</FormLabel>
                   <FormControl>
                     <Input placeholder="100" type="number" {...field} />
                   </FormControl>
@@ -241,7 +276,7 @@ export function GameForm() {
               name="winningCondition"
               render={({ field }) => (
                 <FormItem className="my-4">
-                  <FormLabel>Who wins?</FormLabel>
+                  <FormLabel>{t('form:options.who-wins.question')}</FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -253,7 +288,7 @@ export function GameForm() {
                           <RadioGroupItem value="minNumber" />
                         </FormControl>
                         <FormLabel className="font-normal">
-                          Player with fewest points
+                          {t('form:options.who-wins.min')}
                         </FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
@@ -261,7 +296,7 @@ export function GameForm() {
                           <RadioGroupItem value="maxNumber" />
                         </FormControl>
                         <FormLabel className="font-normal">
-                          Player with most points
+                          {t('form:options.who-wins.max')}
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>
@@ -273,7 +308,9 @@ export function GameForm() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">Advanced settings</h3>{' '}
+            <h3 className="mb-4 font-medium text-lg">
+              {t('form:advanced-options.index')}
+            </h3>{' '}
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <Checkbox
@@ -284,7 +321,7 @@ export function GameForm() {
                   }}
                 />
                 <Label htmlFor="endsAtRound">
-                  Game ends after a certain round has been played
+                  {t('form:advanced-options.ends-at-round-checkbox')}{' '}
                 </Label>
               </div>
               {form.watch('endsAtRound') ? (
@@ -293,14 +330,16 @@ export function GameForm() {
                   name="roundToEnd"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Round to be finished</FormLabel>
+                      <FormLabel>
+                        {t('form:advanced-options.round-to-be-finished-label')}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="10"
                           type="number"
                           {...field}
                           onChange={(e) =>
-                            field.onChange(parseInt(e.target.value))
+                            field.onChange(Number.parseInt(e.target.value))
                           }
                         />
                       </FormControl>
@@ -318,7 +357,7 @@ export function GameForm() {
                   }}
                 />
                 <Label htmlFor="endsAtScore">
-                  Game ends after a player hits a certain score
+                  {t('form:advanced-options.ends-at-score-checkbox')}
                 </Label>
               </div>
               {form.watch('endsAtScore') ? (
@@ -327,14 +366,16 @@ export function GameForm() {
                   name="scoreToEnd"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Game ends at points</FormLabel>
+                      <FormLabel>
+                        {t('form:advanced-options.score-to-be-finished-label')}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="100"
                           type="number"
                           {...field}
                           onChange={(e) =>
-                            field.onChange(parseInt(e.target.value))
+                            field.onChange(Number.parseInt(e.target.value))
                           }
                         />
                       </FormControl>
@@ -347,9 +388,9 @@ export function GameForm() {
           </div>
 
           <CardAction className="flex justify-end gap-4">
-            <Button type="submit">Create Game</Button>
+            <Button type="submit">{t('form:create-game')}</Button>
             <Button variant="secondary" onClick={() => setShowForm(false)}>
-              Cancel
+              {t('action:cancel')}
             </Button>
           </CardAction>
         </form>

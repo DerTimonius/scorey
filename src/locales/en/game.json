@@ -1,0 +1,34 @@
+{
+  "finish-game": {
+    "button": "Finish game",
+    "title": "Are you absolutely sure?",
+    "description": "Has everyone finished the game? This action cannot be undone."
+  },
+  "decrease-by": "Decrease by",
+  "skip-round": "Skip round",
+  "increase-by": "Increase by",
+  "reset-game": {
+    "button": "Reset game",
+    "title": "Are you sure you want to reset this game?",
+    "description": "This action cannot be undone."
+  },
+  "start-game": {
+    "button": "Start game"
+  },
+  "tagline": "Keep score of any game",
+  "state": {
+    "current-score": "Current score",
+    "round-number": "Round {{roundNum}}",
+    "rounds-to-go": "({{roundsToGo}} rounds remaining)",
+    "game-ends-after-round": "Game ends after round {{roundToEnd}}",
+    "game-ends-at-points": "Game ends when a player reached {{scoreToEnd}} points",
+    "enforce-rounds-label": "Only play when every player is on the same round"
+  },
+  "player-stats": "Rounds for {{name}}",
+  "game-stats": {
+    "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",
+    "player-score": "- {{playerName}}: {{playerScore}} points",
+    "how-it-happened": "How it happened",
+    "new-game-button": "New game"
+  }
+}

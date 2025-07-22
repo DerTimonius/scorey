@@ -1,8 +1,10 @@
 import { useAtom } from 'jotai/react';
+import { useTranslation } from 'react-i18next';
 import { gameAtom, playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { GameChart, type GameChartDataItem } from '../charts/GameChart';
+import { Layout } from '../layout/Layout';
 import { PlayerStats } from '../player/PlayerStats';
 import { Button } from '../ui/button';
 import {
@@ -15,6 +17,7 @@ import {
 import type { ChartConfig } from '../ui/chart';
 
 export function GameStats() {
+  const { t } = useTranslation();
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
 
@@ -33,16 +36,22 @@ export function GameStats() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-18 py-8">
+    <Layout className="min-h-min py-12">
       <Card className="w-[80vw]">
         <CardHeader>
           <CardTitle className="text-center text-5xl">
-            And the winner is {winner.name} with {winner.currVal} points!
+            {t('game:game-stats.winner-message', {
+              winnerName: winner.name,
+              winnerScore: winner.currVal,
+            })}
           </CardTitle>
           <CardDescription className="mt-6">
             {sortedPlayers.slice(1).map((p) => (
               <p key={p.id} className="text-center font-semibold text-lg">
-                - {p.name}: {p.currVal} points
+                {t('game:game-stats.player-score', {
+                  playerName: p.name,
+                  playerScore: p.currVal,
+                })}
               </p>
             ))}
           </CardDescription>
@@ -51,7 +60,7 @@ export function GameStats() {
           className={cn('flex flex-col items-center justify-around gap-2 px-3')}
         >
           <h3 className="mb-2 text-center font-bold text-2xl">
-            How it happened
+            {t('game:game-stats.how-it-happened')}
           </h3>
           <GameChart
             chartConfig={createChartConfig(players)}
@@ -74,10 +83,10 @@ export function GameStats() {
           </div>
         </div>
         <CardAction className="flex w-full flex-row items-center justify-around">
-          <Button onClick={handleNewGame}>New Game</Button>
+          <Button onClick={handleNewGame}>{t('game:new-game')}</Button>
         </CardAction>
       </Card>
-    </main>
+    </Layout>
   );
 }
 

@@ -1,0 +1,34 @@
+{
+  "finish-game": {
+    "button": "Spiel beenden",
+    "title": "Bist du absolut sicher?",
+    "description": "Hat jeder das Spiel beendet? Diese Aktion kann nicht rückgängig gemacht werden."
+  },
+  "decrease-by": "Verringern um",
+  "skip-round": "Runde skippen",
+  "increase-by": "Erhöhen um",
+  "reset-game": {
+    "button": "Spiel zurücksetzen",
+    "title": "Bist du sicher, dass du dieses Spiel zurücksetzen möchtest?",
+    "description": "Diese Aktion kann nicht rückgängig gemacht werden."
+  },
+  "start-game": {
+    "button": "Spiel starten"
+  },
+  "tagline": "Behalte den Überblick über jedes Spiel",
+  "state": {
+    "current-score": "Momentane Punkte",
+    "round-number": "Runde {{roundNum}}",
+    "rounds-to-go": "({{roundsToGo}} Runden verbleibend)",
+    "game-ends-after-round": "Spiel endet nach Runde {{roundToEnd}}",
+    "game-ends-at-points": "Spiel endet, wenn ein Spieler {{scoreToEnd}} Punkte erreicht",
+    "enforce-rounds-label": "Nur spielen, wenn jeder Spieler in der gleichen Runde ist"
+  },
+  "new-game": "Neues Spiel",
+  "player-stats": "Runden für {{name}}",
+  "game-stats": {
+    "winner-message": "Und der Gewinner ist {{winnerName}} mit {{winnerScore}} Punkten!",
+    "player-score": "- {{playerName}}: {{playerScore}} Punkte",
+    "how-it-happened": "Wie es dazu kam"
+  }
+}

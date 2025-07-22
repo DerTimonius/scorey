@@ -1,0 +1,21 @@
+{
+  "amber": "amber",
+  "blue": "blue",
+  "color": "Color",
+  "cyan": "cyan",
+  "emerald": "emerald",
+  "fuchsia": "fuchsia",
+  "green": "green",
+  "indigo": "indigo",
+  "lime": "lime",
+  "orange": "orange",
+  "pink": "pink",
+  "purple": "purple",
+  "red": "red",
+  "rose": "rose",
+  "select-color": "Select a color",
+  "sky": "sky",
+  "teal": "teal",
+  "violet": "violet",
+  "yellow": "yellow"
+}

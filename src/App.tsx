@@ -1,11 +1,14 @@
 import './index.css';
 import { useAtomValue } from 'jotai/react';
+import { useTranslation } from 'react-i18next';
 import { GameForm } from './components/game/GameForm';
-import { GameStats } from './components/game/GameStats';
 import { GameState } from './components/game/GameState';
+import { GameStats } from './components/game/GameStats';
+import { Layout } from './components/layout/Layout';
 import { gameAtom } from './lib/jotai';
 
 function App() {
+  const { t } = useTranslation();
   const game = useAtomValue(gameAtom);
 
   if (game) {
@@ -13,13 +16,13 @@ function App() {
   }
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-18">
+    <Layout>
       <div>
         <h1 className="font-bold text-8xl">Scorey</h1>
-        <p>Keep score of any game</p>
+        <p>{t('game:tagline')}</p>
       </div>
       <GameForm />
-    </main>
+    </Layout>
   );
 }
 

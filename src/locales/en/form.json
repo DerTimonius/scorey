@@ -1,0 +1,33 @@
+{
+  "at-least-one-player-required": "Mindestens ein Spieler ist erforderlich.",
+  "add-player": "Add player",
+  "advanced-options": {
+    "index": "Advanced settings",
+    "ends-at-round-checkbox": "Game ends after a certain round",
+    "round-to-be-finished-label": "Round to be finished",
+    "ends-at-score-checkbox": "Game ends, when a player reaches a certain score",
+    "score-to-be-finished-label": "Game ends at (points)"
+  },
+  "create-game": "Let's go",
+  "game-info": "Informations about the game",
+  "game-name": {
+    "label": "Name of the game",
+    "required": "Game name is required"
+  },
+  "options": {
+    "index": "Settings",
+    "who-wins": {
+      "question": "Who wins the game?",
+      "min": "Player with the fewest points",
+      "max": "Player with the most points"
+    },
+    "game-start": "Game starts at (points)"
+  },
+  "player-name": {
+    "required": "Player name is required",
+    "label": "Player {{ index }} name",
+    "placeholder": "Player {{ index }}",
+    "unique": "Player names should be unique"
+  },
+  "players": "Players"
+}

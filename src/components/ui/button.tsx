@@ -1,6 +1,5 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-
 import type * as React from 'react';
 import { DEFAULT_COLOR } from '@/lib/constants';
 import type { VariantColor } from '@/lib/types';
@@ -16,8 +15,7 @@ const buttonVariants = cva(
         ghost: 'border-2 border-border',
         secondary:
           '!bg-white border-2 border-border shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none',
-        // reverse:
-        // 'text-main-foreground bg-main border-2 border-border hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow',
+        tertiary: 'border-2 border-border !bg-white',
       },
       color: {
         red: 'bg-red-main',
