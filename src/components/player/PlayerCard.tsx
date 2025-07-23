@@ -95,7 +95,7 @@ export function PlayerCard({
                 {t('action:save')}
               </Button>
               <Button
-                className='ml-2'
+                className="ml-2"
                 color={player.color}
                 onClick={() => setType(undefined)}
                 variant="tertiary"
@@ -105,7 +105,7 @@ export function PlayerCard({
             </div>
           </div>
         ) : (
-          <div className="flex justify-around gap-6">
+          <div className="flex justify-around gap-2 md:gap-6">
             <Button
               color={player.color}
               disabled={hasMoreRounds}
@@ -129,14 +129,15 @@ export function PlayerCard({
               +
             </Button>
             <Button
+              className="max-w-max"
               color={player.color}
               disabled={hasMoreRounds}
               onClick={() => {
-                  increasePlayerVal(0)
+                increasePlayerVal(0);
               }}
               variant="ghost"
             >
-                Skip round
+              {t('state:skip-round')}
             </Button>
           </div>
         )}

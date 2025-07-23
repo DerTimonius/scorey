@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSetAtom } from 'jotai/react';
+import { useAtomValue, useSetAtom } from 'jotai/react';
+import { TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { getBgFromColor } from '@/lib/colorHelper';
-import { DEFAULT_COLOR } from '@/lib/constants';
-import { gameAtom, playerAtom } from '@/lib/jotai';
+import { getMainFromColor } from '@/lib/colorHelper';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
+import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import {
   ColorEnum,
   colorsArray,
@@ -35,8 +36,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { TrashIcon } from 'lucide-react';
-import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 const gamenamePlaceholders = [
   'Flip 7',
@@ -51,6 +50,7 @@ const gamenamePlaceholders = [
 
 export function GameForm() {
   const { t } = useTranslation();
+  const mainColor = useAtomValue(mainColorAtom);
   const [showForm, setShowForm] = useState(false);
   const setGame = useSetAtom(gameAtom);
   const setPlayers = useSetAtom(playerAtom);
@@ -82,7 +82,7 @@ export function GameForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       gameName: '',
-      players: [{ name: '', color: DEFAULT_COLOR }],
+      players: [{ name: '', color: mainColor }],
       startValue: 0,
       winningCondition: 'maxNumber',
       endsAtRound: false,
@@ -134,7 +134,7 @@ export function GameForm() {
           <h1 className="font-bold font-display text-8xl">Scorey</h1>
           <p>{t('game:tagline')}</p>
         </div>
-        <Button onClick={() => setShowForm(true)}>
+        <Button onClick={() => setShowForm(true)} color={mainColor}>
           {t('game:start-game.button')}
         </Button>
       </>
@@ -142,7 +142,7 @@ export function GameForm() {
   }
 
   return (
-    <Card className="my-12 max-w-[85vw] px-4 py-3">
+    <Card className="my-12 max-w-[85vw] px-4 py-3" color={mainColor}>
       <CardHeader>
         <CardTitle className="text-center text-2xl">
           {t('form:game-info')}
@@ -229,7 +229,7 @@ export function GameForm() {
                                 <span
                                   className={cn(
                                     'h-2.5 w-2.5 rounded-full',
-                                    getBgFromColor(color),
+                                    getMainFromColor(color),
                                   )}
                                 ></span>
                                 {t(`color:${color}`)}
@@ -243,6 +243,7 @@ export function GameForm() {
                   )}
                 />
                 <Button
+                  color={mainColor}
                   size={isMobile ? 'icon' : 'default'}
                   type="button"
                   variant="ghost"
@@ -261,7 +262,7 @@ export function GameForm() {
               <Button
                 type="button"
                 variant="secondary"
-                onClick={() => append({ name: '', color: DEFAULT_COLOR })}
+                onClick={() => append({ name: '', color: mainColor })}
               >
                 {t('form:add-player')}
               </Button>
@@ -328,6 +329,7 @@ export function GameForm() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <Checkbox
+                  color={mainColor}
                   checked={form.watch('endsAtRound')}
                   id="endsAtRound"
                   onCheckedChange={(checked) => {
@@ -366,6 +368,7 @@ export function GameForm() {
               <div className="flex items-center gap-3">
                 <Checkbox
                   checked={form.watch('endsAtScore')}
+                  color={mainColor}
                   id="endsAtScore"
                   onCheckedChange={(checked) => {
                     form.setValue('endsAtScore', Boolean(checked));
@@ -403,7 +406,9 @@ export function GameForm() {
           </div>
 
           <CardAction className="flex justify-end gap-4">
-            <Button type="submit">{t('form:create-game')}</Button>
+            <Button color={mainColor} type="submit">
+              {t('form:create-game')}
+            </Button>
             <Button variant="secondary" onClick={() => setShowForm(false)}>
               {t('action:cancel')}
             </Button>

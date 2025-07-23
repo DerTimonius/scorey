@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="flex flex-row justify-center space-x-4 divide-x-2 divide-black">
+    <footer className="my-4 flex flex-row justify-center space-x-4 divide-x-2 divide-black">
       <p className="pr-4">
         Made by{' '}
         <a

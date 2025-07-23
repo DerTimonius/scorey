@@ -1,6 +1,6 @@
-import { useAtom } from 'jotai/react';
+import { useAtom, useAtomValue } from 'jotai/react';
 import { useTranslation } from 'react-i18next';
-import { gameAtom, playerAtom } from '@/lib/jotai';
+import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { GameChart, type GameChartDataItem } from '../charts/GameChart';
@@ -17,6 +17,7 @@ import {
 import type { ChartConfig } from '../ui/chart';
 
 export function GameStats() {
+  const mainColor = useAtomValue(mainColorAtom);
   const { t } = useTranslation();
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
@@ -37,7 +38,7 @@ export function GameStats() {
 
   return (
     <Layout className="min-h-min py-12">
-      <Card className="w-[80vw]">
+      <Card className="w-[80vw]" color={mainColor}>
         <CardHeader>
           <CardTitle className="text-center font-display text-5xl">
             {t('game:game-stats.winner-message', {
@@ -83,7 +84,9 @@ export function GameStats() {
           </div>
         </div>
         <CardAction className="flex w-full flex-row items-center justify-around">
-          <Button onClick={handleNewGame}>{t('game:new-game')}</Button>
+          <Button onClick={handleNewGame} color={mainColor}>
+            {t('game:new-game')}
+          </Button>
         </CardAction>
       </Card>
     </Layout>

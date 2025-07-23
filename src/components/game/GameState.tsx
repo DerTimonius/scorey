@@ -1,7 +1,8 @@
-import { useAtom } from 'jotai/react';
+import { useAtom, useAtomValue } from 'jotai/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { gameAtom, playerAtom } from '@/lib/jotai';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
+import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import { cn } from '@/lib/utils';
 import { Layout } from '../layout/Layout';
 import { PlayerCard } from '../player/PlayerCard';
@@ -19,11 +20,11 @@ import {
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
-import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 export function GameState() {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const mainColor = useAtomValue(mainColorAtom);
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
   const [enforceRounds, setEnforceRounds] = useState(true);
@@ -58,7 +59,7 @@ export function GameState() {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center gap-3 px-4 pt-2 sm:px-6">
+      <div className="flex flex-col items-center gap-3 px-4 pt-4 sm:px-6">
         <h1 className="font-display font-extrabold text-5xl md:text-6xl">
           {game.name}
         </h1>
@@ -89,6 +90,7 @@ export function GameState() {
         ) : null}
         <div className="flex items-center space-x-2 px-12 md:px-0">
           <Switch
+            color={mainColor}
             id="enforce-round"
             onCheckedChange={() => setEnforceRounds(!enforceRounds)}
             checked={enforceRounds}
@@ -100,6 +102,7 @@ export function GameState() {
 
         <div className="flex items-center space-x-2 px-12 md:px-0">
           <Switch
+            color={mainColor}
             id="show-stats"
             onCheckedChange={() => setShowStats(!showStats)}
             checked={showStats}
@@ -128,9 +131,9 @@ export function GameState() {
       <div className="mb-12 flex flex-row gap-8">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button>{t('game:finish-game.button')}</Button>
+            <Button color={mainColor}>{t('game:finish-game.button')}</Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent color={mainColor}>
             <AlertDialogHeader>
               <AlertDialogTitle>{t('game:finish-game.title')}</AlertDialogTitle>
               <AlertDialogDescription>
@@ -139,7 +142,7 @@ export function GameState() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
-              <AlertDialogAction onClick={handleFinishGame}>
+              <AlertDialogAction onClick={handleFinishGame} color={mainColor}>
                 {t('game:finish-game.button')}
               </AlertDialogAction>
             </AlertDialogFooter>
@@ -150,7 +153,7 @@ export function GameState() {
           <AlertDialogTrigger asChild>
             <Button variant="secondary">{t('game:reset-game.button')}</Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent color={mainColor}>
             <AlertDialogHeader>
               <AlertDialogTitle>{t('game:reset-game.title')}</AlertDialogTitle>
               <AlertDialogDescription>
@@ -159,10 +162,8 @@ export function GameState() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
-              <AlertDialogAction asChild>
-                <Button onClick={handleResetGame}>
-                  {t('game:reset-game.button')}
-                </Button>
+              <AlertDialogAction onClick={handleResetGame} color={mainColor}>
+                {t('game:reset-game.button')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

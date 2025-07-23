@@ -5,5 +5,6 @@
   "game-ends-at-points": "Spiel endet, wenn ein Spieler {{scoreToEnd}} Punkte erreicht",
   "round-number": "Runde {{roundNum}}",
   "rounds-to-go": "({{roundsToGo}} Runden verbleibend)",
-  "show-stats": "Statistik anzeigen"
+  "show-stats": "Statistik anzeigen",
+  "skip-round": "Runde überspringen"
 }

@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { cn } from '@/lib/utils';
-import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { Navbar } from './Navbar';
 
 export function Layout({
   children,
