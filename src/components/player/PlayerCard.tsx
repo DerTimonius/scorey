@@ -94,6 +94,14 @@ export function PlayerCard({
               >
                 {t('action:save')}
               </Button>
+              <Button
+                className='ml-2'
+                color={player.color}
+                onClick={() => setType(undefined)}
+                variant="tertiary"
+              >
+                {t('action:cancel')}
+              </Button>
             </div>
           </div>
         ) : (
@@ -119,6 +127,16 @@ export function PlayerCard({
               variant="ghost"
             >
               +
+            </Button>
+            <Button
+              color={player.color}
+              disabled={hasMoreRounds}
+              onClick={() => {
+                  increasePlayerVal(0)
+              }}
+              variant="ghost"
+            >
+                Skip round
             </Button>
           </div>
         )}

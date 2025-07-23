@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { cn } from '@/lib/utils';
 import { Navbar } from './Navbar';
+import { Footer } from './Footer';
 
 export function Layout({
   children,
@@ -17,6 +18,7 @@ export function Layout({
       >
         {children}
       </main>
+      <Footer />
     </>
   );
 }
