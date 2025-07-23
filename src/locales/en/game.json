@@ -16,14 +16,6 @@
     "button": "Start game"
   },
   "tagline": "Keep score of any game",
-  "state": {
-    "current-score": "Current score",
-    "round-number": "Round {{roundNum}}",
-    "rounds-to-go": "({{roundsToGo}} rounds remaining)",
-    "game-ends-after-round": "Game ends after round {{roundToEnd}}",
-    "game-ends-at-points": "Game ends when a player reached {{scoreToEnd}} points",
-    "enforce-rounds-label": "Only play when every player is on the same round"
-  },
   "player-stats": "Rounds for {{name}}",
   "game-stats": {
     "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",

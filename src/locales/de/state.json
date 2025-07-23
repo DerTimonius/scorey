@@ -1,0 +1,9 @@
+{
+  "current-score": "Momentane Punkte",
+  "enforce-rounds-label": "Nur spielen, wenn jeder Spieler in der gleichen Runde ist",
+  "game-ends-after-round": "Spiel endet nach Runde {{roundToEnd}}",
+  "game-ends-at-points": "Spiel endet, wenn ein Spieler {{scoreToEnd}} Punkte erreicht",
+  "round-number": "Runde {{roundNum}}",
+  "rounds-to-go": "({{roundsToGo}} Runden verbleibend)",
+  "show-stats": "Statistik anzeigen"
+}

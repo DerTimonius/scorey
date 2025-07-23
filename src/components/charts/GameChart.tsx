@@ -54,7 +54,7 @@ export function GameChart({
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value: string) =>
-                t('game:state.round-number', { roundNum: value })
+                t('state:round-number', { roundNum: value })
               }
             />
             <Legend iconType="plainline" />

@@ -16,14 +16,6 @@
     "button": "Spiel starten"
   },
   "tagline": "Behalte den Überblick über jedes Spiel",
-  "state": {
-    "current-score": "Momentane Punkte",
-    "round-number": "Runde {{roundNum}}",
-    "rounds-to-go": "({{roundsToGo}} Runden verbleibend)",
-    "game-ends-after-round": "Spiel endet nach Runde {{roundToEnd}}",
-    "game-ends-at-points": "Spiel endet, wenn ein Spieler {{scoreToEnd}} Punkte erreicht",
-    "enforce-rounds-label": "Nur spielen, wenn jeder Spieler in der gleichen Runde ist"
-  },
   "new-game": "Neues Spiel",
   "player-stats": "Runden für {{name}}",
   "game-stats": {

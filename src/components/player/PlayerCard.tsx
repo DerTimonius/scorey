@@ -12,9 +12,14 @@ import { PlayerStats } from './PlayerStats';
 interface PlayerCardProps {
   player: Player;
   hasMoreRounds: boolean;
+  showStats: boolean;
 }
 
-export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
+export function PlayerCard({
+  player,
+  hasMoreRounds,
+  showStats,
+}: PlayerCardProps) {
   const { t } = useTranslation();
   const [value, setValue] = useState(1);
   const [type, setType] = useState<'increase' | 'descrease'>();
@@ -57,7 +62,7 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
         className={cn('flex flex-col items-center justify-around gap-2 px-3')}
       >
         <div className="flex flex-col items-center">
-          <p className="font-semibold">{t('game:state.current-score')}</p>
+          <p className="font-semibold">{t('state:current-score')}</p>
           <NumberFlow
             className="font-extrabold text-4xl"
             value={player.currVal}
@@ -119,7 +124,9 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
         )}
       </div>
       <CardFooter>
-        {player.rounds.length ? <PlayerStats player={player} /> : null}
+        {showStats && player.rounds.length ? (
+          <PlayerStats player={player} />
+        ) : null}
       </CardFooter>
     </Card>
   );

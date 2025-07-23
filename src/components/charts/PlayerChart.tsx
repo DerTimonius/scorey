@@ -39,7 +39,7 @@ export function PlayerChart({
               tickMargin={10}
               axisLine={false}
               tickFormatter={(value: string) =>
-                t('game:state.round-number', { roundNum: value })
+                t('state:round-number', { roundNum: value })
               }
             />
             <Bar dataKey="val" fill={`var(--chart-${color})`} radius={8}>

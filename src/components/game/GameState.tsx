@@ -19,12 +19,15 @@ import {
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 export function GameState() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
   const [enforceRounds, setEnforceRounds] = useState(true);
+  const [showStats, setShowStats] = useState(!isMobile);
 
   const minLength = Math.min(...players.map((p) => p.rounds.length));
 
@@ -60,9 +63,9 @@ export function GameState() {
           {game.name}
         </h1>
         <h2 className="font-bold text-xl md:text-2xl">
-          {t('game:state.round-number', { roundNum: minLength + 1 })}{' '}
+          {t('state:round-number', { roundNum: minLength + 1 })}{' '}
           {game.endsAtRound
-            ? t('game:state.rounds-to-go', {
+            ? t('state:rounds-to-go', {
                 roundsToGo: game.roundToEnd - minLength,
               }).replace(
                 'Runden',
@@ -72,14 +75,14 @@ export function GameState() {
         </h2>
         {game.endsAtRound ? (
           <h3 className="font-semibold md:text-lg">
-            {t('game:state.game-ends-after-round', {
+            {t('state:game-ends-after-round', {
               roundToEnd: game.roundToEnd,
             })}
           </h3>
         ) : null}
         {game.endsAtScore ? (
           <h3 className="font-semibold md:text-lg">
-            {t('game:state:game-ends-at-points', {
+            {t('state:game-ends-at-points', {
               scoreToEnd: game.scoreToEnd,
             })}
           </h3>
@@ -91,8 +94,17 @@ export function GameState() {
             checked={enforceRounds}
           />
           <Label htmlFor="enforce-round">
-            {t('game:state.enforce-rounds-label')}
+            {t('state:enforce-rounds-label')}
           </Label>
+        </div>
+
+        <div className="flex items-center space-x-2 px-12 md:px-0">
+          <Switch
+            id="show-stats"
+            onCheckedChange={() => setShowStats(!showStats)}
+            checked={showStats}
+          />
+          <Label htmlFor="show-stats">{t('state:show-stats')}</Label>
         </div>
       </div>
 
@@ -106,6 +118,7 @@ export function GameState() {
           .sort((a, b) => a.order - b.order)
           .map((p) => (
             <PlayerCard
+              showStats={showStats}
               player={p}
               key={p.id}
               hasMoreRounds={enforceRounds && p.rounds.length > minLength}
