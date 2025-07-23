@@ -35,7 +35,7 @@ export function GameChart({
     <Card className="bg-secondary-background text-foreground">
       <CardContent>
         <ChartContainer
-          className={cn('min-w-2xl ', containerClasses)}
+          className={cn('min-w-[60vw] sm:min-w-[65vw]', containerClasses)}
           config={chartConfig}
         >
           <LineChart

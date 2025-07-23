@@ -49,7 +49,7 @@ export function PlayerCard({ player, hasMoreRounds }: PlayerCardProps) {
   };
 
   return (
-    <Card color={player.color}>
+    <Card color={player.color} className="gap-2 md:gap-6">
       <CardHeader>
         <CardTitle className="text-center text-2xl">{player.name}</CardTitle>
       </CardHeader>

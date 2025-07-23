@@ -69,12 +69,12 @@ export function GameStats() {
           />
           <div
             className={cn(
-              'mt-4 grid w-full gap-2',
+              'mt-4 grid w-full grid-cols-1 gap-2',
               players.length <= 4
-                ? 'grid-cols-2'
+                ? 'md:grid-cols-2'
                 : players.length <= 8
-                  ? 'grid-cols-4'
-                  : 'grid-cols-6',
+                  ? 'md:grid-cols-4'
+                  : 'md:grid-cols-6',
             )}
           >
             {sortedPlayers.map((p) => (

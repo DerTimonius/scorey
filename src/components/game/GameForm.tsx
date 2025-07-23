@@ -35,6 +35,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { TrashIcon } from 'lucide-react';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 const gamenamePlaceholders = [
   'Flip 7',
@@ -52,6 +54,7 @@ export function GameForm() {
   const [showForm, setShowForm] = useState(false);
   const setGame = useSetAtom(gameAtom);
   const setPlayers = useSetAtom(playerAtom);
+  const isMobile = useIsMobile();
 
   const playerSchema = z.object({
     name: z.string().min(1, {
@@ -126,14 +129,20 @@ export function GameForm() {
 
   if (!showForm) {
     return (
-      <Button onClick={() => setShowForm(true)}>
-        {t('game:start-game.button')}
-      </Button>
+      <>
+        <div className="flex flex-col gap-4">
+          <h1 className="font-bold font-display text-8xl">Scorey</h1>
+          <p>{t('game:tagline')}</p>
+        </div>
+        <Button onClick={() => setShowForm(true)}>
+          {t('game:start-game.button')}
+        </Button>
+      </>
     );
   }
 
   return (
-    <Card className="px-4 py-3">
+    <Card className="my-12 max-w-[85vw] px-4 py-3">
       <CardHeader>
         <CardTitle className="text-center text-2xl">
           {t('form:game-info')}
@@ -178,7 +187,7 @@ export function GameForm() {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            className="min-w-72"
+                            className="min-w-36 md:min-w-72"
                             placeholder={t('form:player-name.placeholder', {
                               index: index + 1,
                             })}
@@ -203,7 +212,7 @@ export function GameForm() {
                           defaultValue={field.value}
                         >
                           <FormControl>
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-32 md:w-[180px]">
                               <SelectValue
                                 className="capitalize"
                                 placeholder={t('color:select-color')}
@@ -234,11 +243,16 @@ export function GameForm() {
                   )}
                 />
                 <Button
+                  size={isMobile ? 'icon' : 'default'}
                   type="button"
                   variant="ghost"
                   onClick={() => remove(index)}
                 >
-                  {t('action:remove')}
+                  <span className="hidden md:block">{t('action:remove')}</span>
+                  <TrashIcon
+                    className="block md:hidden"
+                    aria-label={t('action:remove')}
+                  />
                 </Button>
               </div>
             ))}
@@ -336,6 +350,7 @@ export function GameForm() {
                       <FormControl>
                         <Input
                           placeholder="10"
+                          min={1}
                           type="number"
                           {...field}
                           onChange={(e) =>

@@ -55,9 +55,11 @@ export function GameState() {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-3">
-        <h1 className="font-display font-extrabold text-6xl">{game.name}</h1>
-        <h2 className="font-bold text-2xl">
+      <div className="flex flex-col items-center gap-3 px-4 pt-2 sm:px-6">
+        <h1 className="font-display font-extrabold text-5xl md:text-6xl">
+          {game.name}
+        </h1>
+        <h2 className="font-bold text-xl md:text-2xl">
           {t('game:state.round-number', { roundNum: minLength + 1 })}{' '}
           {game.endsAtRound
             ? t('game:state.rounds-to-go', {
@@ -69,20 +71,20 @@ export function GameState() {
             : null}
         </h2>
         {game.endsAtRound ? (
-          <h3 className="font-semibold text-lg">
+          <h3 className="font-semibold md:text-lg">
             {t('game:state.game-ends-after-round', {
               roundToEnd: game.roundToEnd,
             })}
           </h3>
         ) : null}
         {game.endsAtScore ? (
-          <h3 className="font-semibold text-lg">
+          <h3 className="font-semibold md:text-lg">
             {t('game:state:game-ends-at-points', {
               scoreToEnd: game.scoreToEnd,
             })}
           </h3>
         ) : null}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 px-12 md:px-0">
           <Switch
             id="enforce-round"
             onCheckedChange={() => setEnforceRounds(!enforceRounds)}
@@ -96,8 +98,8 @@ export function GameState() {
 
       <div
         className={cn(
-          'grid min-w-[80vw] gap-4',
-          players.length > 4 ? 'grid-cols-3' : 'grid-cols-2',
+          'grid min-w-[80vw] grid-cols-1 gap-4',
+          players.length > 4 ? 'md:grid-cols-3' : 'md:grid-cols-2',
         )}
       >
         {players
@@ -110,7 +112,7 @@ export function GameState() {
             />
           ))}
       </div>
-      <div className="flex flex-row gap-8">
+      <div className="mb-12 flex flex-row gap-8">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button>{t('game:finish-game.button')}</Button>
