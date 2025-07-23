@@ -120,7 +120,7 @@ export function GameForm() {
     const playerArr = players.map((p, idx) => ({
       ...p,
       order: idx,
-      id: crypto.randomUUID() as string,
+      id: Math.random().toString(36).substring(2, 15),
       rounds: [],
       currVal: startValue,
     })) satisfies Player[];
