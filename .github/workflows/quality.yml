@@ -1,0 +1,26 @@
+name: Code checks
+on:
+  pull_request:
+
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        if: steps.pnpm-cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting and linting
+        run: pnpm check
+
+      - name: Knip
+        run: pnpm knip
+
+      - name: Typecheck
+        run: pnpm typecheck

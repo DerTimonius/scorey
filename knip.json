@@ -1,0 +1,10 @@
+{
+  "entry": ["src/**/*.{ts,tsx,css}"],
+  "ignore": ["node_modules", "dist", "public"],
+  "ignoreDependencies": [
+    "tailwindcss",
+    "@fontsource*",
+    "@biomejs/biome",
+    "tw-animate-css"
+  ]
+}
