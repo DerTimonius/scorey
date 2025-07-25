@@ -48,8 +48,11 @@ export function GameState() {
     if (!game) return;
     if (
       (game.endsAtRound && minLength === game.roundToEnd) ||
-      (game.endsAtScore &&
-        players.some((p) => p.currVal >= Number(game.scoreToEnd)))
+      (game.endsAtScore.ends &&
+        players.some((p) => p.currVal >= Number(game.scoreToEnd)) &&
+        (game.endsAtScore.sameRound
+          ? players.every((p) => p.rounds.length === minLength)
+          : true))
     ) {
       handleFinishGame();
     }

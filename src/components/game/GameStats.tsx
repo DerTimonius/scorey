@@ -38,6 +38,9 @@ export function GameStats() {
 
   return (
     <Layout className="min-h-min py-12">
+      <h1 className="text-center font-display font-extrabold text-5xl md:text-6xl">
+        {game.name}
+      </h1>
       <Card className="w-[80vw]" color={mainColor}>
         <CardHeader>
           <CardTitle className="text-center font-display text-5xl">

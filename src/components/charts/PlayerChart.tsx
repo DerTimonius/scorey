@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer } from '@/components/ui/chart';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import type { Color } from '@/lib/types';
 
 interface PlayerChartProps {
@@ -24,6 +25,7 @@ export function PlayerChart({
   chartConfig,
   color,
 }: PlayerChartProps) {
+  const isMobile = useIsMobile();
   const { t } = useTranslation();
   return (
     <Card className="w-full bg-secondary-background text-foreground">
@@ -49,7 +51,7 @@ export function PlayerChart({
                 t('state:round-number', { roundNum: value })
               }
             />
-            <YAxis />
+            {!isMobile ? <YAxis /> : null}
             <Bar dataKey="val" fill={`var(--chart-${color})`} radius={8}>
               <LabelList
                 position="top"

@@ -7,9 +7,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 export interface GameChartDataItem {
   round: string;

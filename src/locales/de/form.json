@@ -6,6 +6,7 @@
     "ends-at-round-checkbox": "Spiel endet nach einer bestimmten Runde",
     "round-to-be-finished-label": "Zu beendende Runde",
     "ends-at-score-checkbox": "Spiel endet, wenn ein Spieler eine bestimmte Punktzahl erreicht hat",
+    "same-round-checkbox": "Andere Spielen können ihre Runde noch beenden",
     "score-to-be-finished-label": "Spiel endet bei (Punkten)"
   },
   "create-game": "Los geht's",

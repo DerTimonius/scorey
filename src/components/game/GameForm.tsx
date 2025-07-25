@@ -74,6 +74,7 @@ export function GameForm() {
     winningCondition: WinningConditionEnum,
     endsAtScore: z.boolean(),
     scoreToEnd: z.number().optional(),
+    endsAtSameRound: z.boolean(),
     endsAtRound: z.boolean(),
     roundToEnd: z.number().optional(),
   });
@@ -105,6 +106,7 @@ export function GameForm() {
       endsAtRound,
       scoreToEnd,
       roundToEnd,
+      endsAtSameRound,
     } = values;
 
     setGame({
@@ -113,7 +115,7 @@ export function GameForm() {
       startValue,
       endsAtRound,
       roundToEnd: endsAtRound ? (roundToEnd ?? 10) : 0,
-      endsAtScore,
+      endsAtScore: { ends: endsAtScore, sameRound: endsAtSameRound },
       scoreToEnd: endsAtScore ? (scoreToEnd ?? 100) : 0,
     });
 
@@ -345,7 +347,7 @@ export function GameForm() {
                   control={form.control}
                   name="roundToEnd"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="ml-4">
                       <FormLabel>
                         {t('form:advanced-options.round-to-be-finished-label')}
                       </FormLabel>
@@ -379,28 +381,45 @@ export function GameForm() {
                 </Label>
               </div>
               {form.watch('endsAtScore') ? (
-                <FormField
-                  control={form.control}
-                  name="scoreToEnd"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t('form:advanced-options.score-to-be-finished-label')}
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="100"
-                          type="number"
-                          {...field}
-                          onChange={(e) =>
-                            field.onChange(Number.parseInt(e.target.value))
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="ml-4 flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="scoreToEnd"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {t(
+                            'form:advanced-options.score-to-be-finished-label',
+                          )}
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="100"
+                            type="number"
+                            {...field}
+                            onChange={(e) =>
+                              field.onChange(Number.parseInt(e.target.value))
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      checked={form.watch('endsAtSameRound')}
+                      color={mainColor}
+                      id="endsAtSameRound"
+                      onCheckedChange={(checked) => {
+                        form.setValue('endsAtSameRound', Boolean(checked));
+                      }}
+                    />
+                    <Label htmlFor="endsAtSameRound">
+                      {t('form:advanced-options.same-round-checkbox')}
+                    </Label>
+                  </div>
+                </div>
               ) : null}
             </div>
           </div>

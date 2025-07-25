@@ -19,7 +19,10 @@ export interface Game {
   finished?: boolean;
   winningCondition: WinningCondition;
   startValue: number;
-  endsAtScore: boolean;
+  endsAtScore: {
+    ends: boolean;
+    sameRound: boolean;
+  };
   scoreToEnd: number;
   endsAtRound: boolean;
   roundToEnd: number;
