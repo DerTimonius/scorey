@@ -1,6 +1,6 @@
 import NumberFlow from '@number-flow/react';
 import { useSetAtom } from 'jotai/react';
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
@@ -21,7 +21,7 @@ export function PlayerCard({
   showStats,
 }: PlayerCardProps) {
   const { t } = useTranslation();
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState<number>();
   const [type, setType] = useState<'increase' | 'descrease'>();
   const inputRef = useRef<HTMLInputElement>(null);
   const setPlayers = useSetAtom(playerAtom);
@@ -49,9 +49,15 @@ export function PlayerCard({
   const handleSubmit = () => {
     setType(undefined);
     const func = type === 'increase' ? increasePlayerVal : decreasePlayerVal;
-    func(value);
-    setValue(0);
+    func(value ?? 0);
+    setValue(undefined);
   };
+
+  useLayoutEffect(() => {
+    if (type && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [type]);
 
   return (
     <Card color={player.color} className="gap-2 md:gap-6">
@@ -111,7 +117,6 @@ export function PlayerCard({
               disabled={hasMoreRounds}
               onClick={() => {
                 setType('descrease');
-                inputRef.current?.focus();
               }}
               variant="ghost"
             >
@@ -122,7 +127,6 @@ export function PlayerCard({
               disabled={hasMoreRounds}
               onClick={() => {
                 setType('increase');
-                inputRef.current?.focus();
               }}
               variant="ghost"
             >
