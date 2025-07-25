@@ -1,7 +1,7 @@
 export function Footer() {
   return (
-    <footer className="my-4 flex flex-row justify-center space-x-4 divide-x-2 divide-black">
-      <p className="pr-4">
+    <footer className="my-4 flex flex-row justify-center space-x-2 divide-x-2 divide-black text-xs md:space-x-4">
+      <p className="pr-2 md:pr-4">
         Made by{' '}
         <a
           href="https://dertimonius.dev"
@@ -13,7 +13,7 @@ export function Footer() {
         </a>
       </p>
       <p>
-        Found some issues? Report them{' '}
+        Found some bugs? Report them{' '}
         <a
           href="https://github.com/DerTimonius/scorey/issues/new"
           className="cursor-pointer hover:text-cyan-main hover:underline"
