@@ -1,5 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer } from '@/components/ui/chart';
 import type { Color } from '@/lib/types';
@@ -42,6 +49,7 @@ export function PlayerChart({
                 t('state:round-number', { roundNum: value })
               }
             />
+            <YAxis />
             <Bar dataKey="val" fill={`var(--chart-${color})`} radius={8}>
               <LabelList
                 position="top"

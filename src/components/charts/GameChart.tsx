@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { CartesianGrid, Legend, Line, LineChart, XAxis } from 'recharts';
+import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/chart';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/lib/hooks/useIsMobile';
 
 export interface GameChartDataItem {
   round: string;
@@ -29,6 +30,7 @@ export function GameChart({
   containerClasses,
 }: GameChartProps) {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   if (!data.length || !players.length) return;
 
   return (
@@ -43,20 +45,23 @@ export function GameChart({
             data={data}
             margin={{
               left: 12,
-              right: 12,
+              right: isMobile ? 12 : 25,
               top: 20,
             }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="round"
-              tickLine={false}
+              tickLine={true}
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value: string) =>
-                t('state:round-number', { roundNum: value })
+                isMobile
+                  ? `Rd. ${value}`
+                  : t('state:round-number', { roundNum: value })
               }
             />
+            {!isMobile ? <YAxis /> : null}
             <Legend iconType="plainline" />
             <ChartTooltip
               cursor={false}
