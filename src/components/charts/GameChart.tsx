@@ -34,7 +34,10 @@ export function GameChart({
   if (!data.length || !players.length) return;
 
   return (
-    <Card className="bg-secondary-background text-foreground">
+    <Card
+      className="bg-secondary-background text-foreground"
+      data-test-id="game-chart"
+    >
       <CardContent>
         <ChartContainer
           className={cn('min-w-[60vw] sm:min-w-[65vw]', containerClasses)}

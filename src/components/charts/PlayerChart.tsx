@@ -13,6 +13,7 @@ import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import type { Color } from '@/lib/types';
 
 interface PlayerChartProps {
+  dataTestId: string;
   label: string;
   data: { round: string; val: number }[];
   chartConfig: ChartConfig;
@@ -20,6 +21,7 @@ interface PlayerChartProps {
 }
 
 export function PlayerChart({
+  dataTestId,
   label,
   data,
   chartConfig,
@@ -28,7 +30,10 @@ export function PlayerChart({
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   return (
-    <Card className="w-full bg-secondary-background text-foreground">
+    <Card
+      className="w-full bg-secondary-background text-foreground"
+      data-test-id={dataTestId}
+    >
       <CardHeader>
         <CardTitle className="text-sm">{label}</CardTitle>
       </CardHeader>

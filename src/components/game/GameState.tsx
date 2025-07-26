@@ -93,10 +93,11 @@ export function GameState() {
         ) : null}
         <div className="flex items-center space-x-2 px-12 md:px-0">
           <Switch
+            checked={enforceRounds}
             color={mainColor}
+            data-test-id="enforce-rounds-switch"
             id="enforce-round"
             onCheckedChange={() => setEnforceRounds(!enforceRounds)}
-            checked={enforceRounds}
           />
           <Label htmlFor="enforce-round">
             {t('state:enforce-rounds-label')}
@@ -105,10 +106,11 @@ export function GameState() {
 
         <div className="flex items-center space-x-2 px-12 md:px-0">
           <Switch
+            checked={showStats}
             color={mainColor}
+            data-test-id="show-stats-switch"
             id="show-stats"
             onCheckedChange={() => setShowStats(!showStats)}
-            checked={showStats}
           />
           <Label htmlFor="show-stats">{t('state:show-stats')}</Label>
         </div>
@@ -134,9 +136,14 @@ export function GameState() {
       <div className="mb-12 flex flex-row gap-8">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button color={mainColor}>{t('game:finish-game.button')}</Button>
+            <Button color={mainColor} data-test-id="finish-game-button">
+              {t('game:finish-game.button')}
+            </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent color={mainColor}>
+          <AlertDialogContent
+            color={mainColor}
+            data-test-id="finish-game-dialog"
+          >
             <AlertDialogHeader>
               <AlertDialogTitle>{t('game:finish-game.title')}</AlertDialogTitle>
               <AlertDialogDescription>
@@ -145,7 +152,11 @@ export function GameState() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
-              <AlertDialogAction onClick={handleFinishGame} color={mainColor}>
+              <AlertDialogAction
+                onClick={handleFinishGame}
+                data-test-id="confirm-finish-game"
+                color={mainColor}
+              >
                 {t('game:finish-game.button')}
               </AlertDialogAction>
             </AlertDialogFooter>
@@ -154,9 +165,14 @@ export function GameState() {
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="secondary">{t('game:reset-game.button')}</Button>
+            <Button data-test-id="reset-game-button" variant="secondary">
+              {t('game:reset-game.button')}
+            </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent color={mainColor}>
+          <AlertDialogContent
+            color={mainColor}
+            data-test-id="reset-game-dialog"
+          >
             <AlertDialogHeader>
               <AlertDialogTitle>{t('game:reset-game.title')}</AlertDialogTitle>
               <AlertDialogDescription>
@@ -164,8 +180,14 @@ export function GameState() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
-              <AlertDialogAction onClick={handleResetGame} color={mainColor}>
+              <AlertDialogCancel data-test-id="cancel-reset-game">
+                {t('action:cancel')}
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleResetGame}
+                color={mainColor}
+                data-test-id="confirm-reset-game"
+              >
                 {t('game:reset-game.button')}
               </AlertDialogAction>
             </AlertDialogFooter>

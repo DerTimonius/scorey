@@ -135,9 +135,13 @@ export function GameForm() {
       <>
         <div className="flex flex-col gap-4">
           <h1 className="font-bold font-display text-8xl">Scorey</h1>
-          <p>{t('game:tagline')}</p>
+          <p data-test-id="tagline">{t('game:tagline')}</p>
         </div>
-        <Button onClick={() => setShowForm(true)} color={mainColor}>
+        <Button
+          color={mainColor}
+          data-test-id="start-game-button"
+          onClick={() => setShowForm(true)}
+        >
           {t('game:start-game.button')}
         </Button>
       </>
@@ -145,7 +149,11 @@ export function GameForm() {
   }
 
   return (
-    <Card className="my-12 max-w-[85vw] px-4 py-3" color={mainColor}>
+    <Card
+      className="my-12 max-w-[85vw] px-4 py-3"
+      color={mainColor}
+      data-test-id="game-form"
+    >
       <CardHeader>
         <CardTitle className="text-center text-2xl">
           {t('form:game-info')}
@@ -161,6 +169,7 @@ export function GameForm() {
                 <FormLabel>{t('form:game-name.label')}</FormLabel>
                 <FormControl>
                   <Input
+                    data-test-id="game-name-input"
                     placeholder={
                       gamenamePlaceholders[
                         Math.floor(Math.random() * gamenamePlaceholders.length)
@@ -192,6 +201,7 @@ export function GameForm() {
                         </FormLabel>
                         <FormControl>
                           <Input
+                            data-test-id={`player-name-input-${index + 1}`}
                             className="min-w-36 md:min-w-72"
                             placeholder={t('form:player-name.placeholder', {
                               index: index + 1,
@@ -217,7 +227,10 @@ export function GameForm() {
                           defaultValue={field.value}
                         >
                           <FormControl>
-                            <SelectTrigger className="w-32 md:w-[180px]">
+                            <SelectTrigger
+                              className="w-32 md:w-[180px]"
+                              data-test-id={`player-color-select-${index + 1}`}
+                            >
                               <SelectValue
                                 className="capitalize"
                                 placeholder={t('color:select-color')}
@@ -230,6 +243,7 @@ export function GameForm() {
                                 key={color}
                                 className="capitalize"
                                 value={color}
+                                data-test-id={`player-color-${color}-${index + 1}`}
                               >
                                 <span
                                   className={cn(
@@ -265,9 +279,10 @@ export function GameForm() {
 
             {fields.length < 15 ? (
               <Button
+                data-test-id="add-player-button"
+                onClick={() => append({ name: '', color: mainColor })}
                 type="button"
                 variant="secondary"
-                onClick={() => append({ name: '', color: mainColor })}
               >
                 {t('form:add-player')}
               </Button>
@@ -286,6 +301,7 @@ export function GameForm() {
                   <FormLabel>{t('form:options.game-start')}</FormLabel>
                   <FormControl>
                     <Input
+                      data-test-id="start-value-input"
                       placeholder="100"
                       type="number"
                       {...field}
@@ -310,7 +326,10 @@ export function GameForm() {
                     >
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem value="minNumber" />
+                          <RadioGroupItem
+                            value="minNumber"
+                            data-test-id="min-number-win"
+                          />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.min')}
@@ -318,7 +337,10 @@ export function GameForm() {
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem value="maxNumber" />
+                          <RadioGroupItem
+                            value="maxNumber"
+                            data-test-id="max-number-win"
+                          />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.max')}
@@ -345,6 +367,7 @@ export function GameForm() {
                   onCheckedChange={(checked) => {
                     form.setValue('endsAtRound', Boolean(checked));
                   }}
+                  data-test-id="ends-at-round-checkbox"
                 />
                 <Label htmlFor="endsAtRound">
                   {t('form:advanced-options.ends-at-round-checkbox')}{' '}
@@ -363,6 +386,7 @@ export function GameForm() {
                         <Input
                           placeholder="10"
                           min={1}
+                          data-test-id="ends-at-round-input"
                           type="number"
                           {...field}
                           onChange={(e) =>
@@ -380,6 +404,7 @@ export function GameForm() {
                   checked={form.watch('endsAtScore')}
                   color={mainColor}
                   id="endsAtScore"
+                  data-test-id="ends-at-score-checkbox"
                   onCheckedChange={(checked) => {
                     form.setValue('endsAtScore', Boolean(checked));
                   }}
@@ -403,6 +428,7 @@ export function GameForm() {
                         <FormControl>
                           <Input
                             placeholder="100"
+                            data-test-id="ends-at-score-input"
                             type="number"
                             {...field}
                             onChange={(e) =>
@@ -419,6 +445,7 @@ export function GameForm() {
                       checked={form.watch('endsAtSameRound')}
                       color={mainColor}
                       id="endsAtSameRound"
+                      data-test-id="ends-at-same-round-checkbox"
                       onCheckedChange={(checked) => {
                         form.setValue('endsAtSameRound', Boolean(checked));
                       }}
@@ -433,7 +460,11 @@ export function GameForm() {
           </div>
 
           <CardAction className="flex justify-end gap-4">
-            <Button color={mainColor} type="submit">
+            <Button
+              color={mainColor}
+              data-test-id="create-game-button"
+              type="submit"
+            >
               {t('form:create-game')}
             </Button>
             <Button variant="secondary" onClick={() => setShowForm(false)}>
