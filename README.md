@@ -1,69 +1,22 @@
-# React + TypeScript + Vite
+# Scorey
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="./public/home.png" alt="game-screenshot" width="250" />
+<img src="./public/form.png" alt="form-screenshot" width="250" />
+<img src="./public/game.png" alt="game-state-screenshot" width="250" />
 
-Currently, two official plugins are available:
+Scorey is a simple toy application designed to help users keep score while playing board games. It provides a user-friendly interface for tracking scores and managing game options.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Game Creation**: Users can create new games with various customizable options.
+- **Player Management**: Add and remove players, assign names and colors.
+- **Scoring**: Keep track of scores for each player during gameplay.
+- **Game Options**: Configure game settings such as:
+  - Starting score value.
+  - Winning condition (e.g., highest score wins, lowest score wins).
+  - Optional ending conditions based on rounds or scores (e.g., game ends after 10 rounds, or when a player reaches 100 points).
+  - Option to end the game on the same round when a score condition is met.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Thanks to
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+[neobrutalism.dev](https://neobrutalism.dev) for the components and charts

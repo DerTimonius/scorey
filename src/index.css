@@ -175,6 +175,7 @@
 
 @layer base {
   body {
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" patternUnits="userSpaceOnUse" xmlns="http://www.w3.org/2000/svg"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%23e0e0e0" stroke-width="0.5"/></svg>');
     @apply text-foreground font-base;
   }
 
