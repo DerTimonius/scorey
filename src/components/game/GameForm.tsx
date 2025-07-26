@@ -326,7 +326,10 @@ export function GameForm() {
                     >
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem value="minNumber" />
+                          <RadioGroupItem
+                            value="minNumber"
+                            data-test-id="min-number-win"
+                          />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.min')}
@@ -334,7 +337,10 @@ export function GameForm() {
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem value="maxNumber" />
+                          <RadioGroupItem
+                            value="maxNumber"
+                            data-test-id="max-number-win"
+                          />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.max')}
@@ -361,6 +367,7 @@ export function GameForm() {
                   onCheckedChange={(checked) => {
                     form.setValue('endsAtRound', Boolean(checked));
                   }}
+                  data-test-id="ends-at-round-checkbox"
                 />
                 <Label htmlFor="endsAtRound">
                   {t('form:advanced-options.ends-at-round-checkbox')}{' '}
@@ -379,6 +386,7 @@ export function GameForm() {
                         <Input
                           placeholder="10"
                           min={1}
+                          data-test-id="ends-at-round-input"
                           type="number"
                           {...field}
                           onChange={(e) =>
@@ -396,6 +404,7 @@ export function GameForm() {
                   checked={form.watch('endsAtScore')}
                   color={mainColor}
                   id="endsAtScore"
+                  data-test-id="ends-at-score-checkbox"
                   onCheckedChange={(checked) => {
                     form.setValue('endsAtScore', Boolean(checked));
                   }}
@@ -419,6 +428,7 @@ export function GameForm() {
                         <FormControl>
                           <Input
                             placeholder="100"
+                            data-test-id="ends-at-score-input"
                             type="number"
                             {...field}
                             onChange={(e) =>
@@ -435,6 +445,7 @@ export function GameForm() {
                       checked={form.watch('endsAtSameRound')}
                       color={mainColor}
                       id="endsAtSameRound"
+                      data-test-id="ends-at-same-round-checkbox"
                       onCheckedChange={(checked) => {
                         form.setValue('endsAtSameRound', Boolean(checked));
                       }}
