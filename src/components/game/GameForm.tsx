@@ -88,6 +88,7 @@ export function GameForm() {
       winningCondition: 'maxNumber',
       endsAtRound: false,
       endsAtScore: false,
+      endsAtSameRound: false,
     },
   });
 
@@ -112,7 +113,7 @@ export function GameForm() {
     setGame({
       name: gameName,
       winningCondition,
-      startValue,
+      startValue: startValue ?? 0,
       endsAtRound,
       roundToEnd: endsAtRound ? (roundToEnd ?? 10) : 0,
       endsAtScore: { ends: endsAtScore, sameRound: endsAtSameRound },
@@ -124,7 +125,7 @@ export function GameForm() {
       order: idx,
       id: Math.random().toString(36).substring(2, 15),
       rounds: [],
-      currVal: startValue,
+      currVal: startValue ?? 0,
     })) satisfies Player[];
     setPlayers(playerArr);
   }
@@ -185,7 +186,9 @@ export function GameForm() {
                     <FormItem className="flex items-end space-x-2 pb-4">
                       <div className="grid flex-1 gap-1">
                         <FormLabel>
-                          {t('form:player-name.label', { index: index + 1 })}
+                          {t('form:player-name.placeholder', {
+                            index: index + 1,
+                          })}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -282,7 +285,12 @@ export function GameForm() {
                 <FormItem>
                   <FormLabel>{t('form:options.game-start')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="100" type="number" {...field} />
+                    <Input
+                      placeholder="100"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

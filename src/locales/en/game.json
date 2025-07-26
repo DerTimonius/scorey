@@ -16,11 +16,11 @@
     "button": "Start game"
   },
   "tagline": "Keep score of any game",
+  "new-game": "New game",
   "player-stats": "Rounds for {{name}}",
   "game-stats": {
     "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",
     "player-score": "- {{playerName}}: {{playerScore}} points",
-    "how-it-happened": "How it happened",
-    "new-game-button": "New game"
+    "how-it-happened": "How it happened"
   }
 }
