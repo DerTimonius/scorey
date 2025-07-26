@@ -11,7 +11,9 @@ export default defineConfig({
     ? 'list'
     : [['html', { outputFolder: 'playwright/report/' }]],
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: process.env.CI
+      ? process.env.PLAYWRIGHT_TEST_BASE_URL
+      : 'http://localhost:5173',
     screenshot: 'only-on-failure',
     testIdAttribute: 'data-test-id',
     trace: 'on-first-retry',
