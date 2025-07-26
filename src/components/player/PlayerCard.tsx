@@ -60,7 +60,11 @@ export function PlayerCard({
   }, [type]);
 
   return (
-    <Card color={player.color} className="gap-2 md:gap-6">
+    <Card
+      color={player.color}
+      className="gap-2 md:gap-6"
+      data-test-id={`player-card-${player.name}`}
+    >
       <CardHeader>
         <CardTitle className="text-center text-2xl">{player.name}</CardTitle>
       </CardHeader>
@@ -71,6 +75,7 @@ export function PlayerCard({
           <p className="font-semibold">{t('state:current-score')}</p>
           <NumberFlow
             className="font-extrabold text-4xl"
+            data-test-id={`current-score-${player.name}`}
             value={player.currVal}
           />
         </div>
@@ -83,6 +88,7 @@ export function PlayerCard({
               <input
                 className="w-32 text-center font-extrabold text-4xl"
                 id="value"
+                data-test-id="score-input"
                 ref={inputRef}
                 value={value}
                 onChange={(e) => setValue(Number.parseInt(e.target.value))}
@@ -114,6 +120,7 @@ export function PlayerCard({
           <div className="flex justify-around gap-2 md:gap-6">
             <Button
               color={player.color}
+              data-test-id={`minus-button-${player.name}`}
               disabled={hasMoreRounds}
               onClick={() => {
                 setType('descrease');
@@ -124,6 +131,7 @@ export function PlayerCard({
             </Button>
             <Button
               color={player.color}
+              data-test-id={`plus-button-${player.name}`}
               disabled={hasMoreRounds}
               onClick={() => {
                 setType('increase');
@@ -135,6 +143,7 @@ export function PlayerCard({
             <Button
               className="max-w-max"
               color={player.color}
+              data-test-id={`skip-round-button-${player.name}`}
               disabled={hasMoreRounds}
               onClick={() => {
                 increasePlayerVal(0);

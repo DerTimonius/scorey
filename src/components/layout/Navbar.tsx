@@ -51,7 +51,7 @@ export function Navbar() {
           onValueChange={(val) => setMainColor(val as Color)}
           defaultValue={mainColor}
         >
-          <SelectTrigger className="w-16">
+          <SelectTrigger className="w-16" data-test-id="global-color-select">
             <SelectValue
               className="capitalize"
               placeholder={t('color:select-color')}
@@ -66,7 +66,12 @@ export function Navbar() {
           </SelectTrigger>
           <SelectContent>
             {colorsArray.map((color) => (
-              <SelectItem key={color} className="capitalize" value={color}>
+              <SelectItem
+                key={color}
+                className="capitalize"
+                value={color}
+                data-test-id={`global-color-${color}`}
+              >
                 <span
                   className={cn(
                     'h-2.5 w-2.5 rounded-full',

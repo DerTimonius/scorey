@@ -25,6 +25,7 @@ export function PlayerStats({
 
   return (
     <PlayerChart
+      dataTestId={`player-chart-${name}`}
       chartConfig={chartConfig}
       color={color}
       label={t('game:player-stats', { name })}

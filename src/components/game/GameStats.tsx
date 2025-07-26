@@ -41,9 +41,16 @@ export function GameStats() {
       <h1 className="text-center font-display font-extrabold text-5xl md:text-6xl">
         {game.name}
       </h1>
-      <Card className="w-[80vw]" color={mainColor}>
+      <Card
+        className="w-[80vw]"
+        color={mainColor}
+        data-test-id="game-stats-card"
+      >
         <CardHeader>
-          <CardTitle className="text-center font-display text-5xl">
+          <CardTitle
+            className="text-center font-display text-5xl"
+            data-test-id="winner-message"
+          >
             {t('game:game-stats.winner-message', {
               winnerName: winner.name,
               winnerScore: winner.currVal,
