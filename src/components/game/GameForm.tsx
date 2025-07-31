@@ -1,10 +1,10 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useAtomValue, useSetAtom } from 'jotai/react';
 import { TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
+import * as v from 'valibot';
 import { getMainFromColor } from '@/lib/colorHelper';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
@@ -56,31 +56,28 @@ export function GameForm() {
   const setPlayers = useSetAtom(playerAtom);
   const isMobile = useIsMobile();
 
-  const playerSchema = z.object({
-    name: z.string().min(1, {
-      message: t('form:player-name.required'),
-    }),
+  const playerSchema = v.object({
+    name: v.pipe(v.string(), v.minLength(1, t('form:player-name.required'))),
     color: ColorEnum,
   });
 
-  const formSchema = z.object({
-    gameName: z.string().min(1, {
-      message: t('form:game-name.required'),
-    }),
-    players: z.array(playerSchema).min(1, {
-      message: t('form:at-least-one-player-required'),
-    }),
-    startValue: z.number(),
+  const formSchema = v.object({
+    gameName: v.pipe(v.string(), v.minLength(1, t('form:game-name.required'))),
+    players: v.pipe(
+      v.array(playerSchema),
+      v.minLength(1, t('form:at-least-one-player-required')),
+    ),
+    startValue: v.number(),
     winningCondition: WinningConditionEnum,
-    endsAtScore: z.boolean(),
-    scoreToEnd: z.number().optional(),
-    endsAtSameRound: z.boolean(),
-    endsAtRound: z.boolean(),
-    roundToEnd: z.number().optional(),
+    endsAtScore: v.boolean(),
+    scoreToEnd: v.optional(v.number()),
+    endsAtSameRound: v.boolean(),
+    endsAtRound: v.boolean(),
+    roundToEnd: v.optional(v.number()),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       gameName: '',
       players: [{ name: '', color: mainColor }],
@@ -88,7 +85,7 @@ export function GameForm() {
       winningCondition: 'maxNumber',
       endsAtRound: false,
       endsAtScore: false,
-      endsAtSameRound: false,
+      endsAtSameRound: true,
     },
   });
 
@@ -97,7 +94,7 @@ export function GameForm() {
     name: 'players',
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: v.InferOutput<typeof formSchema>) {
     const {
       gameName,
       players,
