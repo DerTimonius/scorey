@@ -1,9 +1,9 @@
-import z from 'zod';
+import * as v from 'valibot';
 
 const winningConditions = ['minNumber', 'maxNumber'] as const;
 
-export const WinningConditionEnum = z.enum(winningConditions);
-export type WinningCondition = z.infer<typeof WinningConditionEnum>;
+export const WinningConditionEnum = v.picklist(winningConditions);
+export type WinningCondition = (typeof winningConditions)[number];
 
 export interface Player {
   id: string;
@@ -48,8 +48,8 @@ export const colorsArray = [
   'rose',
 ] as const;
 
-export const ColorEnum = z.enum(colorsArray);
-export type Color = z.infer<typeof ColorEnum>;
+export const ColorEnum = v.picklist(colorsArray);
+export type Color = (typeof colorsArray)[number];
 
 export type VariantType<T extends string> = Record<T, string>;
 export type VariantColor = VariantType<Color>;

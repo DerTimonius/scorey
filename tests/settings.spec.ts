@@ -59,6 +59,7 @@ test.describe('endsAtScore option', () => {
 
     await page.getByTestId('ends-at-score-checkbox').check();
     await page.getByTestId('ends-at-score-input').fill('200');
+    await page.getByTestId('ends-at-same-round-checkbox').uncheck();
 
     await page.getByTestId('create-game-button').click();
 
