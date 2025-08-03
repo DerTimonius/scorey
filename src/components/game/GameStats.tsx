@@ -6,6 +6,16 @@ import { cn } from '@/lib/utils';
 import { GameChart, type GameChartDataItem } from '../charts/GameChart';
 import { Layout } from '../layout/Layout';
 import { PlayerStats } from '../player/PlayerStats';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '../ui/alert-dialog';
 import { Button } from '../ui/button';
 import {
   Card,
@@ -15,6 +25,56 @@ import {
   CardTitle,
 } from '../ui/card';
 import type { ChartConfig } from '../ui/chart';
+
+function transformPlayersToCumulativeChartData(
+  players: Player[],
+): GameChartDataItem[] {
+  if (!players || players.length === 0) {
+    return [];
+  }
+
+  const maxRounds = Math.max(...players.map((p) => p.rounds.length));
+  if (maxRounds === 0) {
+    return [];
+  }
+
+  const chartData: GameChartDataItem[] = [];
+  const cumulativeScores: { [playerName: string]: number } = {};
+
+  players.forEach((player) => {
+    cumulativeScores[player.name] = 0;
+  });
+
+  for (let i = 0; i < maxRounds; i++) {
+    const dataItem: GameChartDataItem = { round: (i + 1).toString() };
+
+    players.forEach((player) => {
+      const name = player.name;
+      const scoreForThisRound = player.rounds[i];
+
+      if (scoreForThisRound !== undefined) {
+        cumulativeScores[name] += scoreForThisRound;
+        dataItem[name] = cumulativeScores[name];
+      } else {
+        dataItem[name] = cumulativeScores[name];
+      }
+    });
+    chartData.push(dataItem);
+  }
+
+  return chartData;
+}
+
+function createChartConfig(players: Player[]): ChartConfig {
+  return players.reduce((acc, player) => {
+    acc[player.name] = {
+      label: player.name,
+      color: `var(--chart-${player.color})`,
+    };
+
+    return acc;
+  }, {} as ChartConfig);
+}
 
 export function GameStats() {
   const mainColor = useAtomValue(mainColorAtom);
@@ -30,6 +90,17 @@ export function GameStats() {
       : a.currVal - b.currVal,
   );
   const winner = sortedPlayers[0];
+
+  const handleNewRound = () => {
+    setGame((prev) => (prev ? { ...prev, finished: false } : null));
+    setPlayers((prev) =>
+      prev.map((p) => ({ ...p, rounds: [], currVal: game.startValue ?? 0 })),
+    );
+  };
+
+  const handleKeepPlayers = () => {
+    setGame(null);
+  };
 
   const handleNewGame = () => {
     setGame(null);
@@ -94,61 +165,49 @@ export function GameStats() {
           </div>
         </div>
         <CardAction className="flex w-full flex-row items-center justify-around">
-          <Button onClick={handleNewGame} color={mainColor}>
-            {t('game:new-game')}
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button data-test-id="new-game-button" color={mainColor}>
+                {t('game:new-game.button')}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent
+              color={mainColor}
+              data-test-id="new-game-dialog"
+            >
+              <AlertDialogHeader>
+                <AlertDialogTitle>{t('game:new-game.title')}</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {t('game:new-game.description')}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex justify-end gap-3 sm:flex-col">
+                <AlertDialogAction
+                  onClick={handleNewGame}
+                  color={mainColor}
+                  data-test-id="confirm-new-game"
+                >
+                  {t('game:new-game.all-new')}
+                </AlertDialogAction>
+                <AlertDialogAction
+                  onClick={handleNewRound}
+                  color={mainColor}
+                  data-test-id="confirm-new-round"
+                >
+                  {t('game:new-game.new-round')}
+                </AlertDialogAction>
+                <AlertDialogAction
+                  onClick={handleKeepPlayers}
+                  color={mainColor}
+                  data-test-id="confirm-keep-players"
+                >
+                  {t('game:new-game.keep-players')}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardAction>
       </Card>
     </Layout>
   );
-}
-
-function transformPlayersToCumulativeChartData(
-  players: Player[],
-): GameChartDataItem[] {
-  if (!players || players.length === 0) {
-    return [];
-  }
-
-  const maxRounds = Math.max(...players.map((p) => p.rounds.length));
-  if (maxRounds === 0) {
-    return [];
-  }
-
-  const chartData: GameChartDataItem[] = [];
-  const cumulativeScores: { [playerName: string]: number } = {};
-
-  players.forEach((player) => {
-    cumulativeScores[player.name] = 0;
-  });
-
-  for (let i = 0; i < maxRounds; i++) {
-    const dataItem: GameChartDataItem = { round: (i + 1).toString() };
-
-    players.forEach((player) => {
-      const name = player.name;
-      const scoreForThisRound = player.rounds[i];
-
-      if (scoreForThisRound !== undefined) {
-        cumulativeScores[name] += scoreForThisRound;
-        dataItem[name] = cumulativeScores[name];
-      } else {
-        dataItem[name] = cumulativeScores[name];
-      }
-    });
-    chartData.push(dataItem);
-  }
-
-  return chartData;
-}
-
-function createChartConfig(players: Player[]): ChartConfig {
-  return players.reduce((acc, player) => {
-    acc[player.name] = {
-      label: player.name,
-      color: `var(--chart-${player.color})`,
-    };
-
-    return acc;
-  }, {} as ChartConfig);
 }

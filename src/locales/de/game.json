@@ -16,7 +16,14 @@
     "button": "Spiel starten"
   },
   "tagline": "Behalte den Überblick über jedes Spiel",
-  "new-game": "Neues Spiel",
+  "new-game": {
+    "all-new": "Komplett von vorne",
+    "new-round": "Gleiches Spiel nochmal",
+    "keep-players": "Anderes Spiel, gleiche Spieler",
+    "button": "Neues Spiel",
+    "title": "Neues Spiel starten",
+    "description": "Willst du das gleiche Spiel nochmal von vorne starten? Ein anderes Spiel, aber mit denselben Spielern? Oder willst du komplett von vorne beginnen?"
+  },
   "player-stats": "Runden für {{name}}",
   "game-stats": {
     "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!",
