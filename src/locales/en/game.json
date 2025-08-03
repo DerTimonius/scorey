@@ -16,7 +16,14 @@
     "button": "Start game"
   },
   "tagline": "Keep score of any game",
-  "new-game": "New game",
+  "new-game": {
+    "all-new": "Fresh start",
+    "new-round": "New round with this game",
+    "keep-players": "Same players, different game",
+    "button": "New game",
+    "title": "Start new game",
+    "description": "Do you want to keep the game info and players the same? Start a different game with the same players? Or start with a blank slate?"
+  },
   "player-stats": "Rounds for {{name}}",
   "game-stats": {
     "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",

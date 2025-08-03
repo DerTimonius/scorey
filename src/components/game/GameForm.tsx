@@ -1,13 +1,17 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { useAtomValue, useSetAtom } from 'jotai/react';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai/react';
 import { TrashIcon } from 'lucide-react';
-import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
 import { getMainFromColor } from '@/lib/colorHelper';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
-import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
+import {
+  gameAtom,
+  mainColorAtom,
+  playerAtom,
+  showGameFormAtom,
+} from '@/lib/jotai';
 import {
   ColorEnum,
   colorsArray,
@@ -50,11 +54,12 @@ const gamenamePlaceholders = [
 
 export function GameForm() {
   const { t } = useTranslation();
-  const mainColor = useAtomValue(mainColorAtom);
-  const [showForm, setShowForm] = useState(false);
-  const setGame = useSetAtom(gameAtom);
-  const setPlayers = useSetAtom(playerAtom);
   const isMobile = useIsMobile();
+
+  const [showForm, setShowForm] = useAtom(showGameFormAtom);
+  const [players, setPlayers] = useAtom(playerAtom);
+  const mainColor = useAtomValue(mainColorAtom);
+  const setGame = useSetAtom(gameAtom);
 
   const playerSchema = v.object({
     name: v.pipe(v.string(), v.minLength(1, t('form:player-name.required'))),
@@ -80,7 +85,9 @@ export function GameForm() {
     resolver: valibotResolver(formSchema),
     defaultValues: {
       gameName: '',
-      players: [{ name: '', color: mainColor }],
+      players: players.length
+        ? players.map(({ name, color }) => ({ name, color }))
+        : [{ name: '', color: mainColor }],
       startValue: 0,
       winningCondition: 'maxNumber',
       endsAtRound: false,
