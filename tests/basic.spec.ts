@@ -56,4 +56,21 @@ test('basic game creation and flow', async ({ page }) => {
   );
   await expect(page.getByTestId('game-chart')).toBeVisible();
   await expect(page.getByTestId(/^player-chart/)).toHaveCount(2);
+
+  await page.getByTestId('new-game-button').click();
+  await expect(page.getByTestId('new-game-dialog')).toBeVisible();
+
+  // start new round
+  await page.getByTestId('confirm-new-round').click();
+  await expect(page.getByTestId(/^player-card/)).toHaveCount(2);
+  await expect(page.getByTestId(/player-chart/)).not.toBeVisible();
+  await page.getByTestId('finish-game-button').click();
+  await page.getByTestId('confirm-finish-game').click();
+  await page.getByTestId('new-game-button').click();
+  await expect(page.getByTestId('new-game-dialog')).toBeVisible();
+
+  // start different game with same players
+  await page.getByTestId('confirm-keep-players').click();
+  await expect(page.getByTestId('player-name-input-1')).toHaveValue('Jane');
+  await expect(page.getByTestId('player-name-input-2')).toHaveValue('John');
 });
