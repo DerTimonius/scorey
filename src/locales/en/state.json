@@ -6,5 +6,6 @@
   "round-number": "Round {{roundNum}}",
   "rounds-to-go": "({{roundsToGo}} rounds remaining)",
   "show-stats": "Show statistics",
-  "skip-round": "Skip round"
+  "skip-round": "Skip round",
+  "undo-round": "Undo last round"
 }

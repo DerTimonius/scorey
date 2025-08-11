@@ -53,6 +53,16 @@ export function PlayerCard({
     setValue(undefined);
   };
 
+  const handleUndo = () => {
+    const rounds = player.rounds.slice(0, player.rounds.length - 1);
+    const currVal = rounds.reduce((acc, val) => acc + val, 0);
+
+    setPlayers((prev) => [
+      ...prev.filter((p) => p.id !== player.id),
+      { ...player, rounds, currVal },
+    ]);
+  };
+
   useLayoutEffect(() => {
     if (type && inputRef.current) {
       inputRef.current.focus();
@@ -157,7 +167,17 @@ export function PlayerCard({
       </div>
       <CardFooter>
         {showStats && player.rounds.length ? (
-          <PlayerStats player={player} />
+          <div className="flex w-full flex-col items-center gap-4">
+            <PlayerStats player={player} />
+            <Button
+              className="max-w-max"
+              color={player.color}
+              onClick={handleUndo}
+              variant="ghost"
+            >
+              {t('state:undo-round')}
+            </Button>
+          </div>
         ) : null}
       </CardFooter>
     </Card>
