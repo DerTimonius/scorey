@@ -25,6 +25,7 @@
     "game-start": "Spiel beginnt mit (Punkten)"
   },
   "player-name": {
+    "edit": "Name von {{ name }} ändern",
     "required": "Spielername ist erforderlich",
     "label": "Name von Spieler {{ index }}",
     "placeholder": "Spieler {{ index }}",
