@@ -1,4 +1,7 @@
 {
+  "edit-game": {
+    "title": "Spieleinstellungen bearbeiten"
+  },
   "finish-game": {
     "button": "Spiel beenden",
     "title": "Bist du absolut sicher?",

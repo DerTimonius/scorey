@@ -46,10 +46,11 @@ const gamenamePlaceholders = [
   'Wingspan',
   'Everdell',
   'Terraforming Mars',
-  'Spicy',
   'Great Western Trail',
   'Brass: Birmingham',
   'Root',
+  'Castle Combo',
+  'Cascadia',
 ];
 
 export function GameForm() {

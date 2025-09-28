@@ -1,4 +1,7 @@
 {
+  "edit-game": {
+    "title": "Edit game settings"
+  },
   "finish-game": {
     "button": "Finish game",
     "title": "Are you absolutely sure?",

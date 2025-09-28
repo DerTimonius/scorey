@@ -20,6 +20,7 @@ import {
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
+import { EditGameForm } from './EditGameForm';
 
 export function GameState() {
   const { t } = useTranslation();
@@ -114,6 +115,7 @@ export function GameState() {
           />
           <Label htmlFor="show-stats">{t('state:show-stats')}</Label>
         </div>
+        <EditGameForm />
       </div>
 
       <div
