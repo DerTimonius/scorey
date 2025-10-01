@@ -12,7 +12,7 @@ export function Layout({
       <Navbar />
       <main
         className={cn(
-          'flex min-h-[90svh] flex-col items-center justify-center gap-12 overflow-scroll font-sans md:gap-18',
+          'flex min-h-[90svh] flex-col items-center justify-center gap-12 overflow-auto font-sans md:gap-18',
           className,
         )}
       >
