@@ -114,7 +114,7 @@ export function EditGameForm() {
                         type="number"
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value))
+                          field.onChange(parseInt(e.target.value, 10))
                         }
                       />
                     </FormControl>
@@ -202,7 +202,9 @@ export function EditGameForm() {
                             type="number"
                             {...field}
                             onChange={(e) =>
-                              field.onChange(Number.parseInt(e.target.value))
+                              field.onChange(
+                                Number.parseInt(e.target.value, 10),
+                              )
                             }
                           />
                         </FormControl>
@@ -244,7 +246,9 @@ export function EditGameForm() {
                               type="number"
                               {...field}
                               onChange={(e) =>
-                                field.onChange(Number.parseInt(e.target.value))
+                                field.onChange(
+                                  Number.parseInt(e.target.value, 10),
+                                )
                               }
                             />
                           </FormControl>

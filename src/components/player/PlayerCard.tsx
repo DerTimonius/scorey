@@ -7,7 +7,7 @@ import { playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { Card, CardFooter, CardHeader, } from '../ui/card';
+import { Card, CardFooter, CardHeader } from '../ui/card';
 import { Input } from '../ui/input';
 import { PlayerStats } from './PlayerStats';
 
@@ -164,7 +164,7 @@ export function PlayerCard({
                 data-test-id="score-input"
                 ref={inputRef}
                 value={value}
-                onChange={(e) => setValue(Number.parseInt(e.target.value))}
+                onChange={(e) => setValue(Number.parseInt(e.target.value, 10))}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     handleSubmit();

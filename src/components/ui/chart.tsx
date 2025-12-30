@@ -106,13 +106,13 @@ const ChartTooltip = RechartsPrimitive.Tooltip;
 
 function ChartTooltipContent({
   active,
-  // @ts-ignore
+  // @ts-expect-error
   payload,
   className,
   indicator = 'dot',
   hideLabel = false,
   hideIndicator = false,
-  // @ts-ignore
+  // @ts-expect-error
   label,
   labelFormatter,
   labelClassName,
@@ -201,29 +201,23 @@ function ChartTooltipContent({
                 <>
                   {itemConfig?.icon ? (
                     <itemConfig.icon />
-                  ) : (
-                    !hideIndicator && (
-                      <div
-                        className={cn(
-                          'shrink-0 rounded-[2px] bg-(--color-bg)',
-                          {
-                            'size-2.5 border border-border':
-                              indicator === 'dot',
-                            'w-1': indicator === 'line',
-                            'w-0 border-[1.5px] border-dashed bg-transparent':
-                              indicator === 'dashed',
-                            'my-0.5': nestLabel && indicator === 'dashed',
-                          },
-                        )}
-                        style={
-                          {
-                            '--color-bg': indicatorColor,
-                            '--color-border': indicatorColor,
-                          } as React.CSSProperties
-                        }
-                      />
-                    )
-                  )}
+                  ) : !hideIndicator ? (
+                    <div
+                      className={cn('shrink-0 rounded-[2px] bg-(--color-bg)', {
+                        'size-2.5 border border-border': indicator === 'dot',
+                        'w-1': indicator === 'line',
+                        'w-0 border-[1.5px] border-dashed bg-transparent':
+                          indicator === 'dashed',
+                        'my-0.5': nestLabel && indicator === 'dashed',
+                      })}
+                      style={
+                        {
+                          '--color-bg': indicatorColor,
+                          '--color-border': indicatorColor,
+                        } as React.CSSProperties
+                      }
+                    />
+                  ) : null}
                   <div
                     className={cn(
                       'flex flex-1 justify-between leading-none',
@@ -236,11 +230,11 @@ function ChartTooltipContent({
                         {itemConfig?.label || item.name}
                       </span>
                     </div>
-                    {item.value && (
+                    {item.value ? (
                       <span className="font-medium font-mono text-foreground tabular-nums">
                         {item.value.toLocaleString()}
                       </span>
-                    )}
+                    ) : null}
                   </div>
                 </>
               )}
@@ -261,14 +255,14 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
 }: React.ComponentProps<'div'> &
-  // @ts-ignore
+  // @ts-expect-error
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     hideIcon?: boolean;
     nameKey?: string;
   }) {
   const { config } = useChart();
 
-  // @ts-ignore
+  // @ts-expect-error
   if (!payload?.length) {
     return null;
   }
