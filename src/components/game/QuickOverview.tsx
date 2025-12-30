@@ -48,7 +48,10 @@ export function QuickOverview({ players }: QuickOverviewProps) {
             return (
               <li
                 key={player.id}
-                className={cn('font-medium', hasFewerRounds && 'opacity-100')}
+                className={cn(
+                  'font-medium first:font-bold',
+                  hasFewerRounds && 'opacity-100',
+                )}
               >
                 <span className="inline-flex w-3/4 justify-between">
                   <span>{player.name}</span>
