@@ -55,5 +55,10 @@
     "next-game": "Next Game",
     "finish-game-night": "Finish Game Night",
     "final-results": "Game Night Results"
+  },
+  "overview": {
+    "title": "Quick overview",
+    "game-night": "Game night",
+    "game": "Points at {{game}}"
   }
 }

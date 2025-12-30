@@ -148,7 +148,11 @@ export function GameState() {
         </div>
         <div className="space-x-4">
           <EditGameForm />
-          <QuickOverview players={players} />
+          <QuickOverview
+            gameNight={gameNight}
+            gameName={game.name}
+            players={players}
+          />
         </div>
       </div>
 

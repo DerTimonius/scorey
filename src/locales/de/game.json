@@ -55,5 +55,10 @@
     "next-game": "Nächstes Spiel",
     "finish-game-night": "Spieleabend beenden",
     "final-results": "Ergebnisse Spieleabend"
+  },
+  "overview": {
+    "title": "Kurzübersicht",
+    "game-night": "Spieleabend",
+    "game": "Punkte bei {{game}}"
   }
 }

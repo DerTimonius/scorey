@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import type { CompletedGame, Player, ScoringMode } from './types';
+import type { CompletedGame, GameNight, Player, ScoringMode } from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -79,4 +79,45 @@ export function calculateTotalGameNightPoints(
   });
 
   return totalPoints;
+}
+
+export function getGameNightStats(
+  gameNight: GameNight | null,
+): (Player & { wins: number; totalPoints: number })[] {
+  if (!gameNight) {
+    return [];
+  }
+
+  const totalPoints = calculateTotalGameNightPoints(
+    gameNight,
+    gameNight.players,
+  );
+
+  const wins: { [playerId: string]: number } = {};
+  gameNight.players.forEach((player) => {
+    wins[player.id] = 0;
+  });
+
+  gameNight.completedGames.forEach((completedGame) => {
+    const gameSortedPlayers = [...gameNight.players].sort((a, b) => {
+      const scoreA = completedGame.playerScores[a.id] ?? 0;
+      const scoreB = completedGame.playerScores[b.id] ?? 0;
+      if (completedGame.winningCondition === 'maxNumber') {
+        return scoreB - scoreA;
+      }
+      return scoreA - scoreB;
+    });
+
+    if (gameSortedPlayers.length > 0) {
+      wins[gameSortedPlayers[0].id] += 1;
+    }
+  });
+
+  return gameNight.players
+    .map((player) => ({
+      ...player,
+      wins: wins[player.id] ?? 0,
+      totalPoints: totalPoints[player.id] ?? 0,
+    }))
+    .sort((a, b) => b.totalPoints - a.totalPoints);
 }
