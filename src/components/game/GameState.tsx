@@ -21,6 +21,7 @@ import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 import { EditGameForm } from './EditGameForm';
+import { QuickOverview } from './QuickOverview';
 
 export function GameState() {
   const { t } = useTranslation();
@@ -116,6 +117,7 @@ export function GameState() {
           <Label htmlFor="show-stats">{t('state:show-stats')}</Label>
         </div>
         <EditGameForm />
+        <QuickOverview players={players} />
       </div>
 
       <div
