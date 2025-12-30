@@ -7,5 +7,6 @@
   "rounds-to-go": "({{roundsToGo}} Runden verbleibend)",
   "show-stats": "Statistik anzeigen",
   "skip-round": "Runde überspringen",
-  "undo-round": "Runde rückgangig machen"
+  "undo-round": "Runde rückgangig machen",
+  "quick-overview": "Schnellübersicht"
 }
