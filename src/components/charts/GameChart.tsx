@@ -21,6 +21,7 @@ interface GameChartProps {
   data: GameChartDataItem[];
   players: Player[];
   chartConfig: ChartConfig;
+  gameNight?: boolean;
 }
 
 export function GameChart({
@@ -28,9 +29,11 @@ export function GameChart({
   players,
   chartConfig,
   containerClasses,
+  gameNight = false,
 }: GameChartProps) {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+
   if (!data.length || !players.length) return;
 
   return (
@@ -59,9 +62,11 @@ export function GameChart({
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value: string) =>
-                isMobile
-                  ? `Rd. ${value}`
-                  : t('state:round-number', { roundNum: value })
+                gameNight
+                  ? value
+                  : isMobile
+                    ? `Rd. ${value}`
+                    : t('state:round-number', { roundNum: value })
               }
             />
             {!isMobile ? <YAxis /> : null}

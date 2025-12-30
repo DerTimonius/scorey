@@ -1,30 +1,20 @@
 import { useAtom, useAtomValue } from 'jotai/react';
 import { useTranslation } from 'react-i18next';
-import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
+import {
+  gameAtom,
+  gameNightAtom,
+  mainColorAtom,
+  playerAtom,
+} from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { GameChart, type GameChartDataItem } from '../charts/GameChart';
 import { Layout } from '../layout/Layout';
 import { PlayerStats } from '../player/PlayerStats';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '../ui/alert-dialog';
-import { Button } from '../ui/button';
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '../ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import type { ChartConfig } from '../ui/chart';
+import { GameNightStats } from './GameNightStats';
+import { GameNightButtons, SingleGameButtons } from './GameStatsButtons';
 
 function transformPlayersToCumulativeChartData(
   players: Player[],
@@ -81,6 +71,7 @@ export function GameStats() {
   const { t } = useTranslation();
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
+  const [gameNight, setGameNight] = useAtom(gameNightAtom);
 
   if (!game || !game.finished || !players.length) return;
 
@@ -105,6 +96,19 @@ export function GameStats() {
   const handleNewGame = () => {
     setGame(null);
     setPlayers([]);
+  };
+
+  const handleNextGame = () => {
+    if (!gameNight) return;
+
+    setGame(null);
+  };
+
+  const handleFinishGameNight = () => {
+    if (!gameNight) return;
+
+    setGame(null);
+    setGameNight((prev) => (prev ? { ...prev, isFinished: true } : null));
   };
 
   return (
@@ -164,50 +168,23 @@ export function GameStats() {
             ))}
           </div>
         </div>
-        <CardAction className="flex w-full flex-row items-center justify-around">
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button data-test-id="new-game-button" color={mainColor}>
-                {t('game:new-game.button')}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent
-              color={mainColor}
-              data-test-id="new-game-dialog"
-            >
-              <AlertDialogHeader>
-                <AlertDialogTitle>{t('game:new-game.title')}</AlertDialogTitle>
-                <AlertDialogDescription>
-                  {t('game:new-game.description')}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter className="flex justify-end gap-3 sm:flex-col">
-                <AlertDialogAction
-                  onClick={handleNewGame}
-                  color={mainColor}
-                  data-test-id="confirm-new-game"
-                >
-                  {t('game:new-game.all-new')}
-                </AlertDialogAction>
-                <AlertDialogAction
-                  onClick={handleNewRound}
-                  color={mainColor}
-                  data-test-id="confirm-new-round"
-                >
-                  {t('game:new-game.new-round')}
-                </AlertDialogAction>
-                <AlertDialogAction
-                  onClick={handleKeepPlayers}
-                  color={mainColor}
-                  data-test-id="confirm-keep-players"
-                >
-                  {t('game:new-game.keep-players')}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </CardAction>
       </Card>
+      {gameNight ? <GameNightStats /> : null}
+      <div className="mb-12 flex flex-row justify-center gap-8">
+        {gameNight ? (
+          <GameNightButtons
+            handleNewGame={handleNextGame}
+            handleNewRound={handleNewRound}
+            handleFinishGameNight={handleFinishGameNight}
+          />
+        ) : (
+          <SingleGameButtons
+            handleNewGame={handleNewGame}
+            handleNewRound={handleNewRound}
+            handleKeepPlayers={handleKeepPlayers}
+          />
+        )}
+      </div>
     </Layout>
   );
 }

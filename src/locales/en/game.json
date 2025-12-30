@@ -22,15 +22,38 @@
   "new-game": {
     "all-new": "Fresh start",
     "new-round": "New round with this game",
-    "keep-players": "Same players, different game",
+    "keep-players": "Different game, same players",
     "button": "New game",
     "title": "Start new game",
-    "description": "Do you want to keep the game info and players the same? Start a different game with the same players? Or start with a blank slate?"
+    "description": "Do you want to keep the game info and players the same? Start a different game with the same players? Or start with a blank slate?",
+    "game-night-description": "Do you want to play the same game again or do you want to start a new game?"
   },
   "player-stats": "Rounds for {{name}}",
   "game-stats": {
     "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",
     "player-score": "- {{playerName}}: {{playerScore}} points",
     "how-it-happened": "How it happened"
+  },
+  "mode-selector": {
+    "title": "How do you want to play?",
+    "single-game": "Single Game",
+    "single-game-desc": "Track scores for one game",
+    "game-night": "Game Night",
+    "game-night-desc": "Track scores across multiple games"
+  },
+  "game-night": {
+    "title": "Game Night Setup",
+    "scoring-system": "Scoring System",
+    "winner-only": "1 point for the winner",
+    "game-points": "Use game points for all players",
+    "ranked": "Ranked: 1st gets n-1 points, last gets 0",
+    "start-game-night": "Start Game Night",
+    "total-ranking": "Game Night Rankings",
+    "games-played": "Games Played: {{count}}",
+    "total-points": "Total Points",
+    "wins": "Wins",
+    "next-game": "Next Game",
+    "finish-game-night": "Finish Game Night",
+    "final-results": "Game Night Results"
   }
 }
