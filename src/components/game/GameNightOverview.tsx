@@ -90,12 +90,8 @@ export function GameNightOverview() {
   }, [gameNight]);
 
   const sortedPlayers = useMemo(() => {
-    if (!gameNight) return [];
-
-    return [...gameNight.players].sort(
-      (a, b) => totalPoints[b.id] - totalPoints[a.id],
-    );
-  }, [gameNight, totalPoints]);
+    return players.sort((a, b) => totalPoints[b.id] - totalPoints[a.id]);
+  }, [players, totalPoints]);
 
   if (!gameNight || !gameNight.isFinished) return null;
 
@@ -108,7 +104,10 @@ export function GameNightOverview() {
 
   return (
     <div className="flex min-h-min flex-col items-center gap-8 py-12">
-      <h1 className="text-center font-display font-extrabold text-5xl md:text-6xl">
+      <h1
+        className="text-center font-display font-extrabold text-5xl md:text-6xl"
+        data-test-id="game-night-title"
+      >
         {t('game:game-night.total-ranking')}
       </h1>
       <Card
@@ -119,7 +118,7 @@ export function GameNightOverview() {
         <CardHeader>
           <CardTitle
             className="text-center font-display text-5xl"
-            data-test-id="game-night-winner-message"
+            data-test-id="winner-message"
           >
             {t('game:game-stats.winner-message', {
               winnerName: overallWinner.name,
@@ -145,7 +144,7 @@ export function GameNightOverview() {
           </h3>
 
           <GameChart
-            chartConfig={createChartConfig(players)}
+            chartConfig={createChartConfig(sortedPlayers)}
             data={chartData}
             players={players}
             gameNight

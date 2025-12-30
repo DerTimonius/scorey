@@ -103,7 +103,7 @@ export function GameNightButtons({
             <AlertDialogAction
               onClick={handleNewGame}
               color={mainColor}
-              data-test-id="confirm-new-game"
+              data-test-id="confirm-next-game"
             >
               {t('game:new-game.keep-players').replace(/,.*/, '')}
             </AlertDialogAction>

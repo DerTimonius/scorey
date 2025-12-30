@@ -7,7 +7,7 @@ test('color changes', async ({ page }) => {
   await page.getByTestId('global-color-purple').click();
   await expect(page.locator('nav')).toContainClass('bg-purple-main');
 
-  await page.getByTestId('start-game-button').click();
+  await page.getByTestId('single-game-mode').click();
 
   await page.getByTestId('game-name-input').fill('Qwirkle');
   await page.getByTestId('player-name-input-1').fill('Jane');
