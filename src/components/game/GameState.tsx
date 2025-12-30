@@ -116,8 +116,10 @@ export function GameState() {
           />
           <Label htmlFor="show-stats">{t('state:show-stats')}</Label>
         </div>
-        <EditGameForm />
-        <QuickOverview players={players} />
+        <div className="space-x-4">
+          <EditGameForm />
+          <QuickOverview players={players} />
+        </div>
       </div>
 
       <div

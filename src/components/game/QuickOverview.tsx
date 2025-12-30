@@ -14,7 +14,7 @@ type QuickOverviewProps = {
 
 export function QuickOverview({ players }: QuickOverviewProps) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const color = useAtomValue(mainColorAtom);
 
   const { sortedPlayers, maxRounds } = useMemo(() => {
@@ -25,6 +25,8 @@ export function QuickOverview({ players }: QuickOverviewProps) {
       sortedPlayers: [...players].sort((a, b) => b.currVal - a.currVal),
     };
   }, [players]);
+
+  if (players.length < 3) return;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
