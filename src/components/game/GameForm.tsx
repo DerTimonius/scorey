@@ -310,7 +310,9 @@ export function GameForm() {
                       placeholder="100"
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value))}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -395,7 +397,7 @@ export function GameForm() {
                           type="number"
                           {...field}
                           onChange={(e) =>
-                            field.onChange(Number.parseInt(e.target.value))
+                            field.onChange(Number.parseInt(e.target.value, 10))
                           }
                         />
                       </FormControl>
@@ -437,7 +439,9 @@ export function GameForm() {
                             type="number"
                             {...field}
                             onChange={(e) =>
-                              field.onChange(Number.parseInt(e.target.value))
+                              field.onChange(
+                                Number.parseInt(e.target.value, 10),
+                              )
                             }
                           />
                         </FormControl>
