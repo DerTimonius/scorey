@@ -28,6 +28,25 @@ export interface Game {
   roundToEnd: number;
 }
 
+const scoringModes = ['winner-only', 'game-points', 'ranked'] as const;
+
+export const ScoringModeEnum = v.picklist(scoringModes);
+export type ScoringMode = (typeof scoringModes)[number];
+
+export interface CompletedGame {
+  id: string;
+  name: string;
+  playerScores: { [playerId: string]: number };
+  winningCondition: WinningCondition;
+}
+
+export interface GameNight {
+  players: Player[];
+  scoringMode: ScoringMode;
+  completedGames: CompletedGame[];
+  isFinished: boolean;
+}
+
 export const colorsArray = [
   'red',
   'orange',

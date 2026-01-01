@@ -1,24 +1,10 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai/react';
-import { TrashIcon } from 'lucide-react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useSetAtom } from 'jotai/react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
-import { getMainFromColor } from '@/lib/colorHelper';
-import { useIsMobile } from '@/lib/hooks/useIsMobile';
-import {
-  gameAtom,
-  mainColorAtom,
-  playerAtom,
-  showGameFormAtom,
-} from '@/lib/jotai';
-import {
-  ColorEnum,
-  colorsArray,
-  type Player,
-  WinningConditionEnum,
-} from '@/lib/types';
-import { cn } from '@/lib/utils';
+import { gameAtom, playerAtom } from '@/lib/jotai';
+import { WinningConditionEnum } from '@/lib/types';
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
 import { Checkbox } from '../ui/checkbox';
@@ -33,13 +19,6 @@ import {
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
 
 const gamenamePlaceholders = [
   'Flip 7',
@@ -53,26 +32,14 @@ const gamenamePlaceholders = [
   'Cascadia',
 ];
 
-export function GameForm() {
+export function GameNightGameForm() {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
 
-  const [showForm, setShowForm] = useAtom(showGameFormAtom);
-  const [players, setPlayers] = useAtom(playerAtom);
-  const mainColor = useAtomValue(mainColorAtom);
   const setGame = useSetAtom(gameAtom);
-
-  const playerSchema = v.object({
-    name: v.pipe(v.string(), v.minLength(1, t('form:player-name.required'))),
-    color: ColorEnum,
-  });
+  const setPlayers = useSetAtom(playerAtom);
 
   const formSchema = v.object({
     gameName: v.pipe(v.string(), v.minLength(1, t('form:game-name.required'))),
-    players: v.pipe(
-      v.array(playerSchema),
-      v.minLength(1, t('form:at-least-one-player-required')),
-    ),
     startValue: v.number(),
     winningCondition: WinningConditionEnum,
     endsAtScore: v.boolean(),
@@ -86,9 +53,6 @@ export function GameForm() {
     resolver: valibotResolver(formSchema),
     defaultValues: {
       gameName: '',
-      players: players.length
-        ? players.map(({ name, color }) => ({ name, color }))
-        : [{ name: '', color: mainColor }],
       startValue: 0,
       winningCondition: 'maxNumber',
       endsAtRound: false,
@@ -97,15 +61,9 @@ export function GameForm() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'players',
-  });
-
   function onSubmit(values: v.InferOutput<typeof formSchema>) {
     const {
       gameName,
-      players,
       startValue,
       winningCondition,
       endsAtScore,
@@ -125,39 +83,16 @@ export function GameForm() {
       scoreToEnd: endsAtScore ? (scoreToEnd ?? 100) : 0,
     });
 
-    const playerArr = players.map((p, idx) => ({
-      ...p,
-      order: idx,
-      id: Math.random().toString(36).substring(2, 15),
-      rounds: [],
-      currVal: startValue ?? 0,
-    })) satisfies Player[];
-    setPlayers(playerArr);
-  }
-
-  if (!showForm) {
-    return (
-      <>
-        <div className="flex flex-col gap-4">
-          <h1 className="font-bold font-display text-8xl">Scorey</h1>
-          <p data-test-id="tagline">{t('game:tagline')}</p>
-        </div>
-        <Button
-          color={mainColor}
-          data-test-id="start-game-button"
-          onClick={() => setShowForm(true)}
-        >
-          {t('game:start-game.button')}
-        </Button>
-      </>
+    setPlayers((prev) =>
+      prev.map((p) => ({ ...p, rounds: [], currVal: startValue ?? 0 })),
     );
   }
 
   return (
     <Card
       className="my-12 max-w-[85vw] px-4 py-3"
-      color={mainColor}
-      data-test-id="game-form"
+      color="blue"
+      data-test-id="game-night-game-form"
     >
       <CardHeader>
         <CardTitle className="text-center text-2xl">
@@ -187,112 +122,6 @@ export function GameForm() {
               </FormItem>
             )}
           />
-
-          <div>
-            <h3 className="mb-4 font-medium text-lg">{t('form:players')}</h3>
-            {fields.map((field, index) => (
-              <div className="flex flex-row items-center gap-2" key={field.id}>
-                <FormField
-                  key={field.id}
-                  control={form.control}
-                  name={`players.${index}.name`}
-                  render={({ field }) => (
-                    <FormItem className="flex items-end space-x-2 pb-4">
-                      <div className="grid flex-1 gap-1">
-                        <FormLabel>
-                          {t('form:player-name.placeholder', {
-                            index: index + 1,
-                          })}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            data-test-id={`player-name-input-${index + 1}`}
-                            className="min-w-36 md:min-w-72"
-                            placeholder={t('form:player-name.placeholder', {
-                              index: index + 1,
-                            })}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  key={field.id}
-                  control={form.control}
-                  name={`players.${index}.color`}
-                  render={({ field }) => (
-                    <FormItem className="flex items-end space-x-2 pb-4">
-                      <div className="grid flex-1 gap-1">
-                        <FormLabel>{t('color:color')}</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger
-                              className="w-32 md:w-[180px]"
-                              data-test-id={`player-color-select-${index + 1}`}
-                            >
-                              <SelectValue
-                                className="capitalize"
-                                placeholder={t('color:select-color')}
-                              />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {colorsArray.map((color) => (
-                              <SelectItem
-                                key={color}
-                                className="capitalize"
-                                value={color}
-                                data-test-id={`player-color-${color}-${index + 1}`}
-                              >
-                                <span
-                                  className={cn(
-                                    'h-2.5 w-2.5 rounded-full',
-                                    getMainFromColor(color),
-                                  )}
-                                ></span>
-                                {t(`color:${color}`)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  color={mainColor}
-                  size={isMobile ? 'icon' : 'default'}
-                  type="button"
-                  variant="ghost"
-                  onClick={() => remove(index)}
-                >
-                  <span className="hidden md:block">{t('action:remove')}</span>
-                  <TrashIcon
-                    className="block md:hidden"
-                    aria-label={t('action:remove')}
-                  />
-                </Button>
-              </div>
-            ))}
-
-            {fields.length < 15 ? (
-              <Button
-                data-test-id="add-player-button"
-                onClick={() => append({ name: '', color: mainColor })}
-                type="button"
-                variant="secondary"
-              >
-                {t('form:add-player')}
-              </Button>
-            ) : null}
-          </div>
 
           <div>
             <h3 className="mb-4 font-medium text-lg">
@@ -368,7 +197,7 @@ export function GameForm() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <Checkbox
-                  color={mainColor}
+                  color="blue"
                   checked={form.watch('endsAtRound')}
                   id="endsAtRound"
                   onCheckedChange={(checked) => {
@@ -410,12 +239,11 @@ export function GameForm() {
               <div className="flex items-center gap-3">
                 <Checkbox
                   checked={form.watch('endsAtScore')}
-                  color={mainColor}
+                  color="blue"
                   id="endsAtScore"
                   data-test-id="ends-at-score-checkbox"
                   onCheckedChange={(checked) => {
                     form.setValue('endsAtScore', Boolean(checked));
-                    if (!checked) form.setValue('scoreToEnd', 0);
                   }}
                 />
                 <Label htmlFor="endsAtScore">
@@ -454,7 +282,7 @@ export function GameForm() {
                   <div className="flex items-center gap-3">
                     <Checkbox
                       checked={form.watch('endsAtSameRound')}
-                      color={mainColor}
+                      color="blue"
                       id="endsAtSameRound"
                       data-test-id="ends-at-same-round-checkbox"
                       onCheckedChange={(checked) => {
@@ -472,14 +300,11 @@ export function GameForm() {
 
           <CardAction className="flex justify-end gap-4">
             <Button
-              color={mainColor}
-              data-test-id="create-game-button"
+              color="blue"
+              data-test-id="create-game-night-game-button"
               type="submit"
             >
               {t('form:create-game')}
-            </Button>
-            <Button variant="secondary" onClick={() => setShowForm(false)}>
-              {t('action:cancel')}
             </Button>
           </CardAction>
         </form>

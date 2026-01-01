@@ -25,12 +25,50 @@
     "keep-players": "Anderes Spiel, gleiche Spieler",
     "button": "Neues Spiel",
     "title": "Neues Spiel starten",
-    "description": "Willst du das gleiche Spiel nochmal von vorne starten? Ein anderes Spiel, aber mit denselben Spielern? Oder willst du komplett von vorne beginnen?"
+    "description": "Willst du das gleiche Spiel nochmal von vorne starten? Ein anderes Spiel, aber mit denselben Spielern? Oder willst du komplett von vorne beginnen?",
+    "game-night-description": "Willst du das gleiche Spiel nochmal spielen oder ein anderes Spiel starten?"
   },
   "player-stats": "Runden für {{name}}",
   "game-stats": {
     "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!",
     "player-score": "- {{playerName}}: {{playerScore}} Punkte",
     "how-it-happened": "Wie es dazu kam"
+  },
+  "mode-selector": {
+    "title": "Wie möchtest du spielen?",
+    "single-game": "Einzelnes Spiel",
+    "single-game-desc": "Punkte für ein Spiel verfolgen",
+    "game-night": "Spieleabend",
+    "game-night-desc": "Punkte über mehrere Spiele hinweg verfolgen"
+  },
+  "game-night": {
+    "title": "Spieleabend einrichten",
+    "start-game-night": "Spieleabend starten",
+    "total-ranking": "Gesamtwertung Spieleabend",
+    "games-played": "Gespielte Spiele: {{count}}",
+    "total-points": "Gesamtpunkte",
+    "wins": "Siege",
+    "next-game": "Nächstes Spiel",
+    "finish-game-night": "Spieleabend beenden",
+    "final-results": "Ergebnisse Spieleabend"
+  },
+  "scoring-system": {
+    "title": "Punktesystem",
+    "about": "Über das Punktesystem",
+    "description": "Jedes Punktesystem funktioniert ein wenig anders.",
+    "winner-only": "Der Spieler, der das Spiel gewinnt, erhält 1 Punkt. Alle anderen Spieler erhalten keine Punkte.",
+    "game-points": {
+      "description": "Alle Spieler erfassen und sammeln ihre individuellen Punkte aus jedem Spiel. Der Gewinner wird durch die höchste Gesamtpunktzahl am Ende der Session bestimmt. Chaotisch, aber lustig!",
+      "title": "Jeder Punkt zählt!"
+    },
+    "ranked": {
+      "description": "Spieler erhalten Punkte basierend auf ihrer Endplatzierung in jedem Spiel. In einem Spiel mit 'n' Spielern erhält der 1. Platz 'n-1' Punkte, der 2. Platz 'n-2' Punkte und so weiter, wobei der letzte Platz 0 Punkte erhält. Zum Beispiel in einem Spiel mit 4 Spielern: Der 1. Platz erhält 3 Punkte, der 2. Platz 2, der 3. Platz 1 und der 4. Platz 0 Punkte.",
+      "title": "Nach Rang punkten!"
+    }
+  },
+  "overview": {
+    "title": "Kurzübersicht",
+    "game-night": "Spieleabend",
+    "game": "Punkte bei {{game}}"
   }
 }

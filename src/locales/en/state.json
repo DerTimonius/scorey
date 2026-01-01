@@ -7,6 +7,5 @@
   "rounds-to-go": "({{roundsToGo}} rounds remaining)",
   "show-stats": "Show statistics",
   "skip-round": "Skip round",
-  "undo-round": "Undo last round",
-  "quick-overview": "Quick overview"
+  "undo-round": "Undo last round"
 }

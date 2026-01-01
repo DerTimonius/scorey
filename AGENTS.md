@@ -22,6 +22,7 @@ This file provides instructions and conventions for agentic coding assistants wo
 - Node.js: use a modern LTS compatible with Vite 7
 - Package manager **must** be `pnpm`
 - Install dependencies:
+
   ```bash
   pnpm install
   ```
@@ -33,16 +34,21 @@ This file provides instructions and conventions for agentic coding assistants wo
 ### Development
 
 - Start dev server:
+
   ```bash
   pnpm dev
   ```
 
 - Production build:
+
   ```bash
   pnpm build
   ```
 
+  Don't run the build command unless explicitly told to.
+
 - Preview production build:
+
   ```bash
   pnpm preview
   ```
@@ -50,6 +56,7 @@ This file provides instructions and conventions for agentic coding assistants wo
 ### Type Checking
 
 - Run TypeScript checks only:
+
   ```bash
   pnpm typecheck
   ```
@@ -61,26 +68,31 @@ This file provides instructions and conventions for agentic coding assistants wo
 Biome is the **single source of truth** for formatting and linting.
 
 - Format code:
+
   ```bash
   pnpm format
   ```
 
 - Lint and auto-fix safe rules:
+
   ```bash
   pnpm lint
   ```
 
 - Lint including unsafe fixes:
+
   ```bash
   pnpm lint:unsafe
   ```
 
 - Full lint + assist pass (preferred before commits):
+
   ```bash
   pnpm lint:all
   ```
 
 - Check only (no writes):
+
   ```bash
   pnpm check
   ```
@@ -152,6 +164,7 @@ Do not manually reorder unless Biome fails.
 - All React components must be typed
 
 Example:
+
 ```ts
 type Props = {
   value: number;
@@ -170,6 +183,7 @@ type Props = {
 - Domain components live under feature folders
 
 Naming:
+
 - Components: `PascalCase`
 - Hooks: `useSomething`
 - Files: match exported symbol name

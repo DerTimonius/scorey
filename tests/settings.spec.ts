@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('game creation with endsAtRound option and flow', async ({ page }) => {
   await page.goto('/');
 
-  await page.getByTestId('start-game-button').click();
+  await page.getByTestId('single-game-mode').click();
   await page.getByTestId('game-name-input').fill('Unknown');
   await page.getByTestId('player-name-input-1').fill('Jane');
   await page.getByTestId('add-player-button').click();
@@ -51,7 +51,7 @@ test.describe('endsAtScore option', () => {
   test('without canFinishRound option', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByTestId('start-game-button').click();
+    await page.getByTestId('single-game-mode').click();
     await page.getByTestId('game-name-input').fill('Flip 7');
     await page.getByTestId('player-name-input-1').fill('Jane');
     await page.getByTestId('add-player-button').click();
@@ -85,7 +85,7 @@ test.describe('endsAtScore option', () => {
   test('with canFinishRound option', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByTestId('start-game-button').click();
+    await page.getByTestId('single-game-mode').click();
     await page.getByTestId('game-name-input').fill('Flip 7');
     await page.getByTestId('player-name-input-1').fill('Jane');
     await page.getByTestId('add-player-button').click();

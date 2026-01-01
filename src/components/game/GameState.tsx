@@ -2,7 +2,13 @@ import { useAtom, useAtomValue } from 'jotai/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
-import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
+import {
+  gameAtom,
+  gameNightAtom,
+  mainColorAtom,
+  playerAtom,
+} from '@/lib/jotai';
+import type { CompletedGame } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Layout } from '../layout/Layout';
 import { PlayerCard } from '../player/PlayerCard';
@@ -29,6 +35,7 @@ export function GameState() {
   const mainColor = useAtomValue(mainColorAtom);
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
+  const [gameNight, setGameNight] = useAtom(gameNightAtom);
   const [enforceRounds, setEnforceRounds] = useState(true);
   const [showStats, setShowStats] = useState(!isMobile);
 
@@ -36,6 +43,29 @@ export function GameState() {
 
   const handleFinishGame = () => {
     setGame((prev) => (prev ? { ...prev, finished: true } : null));
+
+    if (gameNight && game) {
+      const playerScores: { [playerId: string]: number } = {};
+      players.forEach((player) => {
+        playerScores[player.id] = player.currVal;
+      });
+
+      const completedGame: CompletedGame = {
+        id: Math.random().toString(36).substring(2, 15),
+        name: game.name,
+        playerScores,
+        winningCondition: game.winningCondition,
+      };
+
+      setGameNight((prev) =>
+        prev
+          ? {
+              ...prev,
+              completedGames: [...prev.completedGames, completedGame],
+            }
+          : null,
+      );
+    }
   };
 
   const handleResetGame = () => {
@@ -118,7 +148,11 @@ export function GameState() {
         </div>
         <div className="space-x-4">
           <EditGameForm />
-          <QuickOverview players={players} />
+          <QuickOverview
+            gameNight={gameNight}
+            gameName={game.name}
+            players={players}
+          />
         </div>
       </div>
 
