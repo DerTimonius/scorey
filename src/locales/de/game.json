@@ -1,62 +1,60 @@
 {
+  "decrease-by": "Verringern um",
   "edit-game": {
     "title": "Spieleinstellungen bearbeiten"
   },
   "finish-game": {
     "button": "Spiel beenden",
-    "title": "Bist du absolut sicher?",
-    "description": "Hat jeder das Spiel beendet? Diese Aktion kann nicht rückgängig gemacht werden."
-  },
-  "decrease-by": "Verringern um",
-  "skip-round": "Runde skippen",
-  "increase-by": "Erhöhen um",
-  "reset-game": {
-    "button": "Spiel zurücksetzen",
-    "title": "Bist du sicher, dass du dieses Spiel zurücksetzen möchtest?",
-    "description": "Diese Aktion kann nicht rückgängig gemacht werden."
-  },
-  "start-game": {
-    "button": "Spiel starten"
-  },
-  "tagline": "Behalte den Überblick über jedes Spiel",
-  "new-game": {
-    "all-new": "Komplett von vorne",
-    "new-round": "Gleiches Spiel nochmal",
-    "keep-players": "Anderes Spiel, gleiche Spieler",
-    "button": "Neues Spiel",
-    "title": "Neues Spiel starten",
-    "description": "Willst du das gleiche Spiel nochmal von vorne starten? Ein anderes Spiel, aber mit denselben Spielern? Oder willst du komplett von vorne beginnen?",
-    "game-night-description": "Willst du das gleiche Spiel nochmal spielen oder ein anderes Spiel starten?"
-  },
-  "player-stats": "Runden für {{name}}",
-  "game-stats": {
-    "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!",
-    "player-score": "- {{playerName}}: {{playerScore}} Punkte",
-    "how-it-happened": "Wie es dazu kam"
-  },
-  "mode-selector": {
-    "title": "Wie möchtest du spielen?",
-    "single-game": "Einzelnes Spiel",
-    "single-game-desc": "Punkte für ein Spiel verfolgen",
-    "game-night": "Spieleabend",
-    "game-night-desc": "Punkte über mehrere Spiele hinweg verfolgen"
+    "description": "Hat jeder das Spiel beendet? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "title": "Bist du absolut sicher?"
   },
   "game-night": {
-    "title": "Spieleabend einrichten",
-    "start-game-night": "Spieleabend starten",
-    "total-ranking": "Gesamtwertung Spieleabend",
-    "games-played": "Gespielte Spiele: {{count}}",
-    "total-points": "Gesamtpunkte",
-    "wins": "Siege",
-    "next-game": "Nächstes Spiel",
+    "final-results": "Ergebnisse Spieleabend",
     "finish-game-night": "Spieleabend beenden",
-    "final-results": "Ergebnisse Spieleabend"
+    "games-played": "Gespielte Spiele: {{count}}",
+    "next-game": "Nächstes Spiel",
+    "start-game-night": "Spieleabend starten",
+    "title": "Spieleabend einrichten",
+    "total-points": "Gesamtpunkte",
+    "total-ranking": "Gesamtwertung Spieleabend",
+    "wins": "Siege"
+  },
+  "game-stats": {
+    "how-it-happened": "Wie es dazu kam",
+    "player-score": "- {{playerName}}: {{playerScore}} Punkte",
+    "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!"
+  },
+  "increase-by": "Erhöhen um",
+  "mode-selector": {
+    "game-night": "Spieleabend",
+    "game-night-desc": "Punkte über mehrere Spiele hinweg verfolgen",
+    "single-game": "Einzelnes Spiel",
+    "single-game-desc": "Punkte für ein Spiel verfolgen",
+    "title": "Wie möchtest du spielen?"
+  },
+  "new-game": {
+    "all-new": "Komplett von vorne",
+    "button": "Neues Spiel",
+    "description": "Willst du das gleiche Spiel nochmal von vorne starten? Ein anderes Spiel, aber mit denselben Spielern? Oder willst du komplett von vorne beginnen?",
+    "game-night-description": "Willst du das gleiche Spiel nochmal spielen oder ein anderes Spiel starten?",
+    "keep-players": "Anderes Spiel, gleiche Spieler",
+    "new-round": "Gleiches Spiel nochmal",
+    "title": "Neues Spiel starten"
+  },
+  "overview": {
+    "game": "Punkte bei {{game}}",
+    "game-night": "Spieleabend",
+    "title": "Kurzübersicht"
+  },
+  "player-stats": "Runden für {{name}}",
+  "reset-game": {
+    "button": "Spiel zurücksetzen",
+    "description": "Diese Aktion kann nicht rückgängig gemacht werden.",
+    "title": "Bist du sicher, dass du dieses Spiel zurücksetzen möchtest?"
   },
   "scoring-system": {
-    "title": "Punktesystem",
     "about": "Über das Punktesystem",
     "description": "Jedes Punktesystem funktioniert ein wenig anders.",
-    "winner-only": "Der Spieler, der das Spiel gewinnt, erhält 1 Punkt. Alle anderen Spieler erhalten keine Punkte.",
     "game-points": {
       "description": "Alle Spieler erfassen und sammeln ihre individuellen Punkte aus jedem Spiel. Der Gewinner wird durch die höchste Gesamtpunktzahl am Ende der Session bestimmt. Chaotisch, aber lustig!",
       "title": "Jeder Punkt zählt!"
@@ -64,11 +62,13 @@
     "ranked": {
       "description": "Spieler erhalten Punkte basierend auf ihrer Endplatzierung in jedem Spiel. In einem Spiel mit 'n' Spielern erhält der 1. Platz 'n-1' Punkte, der 2. Platz 'n-2' Punkte und so weiter, wobei der letzte Platz 0 Punkte erhält. Zum Beispiel in einem Spiel mit 4 Spielern: Der 1. Platz erhält 3 Punkte, der 2. Platz 2, der 3. Platz 1 und der 4. Platz 0 Punkte.",
       "title": "Nach Rang punkten!"
-    }
+    },
+    "title": "Punktesystem",
+    "winner-only": "Der Spieler, der das Spiel gewinnt, erhält 1 Punkt. Alle anderen Spieler erhalten keine Punkte."
   },
-  "overview": {
-    "title": "Kurzübersicht",
-    "game-night": "Spieleabend",
-    "game": "Punkte bei {{game}}"
-  }
+  "skip-round": "Runde skippen",
+  "start-game": {
+    "button": "Spiel starten"
+  },
+  "tagline": "Behalte den Überblick über jedes Spiel"
 }
