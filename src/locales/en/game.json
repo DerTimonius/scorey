@@ -1,62 +1,60 @@
 {
+  "decrease-by": "Decrease by",
   "edit-game": {
     "title": "Edit game settings"
   },
   "finish-game": {
     "button": "Finish game",
-    "title": "Are you absolutely sure?",
-    "description": "Has everyone finished the game? This action cannot be undone."
-  },
-  "decrease-by": "Decrease by",
-  "skip-round": "Skip round",
-  "increase-by": "Increase by",
-  "reset-game": {
-    "button": "Reset game",
-    "title": "Are you sure you want to reset this game?",
-    "description": "This action cannot be undone."
-  },
-  "start-game": {
-    "button": "Start game"
-  },
-  "tagline": "Keep score of any game",
-  "new-game": {
-    "all-new": "Fresh start",
-    "new-round": "New round with this game",
-    "keep-players": "Different game, same players",
-    "button": "New game",
-    "title": "Start new game",
-    "description": "Do you want to keep the game info and players the same? Start a different game with the same players? Or start with a blank slate?",
-    "game-night-description": "Do you want to play the same game again or do you want to start a new game?"
-  },
-  "player-stats": "Rounds for {{name}}",
-  "game-stats": {
-    "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",
-    "player-score": "- {{playerName}}: {{playerScore}} points",
-    "how-it-happened": "How it happened"
-  },
-  "mode-selector": {
-    "title": "How do you want to play?",
-    "single-game": "Single Game",
-    "single-game-desc": "Track scores for one game",
-    "game-night": "Game Night",
-    "game-night-desc": "Track scores across multiple games"
+    "description": "Has everyone finished the game? This action cannot be undone.",
+    "title": "Are you absolutely sure?"
   },
   "game-night": {
-    "title": "Game Night Setup",
-    "start-game-night": "Start Game Night",
-    "total-ranking": "Game Night Rankings",
-    "games-played": "Games Played: {{count}}",
-    "total-points": "Total Points",
-    "wins": "Wins",
-    "next-game": "Next Game",
+    "final-results": "Game Night Results",
     "finish-game-night": "Finish Game Night",
-    "final-results": "Game Night Results"
+    "games-played": "Games Played: {{count}}",
+    "next-game": "Next Game",
+    "start-game-night": "Start Game Night",
+    "title": "Game Night Setup",
+    "total-points": "Total Points",
+    "total-ranking": "Game Night Rankings",
+    "wins": "Wins"
+  },
+  "game-stats": {
+    "how-it-happened": "How it happened",
+    "player-score": "- {{playerName}}: {{playerScore}} points",
+    "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!"
+  },
+  "increase-by": "Increase by",
+  "mode-selector": {
+    "game-night": "Game Night",
+    "game-night-desc": "Track scores across multiple games",
+    "single-game": "Single Game",
+    "single-game-desc": "Track scores for one game",
+    "title": "How do you want to play?"
+  },
+  "new-game": {
+    "all-new": "Fresh start",
+    "button": "New game",
+    "description": "Do you want to keep the game info and players the same? Start a different game with the same players? Or start with a blank slate?",
+    "game-night-description": "Do you want to play the same game again or do you want to start a new game?",
+    "keep-players": "Different game, same players",
+    "new-round": "New round with this game",
+    "title": "Start new game"
+  },
+  "overview": {
+    "game": "Points at {{game}}",
+    "game-night": "Game night",
+    "title": "Quick overview"
+  },
+  "player-stats": "Rounds for {{name}}",
+  "reset-game": {
+    "button": "Reset game",
+    "description": "This action cannot be undone.",
+    "title": "Are you sure you want to reset this game?"
   },
   "scoring-system": {
-    "title": "Scoring system",
     "about": "About the scoring system",
     "description": "Each scoring system works a bit differently",
-    "winner-only": "The player who wins the game receives 1 point. All other players receive no points.",
     "game-points": {
       "description": "All players track and accumulate their individual scores from each game. The winner is determined by who has the highest total score at the end of the session. Chaotic, but fun!",
       "title": "Every point counts!"
@@ -64,11 +62,13 @@
     "ranked": {
       "description": " Players receive points based on their final position in each game. In a game with 'n' players, 1st place receives 'n-1' points, 2nd place receives 'n-2' points, and so on, with last place receiving 0 points. For example, in a 4-player game: 1st place gets 3 points, 2nd gets 2, 3rd gets 1, and 4th gets 0.",
       "title": "Score by rank!"
-    }
+    },
+    "title": "Scoring system",
+    "winner-only": "The player who wins the game receives 1 point. All other players receive no points."
   },
-  "overview": {
-    "title": "Quick overview",
-    "game-night": "Game night",
-    "game": "Points at {{game}}"
-  }
+  "skip-round": "Skip round",
+  "start-game": {
+    "button": "Start game"
+  },
+  "tagline": "Keep score of any game"
 }
