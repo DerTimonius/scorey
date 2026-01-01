@@ -43,10 +43,6 @@
   },
   "game-night": {
     "title": "Spieleabend einrichten",
-    "scoring-system": "Punktesystem",
-    "winner-only": "1 Punkt für den Gewinner",
-    "game-points": "Spielpunkte für alle Spieler verwenden",
-    "ranked": "Rangsystem: 1. Platz bekommt n-1 Punkte, letzter bekommt 0",
     "start-game-night": "Spieleabend starten",
     "total-ranking": "Gesamtwertung Spieleabend",
     "games-played": "Gespielte Spiele: {{count}}",
@@ -55,6 +51,20 @@
     "next-game": "Nächstes Spiel",
     "finish-game-night": "Spieleabend beenden",
     "final-results": "Ergebnisse Spieleabend"
+  },
+  "scoring-system": {
+    "title": "Punktesystem",
+    "about": "Über das Punktesystem",
+    "description": "Jedes Punktesystem funktioniert ein wenig anders.",
+    "winner-only": "Der Spieler, der das Spiel gewinnt, erhält 1 Punkt. Alle anderen Spieler erhalten keine Punkte.",
+    "game-points": {
+      "description": "Alle Spieler erfassen und sammeln ihre individuellen Punkte aus jedem Spiel. Der Gewinner wird durch die höchste Gesamtpunktzahl am Ende der Session bestimmt. Chaotisch, aber lustig!",
+      "title": "Jeder Punkt zählt!"
+    },
+    "ranked": {
+      "description": "Spieler erhalten Punkte basierend auf ihrer Endplatzierung in jedem Spiel. In einem Spiel mit 'n' Spielern erhält der 1. Platz 'n-1' Punkte, der 2. Platz 'n-2' Punkte und so weiter, wobei der letzte Platz 0 Punkte erhält. Zum Beispiel in einem Spiel mit 4 Spielern: Der 1. Platz erhält 3 Punkte, der 2. Platz 2, der 3. Platz 1 und der 4. Platz 0 Punkte.",
+      "title": "Nach Rang punkten!"
+    }
   },
   "overview": {
     "title": "Kurzübersicht",

@@ -1,6 +1,6 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai/react';
-import { TrashIcon } from 'lucide-react';
+import { Info, TrashIcon } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
@@ -39,6 +39,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 
 const playerSchema = v.object({
   name: v.pipe(v.string(), v.minLength(1, 'form:player-name.required')),
@@ -226,7 +232,47 @@ export function GameNightForm() {
 
           <div>
             <h3 className="mb-4 font-medium text-lg">
-              {t('game:game-night.scoring-system')}
+              {t('game:scoring-system.title')}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info aria-hidden size={18} className="mt-1 ml-2" />
+                  </TooltipTrigger>
+                  <TooltipContent
+                    color={mainColor}
+                    className="w-[40vw] space-y-3 p-4"
+                  >
+                    <h4 className="text-center font-semibold text-lg underline">
+                      {t('game:scoring-system.about')}
+                    </h4>
+                    <p>{t('game:scoring-system.description')}</p>
+                    <ul className="space-y-2 pl-4">
+                      <li className="space-y-1">
+                        <p className="font-normal text-md">Winner takes all!</p>
+                        <p className="text-xs">
+                          {t('game:scoring-system.winner-only')}
+                        </p>
+                      </li>
+                      <li className="space-y-1">
+                        <p className="font-normal text-md">
+                          {t('game:scoring-system.ranked.title')}
+                        </p>
+                        <p className="text-xs">
+                          {t('game:scoring-system.ranked.description')}
+                        </p>
+                      </li>
+                      <li className="space-y-1">
+                        <p className="font-normal text-md">
+                          {t('game:scoring-system.game-points.title')}
+                        </p>
+                        <p className="text-xs">
+                          {t('game:scoring-system.game-points.description')}
+                        </p>
+                      </li>
+                    </ul>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </h3>
             <FormField
               control={form.control}
@@ -247,18 +293,7 @@ export function GameNightForm() {
                           />
                         </FormControl>
                         <FormLabel className="font-normal">
-                          {t('game:game-night.winner-only')}
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center gap-3">
-                        <FormControl>
-                          <RadioGroupItem
-                            value="game-points"
-                            data-test-id="game-points-scoring"
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal">
-                          {t('game:game-night.game-points')}
+                          Winner takes all!
                         </FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
@@ -269,7 +304,18 @@ export function GameNightForm() {
                           />
                         </FormControl>
                         <FormLabel className="font-normal">
-                          {t('game:game-night.ranked')}
+                          {t('game:scoring-system.ranked.title')}
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="game-points"
+                            data-test-id="game-points-scoring"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          {t('game:scoring-system.game-points.title')}
                         </FormLabel>
                       </FormItem>
                     </RadioGroup>
