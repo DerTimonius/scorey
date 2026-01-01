@@ -1,6 +1,7 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai/react';
 import { Info, TrashIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
@@ -127,7 +128,16 @@ export function GameNightForm() {
           <div>
             <h3 className="mb-4 font-medium text-lg">{t('form:players')}</h3>
             {fields.map((field, index) => (
-              <div className="flex flex-row items-center gap-2" key={field.id}>
+              <motion.div
+                className="flex flex-row items-center gap-2"
+                key={field.id}
+                initial={{ scale: 0.4, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  ease: [0.004, 0.998, 0, 0.973],
+                  duration: 0.35,
+                }}
+              >
                 <FormField
                   key={field.id}
                   control={form.control}
@@ -207,6 +217,7 @@ export function GameNightForm() {
                   size={isMobile ? 'icon' : 'default'}
                   type="button"
                   variant="ghost"
+                  disabled={index === 0}
                   onClick={() => remove(index)}
                 >
                   <span className="hidden md:block">{t('action:remove')}</span>
@@ -215,7 +226,7 @@ export function GameNightForm() {
                     aria-label={t('action:remove')}
                   />
                 </Button>
-              </div>
+              </motion.div>
             ))}
 
             {fields.length < 15 ? (
