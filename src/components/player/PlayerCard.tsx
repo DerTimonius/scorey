@@ -1,8 +1,10 @@
 import NumberFlow from '@number-flow/react';
 import { useSetAtom } from 'jotai/react';
 import { Pen } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { easeIn, easeOut } from '@/lib/animations';
 import { playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -26,15 +28,14 @@ export function PlayerCard({
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(player.name);
   const [value, setValue] = useState<number>();
-  const [type, setType] = useState<'increase' | 'descrease'>();
+  const [type, setType] = useState<'increase' | 'decrease'>();
   const inputRef = useRef<HTMLInputElement>(null);
   const setPlayers = useSetAtom(playerAtom);
 
   const handleUpdateName = () => {
-    setPlayers((prev) => [
-      ...prev.filter((p) => p.id !== player.id),
-      { ...player, name },
-    ]);
+    setPlayers((prev) =>
+      prev.map((p) => (p.id === player.id ? { ...player, name } : p)),
+    );
     setIsEditing(false);
   };
 
@@ -42,20 +43,22 @@ export function PlayerCard({
     const newVal = player.currVal + amount;
     const rounds = [...player.rounds, amount];
 
-    setPlayers((prev) => [
-      ...prev.filter((p) => p.id !== player.id),
-      { ...player, rounds, currVal: newVal },
-    ]);
+    setPlayers((prev) =>
+      prev.map((p) =>
+        p.id === player.id ? { ...player, rounds, currVal: newVal } : p,
+      ),
+    );
   };
 
   const decreasePlayerVal = (amount: number) => {
     const newVal = player.currVal - amount;
     const rounds = [...player.rounds, amount * -1];
 
-    setPlayers((prev) => [
-      ...prev.filter((p) => p.id !== player.id),
-      { ...player, rounds, currVal: newVal },
-    ]);
+    setPlayers((prev) =>
+      prev.map((p) =>
+        p.id === player.id ? { ...player, rounds, currVal: newVal } : p,
+      ),
+    );
   };
 
   const handleSubmit = () => {
@@ -69,10 +72,11 @@ export function PlayerCard({
     const rounds = player.rounds.slice(0, player.rounds.length - 1);
     const currVal = rounds.reduce((acc, val) => acc + val, 0);
 
-    setPlayers((prev) => [
-      ...prev.filter((p) => p.id !== player.id),
-      { ...player, rounds, currVal },
-    ]);
+    setPlayers((prev) =>
+      prev.map((p) =>
+        p.id === player.id ? { ...player, rounds, currVal } : p,
+      ),
+    );
   };
 
   useLayoutEffect(() => {
@@ -114,6 +118,7 @@ export function PlayerCard({
                 className="max-w-min self-center text-sm"
                 color={player.color}
                 onClick={handleUpdateName}
+                onMouseDown={(e) => e.preventDefault()}
                 size="sm"
                 variant="ghost"
               >
@@ -153,7 +158,13 @@ export function PlayerCard({
           />
         </div>
         {type ? (
-          <div className="flex flex-col items-center gap-2">
+          <motion.div
+            className="flex flex-col items-center gap-2"
+            initial={{ scale: 0.5, opacity: 0.4 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={easeOut}
+            key="inputs"
+          >
             <label htmlFor="value" className="capitalize">
               {t(type === 'increase' ? 'game:increase-by' : 'game:decrease-by')}
             </label>
@@ -191,15 +202,21 @@ export function PlayerCard({
                 {t('action:cancel')}
               </Button>
             </div>
-          </div>
+          </motion.div>
         ) : (
-          <div className="flex justify-around gap-2 md:gap-6">
+          <motion.div
+            className="flex justify-around gap-2 md:gap-6"
+            initial={{ scale: 0.7, opacity: 0.6 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={easeOut}
+            key="type-buttons"
+          >
             <Button
               color={player.color}
               data-test-id={`minus-button-${player.name}`}
               disabled={hasMoreRounds}
               onClick={() => {
-                setType('descrease');
+                setType('decrease');
               }}
               variant="ghost"
             >
@@ -228,23 +245,30 @@ export function PlayerCard({
             >
               {t('state:skip-round')}
             </Button>
-          </div>
+          </motion.div>
         )}
       </div>
       <CardFooter>
-        {showStats && player.rounds.length ? (
-          <div className="flex w-full flex-col items-center gap-4">
-            <PlayerStats player={player} />
-            <Button
-              className="max-w-max"
-              color={player.color}
-              onClick={handleUndo}
-              variant="ghost"
+        <AnimatePresence>
+          {showStats && player.rounds.length ? (
+            <motion.div
+              className="flex w-full flex-col items-center gap-4"
+              initial={{ scale: 0.6, opacity: 0.5 }}
+              animate={{ scale: 1, opacity: 1, transition: easeOut }}
+              exit={{ scale: 0.6, opacity: 0.5, transition: easeIn }}
             >
-              {t('state:undo-round')}
-            </Button>
-          </div>
-        ) : null}
+              <PlayerStats player={player} />
+              <Button
+                className="max-w-max"
+                color={player.color}
+                onClick={handleUndo}
+                variant="ghost"
+              >
+                {t('state:undo-round')}
+              </Button>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </CardFooter>
     </Card>
   );

@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
+import { playerFormAnimation } from '@/lib/animations';
 import { getMainFromColor } from '@/lib/colorHelper';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import {
@@ -41,7 +42,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { playerFormAnimation } from '@/lib/animations';
 
 const gamenamePlaceholders = [
   'Flip 7',

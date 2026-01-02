@@ -1,4 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai/react';
+import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
@@ -164,13 +165,25 @@ export function GameState() {
       >
         {players
           .sort((a, b) => a.order - b.order)
-          .map((p) => (
-            <PlayerCard
-              showStats={showStats}
-              player={p}
+          .map((p, idx) => (
+            <motion.div
               key={p.id}
-              hasMoreRounds={enforceRounds && p.rounds.length > minLength}
-            />
+              initial={{ opacity: 0.5, y: 50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                delay: 0.15 * idx,
+                duration: 0.3,
+                type: 'spring',
+                bounce: 0.4,
+                bounceDamping: 0.5,
+              }}
+            >
+              <PlayerCard
+                showStats={showStats}
+                player={p}
+                hasMoreRounds={enforceRounds && p.rounds.length > minLength}
+              />
+            </motion.div>
           ))}
       </div>
       <div className="mb-12 flex flex-row gap-8">

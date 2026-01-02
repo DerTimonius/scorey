@@ -1,4 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai/react';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import {
   gameAtom,
@@ -164,7 +165,14 @@ export function GameStats() {
             )}
           >
             {sortedPlayers.map((p) => (
-              <PlayerStats key={p.id} player={p} />
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PlayerStats player={p} />
+              </motion.div>
             ))}
           </div>
         </div>
