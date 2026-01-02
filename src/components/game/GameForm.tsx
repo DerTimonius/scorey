@@ -1,7 +1,7 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai/react';
 import { TrashIcon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
@@ -41,6 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { playerFormAnimation } from '@/lib/animations';
 
 const gamenamePlaceholders = [
   'Flip 7',
@@ -57,6 +58,7 @@ const gamenamePlaceholders = [
 export function GameForm() {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const reduceMotion = useReducedMotion();
 
   const [showForm, setShowForm] = useAtom(showGameFormAtom);
   const [players, setPlayers] = useAtom(playerAtom);
@@ -191,107 +193,115 @@ export function GameForm() {
 
           <div>
             <h3 className="mb-4 font-medium text-lg">{t('form:players')}</h3>
-            {fields.map((field, index) => (
-              <motion.div
-                className="flex flex-row items-center gap-2"
-                key={field.id}
-                initial={{ scale: 0.4, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  ease: [0.004, 0.998, 0, 0.973],
-                  duration: 0.35,
-                }}
-              >
-                <FormField
+            <AnimatePresence initial={false}>
+              {fields.map((field, index) => (
+                <motion.div
+                  className="flex flex-row items-center gap-2"
                   key={field.id}
-                  control={form.control}
-                  name={`players.${index}.name`}
-                  render={({ field }) => (
-                    <FormItem className="flex items-end space-x-2 pb-4">
-                      <div className="grid flex-1 gap-1">
-                        <FormLabel>
-                          {t('form:player-name.placeholder', {
-                            index: index + 1,
-                          })}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            data-test-id={`player-name-input-${index + 1}`}
-                            className="min-w-36 md:min-w-72"
-                            placeholder={t('form:player-name.placeholder', {
+                  {...playerFormAnimation(reduceMotion)}
+                  onAnimationComplete={(def) => {
+                    if (
+                      typeof def === 'object' &&
+                      'x' in def &&
+                      index === fields.length - 1
+                    ) {
+                      remove(index);
+                    }
+                  }}
+                >
+                  <FormField
+                    key={field.id.concat('name')}
+                    control={form.control}
+                    name={`players.${index}.name`}
+                    render={({ field }) => (
+                      <FormItem className="flex items-end space-x-2 pb-4">
+                        <div className="grid flex-1 gap-1">
+                          <FormLabel>
+                            {t('form:player-name.placeholder', {
                               index: index + 1,
                             })}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  key={field.id}
-                  control={form.control}
-                  name={`players.${index}.color`}
-                  render={({ field }) => (
-                    <FormItem className="flex items-end space-x-2 pb-4">
-                      <div className="grid flex-1 gap-1">
-                        <FormLabel>{t('color:color')}</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
+                          </FormLabel>
                           <FormControl>
-                            <SelectTrigger
-                              className="w-32 md:w-[180px]"
-                              data-test-id={`player-color-select-${index + 1}`}
-                            >
-                              <SelectValue
-                                className="capitalize"
-                                placeholder={t('color:select-color')}
-                              />
-                            </SelectTrigger>
+                            <Input
+                              data-test-id={`player-name-input-${index + 1}`}
+                              className="min-w-36 md:min-w-72"
+                              placeholder={t('form:player-name.placeholder', {
+                                index: index + 1,
+                              })}
+                              {...field}
+                            />
                           </FormControl>
-                          <SelectContent>
-                            {colorsArray.map((color) => (
-                              <SelectItem
-                                key={color}
-                                className="capitalize"
-                                value={color}
-                                data-test-id={`player-color-${color}-${index + 1}`}
-                              >
-                                <span
-                                  className={cn(
-                                    'h-2.5 w-2.5 rounded-full',
-                                    getMainFromColor(color),
-                                  )}
-                                ></span>
-                                {t(`color:${color}`)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  color={mainColor}
-                  size={isMobile ? 'icon' : 'default'}
-                  type="button"
-                  variant="ghost"
-                  onClick={() => remove(index)}
-                  disabled={index === 0}
-                >
-                  <span className="hidden md:block">{t('action:remove')}</span>
-                  <TrashIcon
-                    className="block md:hidden"
-                    aria-label={t('action:remove')}
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
                   />
-                </Button>
-              </motion.div>
-            ))}
+                  <FormField
+                    key={field.id.concat('color')}
+                    control={form.control}
+                    name={`players.${index}.color`}
+                    render={({ field }) => (
+                      <FormItem className="flex items-end space-x-2 pb-4">
+                        <div className="grid flex-1 gap-1">
+                          <FormLabel>{t('color:color')}</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger
+                                className="w-32 md:w-[180px]"
+                                data-test-id={`player-color-select-${index + 1}`}
+                              >
+                                <SelectValue
+                                  className="capitalize"
+                                  placeholder={t('color:select-color')}
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {colorsArray.map((color) => (
+                                <SelectItem
+                                  key={color}
+                                  className="capitalize"
+                                  value={color}
+                                  data-test-id={`player-color-${color}-${index + 1}`}
+                                >
+                                  <span
+                                    className={cn(
+                                      'h-2.5 w-2.5 rounded-full',
+                                      getMainFromColor(color),
+                                    )}
+                                  ></span>
+                                  {t(`color:${color}`)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    color={mainColor}
+                    size={isMobile ? 'icon' : 'default'}
+                    type="button"
+                    variant="ghost"
+                    onClick={() => remove(index)}
+                    disabled={index === 0}
+                  >
+                    <span className="hidden md:block">
+                      {t('action:remove')}
+                    </span>
+                    <TrashIcon
+                      className="block md:hidden"
+                      aria-label={t('action:remove')}
+                    />
+                  </Button>
+                </motion.div>
+              ))}
+            </AnimatePresence>
 
             {fields.length < 15 ? (
               <Button

@@ -116,7 +116,7 @@ export function GameState() {
             })}
           </h3>
         ) : null}
-        {game.endsAtScore ? (
+        {game.endsAtScore.ends ? (
           <h3 className="font-semibold md:text-lg">
             {t('state:game-ends-at-points', {
               scoreToEnd: game.scoreToEnd,
