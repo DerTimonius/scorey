@@ -1,3 +1,4 @@
+import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useEffect, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -9,11 +10,10 @@ import {
   calculateTotalGameNightPoints,
   cn,
 } from '@/lib/utils';
+import { AnimatedName, AnimatedScore } from '../animation/Animations';
 import { GameChart } from '../charts/GameChart';
 import { Button } from '../ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { AnimatedName, AnimatedScore } from '../animation/Animations';
-import { useAtomValue, useAtom } from 'jotai';
 
 interface GameNightChartDataItem {
   round: string;
