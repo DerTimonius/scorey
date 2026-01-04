@@ -1,14 +1,14 @@
 {
-  "at-least-one-player-required": "Mindestens ein Spieler ist erforderlich.",
   "add-player": "Spieler hinzufügen",
   "advanced-options": {
-    "index": "Erweiterte Optionen",
     "ends-at-round-checkbox": "Spiel endet nach einer bestimmten Runde",
-    "round-to-be-finished-label": "Zu beendende Runde",
     "ends-at-score-checkbox": "Spiel endet, wenn ein Spieler eine bestimmte Punktzahl erreicht hat",
+    "index": "Erweiterte Optionen",
+    "round-to-be-finished-label": "Zu beendende Runde",
     "same-round-checkbox": "Andere Spielen können ihre Runde noch beenden",
     "score-to-be-finished-label": "Spiel endet bei (Punkten)"
   },
+  "at-least-one-player-required": "Mindestens ein Spieler ist erforderlich.",
   "create-game": "Los geht's",
   "game-info": "Informationen zum Spiel",
   "game-name": {
@@ -16,19 +16,19 @@
     "required": "Spielname ist erforderlich"
   },
   "options": {
+    "game-start": "Spiel beginnt mit (Punkten)",
     "index": "Optionen",
     "who-wins": {
-      "question": "Wer gewinnt das Spiel?",
+      "max": "Spieler mit den meisten Punkten",
       "min": "Spieler mit den wenigsten Punkten",
-      "max": "Spieler mit den meisten Punkten"
-    },
-    "game-start": "Spiel beginnt mit (Punkten)"
+      "question": "Wer gewinnt das Spiel?"
+    }
   },
   "player-name": {
     "edit": "Name von {{ name }} ändern",
-    "required": "Spielername ist erforderlich",
     "label": "Name von Spieler {{ index }}",
     "placeholder": "Spieler {{ index }}",
+    "required": "Spielername ist erforderlich",
     "unique": "Namen der Spieler sollten nicht gleich sein"
   },
   "players": "Spieler"
