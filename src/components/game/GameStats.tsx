@@ -1,70 +1,22 @@
 import { useAtom, useAtomValue } from 'jotai/react';
 import { useTranslation } from 'react-i18next';
 import {
+  createChartConfig,
+  transformPlayersToCumulativeChartData,
+} from '@/lib/chartHelpers';
+import {
   gameAtom,
   gameNightAtom,
   mainColorAtom,
   playerAtom,
 } from '@/lib/jotai';
-import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { GameChart, type GameChartDataItem } from '../charts/GameChart';
+import { GameChart } from '../charts/GameChart';
 import { Layout } from '../layout/Layout';
 import { PlayerStats } from '../player/PlayerStats';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import type { ChartConfig } from '../ui/chart';
 import { GameNightStats } from './GameNightStats';
 import { GameNightButtons, SingleGameButtons } from './GameStatsButtons';
-
-function transformPlayersToCumulativeChartData(
-  players: Player[],
-): GameChartDataItem[] {
-  if (!players || players.length === 0) {
-    return [];
-  }
-
-  const maxRounds = Math.max(...players.map((p) => p.rounds.length));
-  if (maxRounds === 0) {
-    return [];
-  }
-
-  const chartData: GameChartDataItem[] = [];
-  const cumulativeScores: { [playerName: string]: number } = {};
-
-  players.forEach((player) => {
-    cumulativeScores[player.name] = 0;
-  });
-
-  for (let i = 0; i < maxRounds; i++) {
-    const dataItem: GameChartDataItem = { round: (i + 1).toString() };
-
-    players.forEach((player) => {
-      const name = player.name;
-      const scoreForThisRound = player.rounds[i];
-
-      if (scoreForThisRound !== undefined) {
-        cumulativeScores[name] += scoreForThisRound;
-        dataItem[name] = cumulativeScores[name];
-      } else {
-        dataItem[name] = cumulativeScores[name];
-      }
-    });
-    chartData.push(dataItem);
-  }
-
-  return chartData;
-}
-
-function createChartConfig(players: Player[]): ChartConfig {
-  return players.reduce((acc, player) => {
-    acc[player.name] = {
-      label: player.name,
-      color: `var(--chart-${player.color})`,
-    };
-
-    return acc;
-  }, {} as ChartConfig);
-}
 
 export function GameStats() {
   const mainColor = useAtomValue(mainColorAtom);
