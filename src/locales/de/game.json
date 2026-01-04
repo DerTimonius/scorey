@@ -30,7 +30,7 @@
   },
   "player-stats": "Runden für {{name}}",
   "game-stats": {
-    "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!",
+    "winner-message": "Und gewonnen hat <name>{{winnerName}}</name> mit <score /> Punkten!",
     "player-score": "- {{playerName}}: {{playerScore}} Punkte",
     "how-it-happened": "Wie es dazu kam"
   },

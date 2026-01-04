@@ -30,7 +30,7 @@
   },
   "player-stats": "Rounds for {{name}}",
   "game-stats": {
-    "winner-message": "And the winner is {{winnerName}} with {{winnerScore}} points!",
+    "winner-message": "And the winner is <name>{{winnerName}}</name> with <score /> points!",
     "player-score": "- {{playerName}}: {{playerScore}} points",
     "how-it-happened": "How it happened"
   },
