@@ -22,6 +22,7 @@ interface GameChartProps {
   players: Player[];
   chartConfig: ChartConfig;
   gameNight?: boolean;
+  animationDelay?: number;
 }
 
 export function GameChart({
@@ -30,6 +31,7 @@ export function GameChart({
   chartConfig,
   containerClasses,
   gameNight = false,
+  animationDelay = 0,
 }: GameChartProps) {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
@@ -75,7 +77,7 @@ export function GameChart({
               cursor={false}
               content={<ChartTooltipContent labelKey="round" />}
             />
-            {players.map((player) => {
+            {players.map((player, idx) => {
               return (
                 <Line
                   dataKey={player.name}
@@ -83,6 +85,8 @@ export function GameChart({
                   type="monotone"
                   stroke={`var(--chart-${player.color})`}
                   strokeWidth={2}
+                  animationDuration={1500}
+                  animationBegin={animationDelay + idx * 100}
                 />
               );
             })}

@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai/react';
-import { motion, useAnimation, useInView } from 'motion/react';
-import { useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
+import { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { easeOut } from '@/lib/animations';
 import {
@@ -76,6 +76,10 @@ export function GameStats() {
   const [game, setGame] = useAtom(gameAtom);
   const [players, setPlayers] = useAtom(playerAtom);
   const [gameNight, setGameNight] = useAtom(gameNightAtom);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
 
   if (!game || !game.finished || !players.length) return;
 
@@ -204,8 +208,8 @@ export function GameStats() {
                   key={p.id}
                   initial={{ opacity: 0, scale: 0.8, y: 20 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 4 + 0.2 * idx }}
+                  viewport={{ once: true, margin: '0px 0px -20px 0px' }}
+                  transition={{ duration: 0.3, delay: 0.5 + 0.2 * idx }}
                 >
                   <PlayerStats player={p} />
                 </motion.div>

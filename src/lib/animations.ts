@@ -30,14 +30,14 @@ export const bounce = {
   mass: 2.2,
 } satisfies MotionProps['transition'];
 
-export const playerFormAnimation = (_reduceMotion: boolean | null) =>
+export const playerFormAnimation = (reduceMotion: boolean | null) =>
   ({
     initial: { scale: 0.4, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
     transition: fastEaseOut,
     exit: {
       opacity: 0,
-      x: '100%',
+      x: reduceMotion ? 0 : '100%',
       transition: fastEaseIn,
     },
   }) satisfies MotionProps;

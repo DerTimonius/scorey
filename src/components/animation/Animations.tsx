@@ -5,6 +5,7 @@ import { bounce } from '@/lib/animations';
 export function AnimatedName({ children }: React.PropsWithChildren) {
   return (
     <motion.span
+      className="text-6xl"
       initial={{ scale: 0, opacity: 0, y: 20 }}
       animate={{ scale: 1.2, opacity: 1, y: 0 }}
       transition={{
@@ -35,6 +36,7 @@ export function AnimatedScore({ value }: { value: number }) {
 
   return (
     <motion.span
+      className="text-6xl"
       initial={{ scale: 0, opacity: 0, y: 20 }}
       animate={{ scale: 1.2, opacity: 1, y: 0 }}
       transition={{

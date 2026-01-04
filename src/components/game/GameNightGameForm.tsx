@@ -1,9 +1,9 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { useSetAtom } from 'jotai/react';
+import { useAtomValue, useSetAtom } from 'jotai/react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
-import { gameAtom, playerAtom } from '@/lib/jotai';
+import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import { WinningConditionEnum } from '@/lib/types';
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
@@ -34,6 +34,8 @@ const gamenamePlaceholders = [
 
 export function GameNightGameForm() {
   const { t } = useTranslation();
+
+  const mainColor = useAtomValue(mainColorAtom);
 
   const setGame = useSetAtom(gameAtom);
   const setPlayers = useSetAtom(playerAtom);
@@ -91,7 +93,7 @@ export function GameNightGameForm() {
   return (
     <Card
       className="my-12 max-w-[85vw] px-4 py-3"
-      color="blue"
+      color={mainColor}
       data-test-id="game-night-game-form"
     >
       <CardHeader>
