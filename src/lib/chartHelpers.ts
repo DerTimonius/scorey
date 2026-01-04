@@ -1,5 +1,5 @@
-import type { Player } from './types';
 import type { ChartConfig } from '@/components/ui/chart';
+import type { Player } from './types';
 
 export interface GameChartDataItem {
   round: string;

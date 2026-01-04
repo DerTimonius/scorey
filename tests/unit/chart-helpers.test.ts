@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import type { Player } from '../../src/lib/types';
 import {
   createChartConfig,
   transformPlayersToCumulativeChartData,
 } from '../../src/lib/chartHelpers';
+import type { Player } from '../../src/lib/types';
 
 const createPlayer = (
   id: string,

@@ -1,6 +1,10 @@
 import { useAtom, useAtomValue } from 'jotai/react';
 import { useTranslation } from 'react-i18next';
 import {
+  createChartConfig,
+  transformPlayersToCumulativeChartData,
+} from '@/lib/chartHelpers';
+import {
   gameAtom,
   gameNightAtom,
   mainColorAtom,
@@ -13,10 +17,6 @@ import { PlayerStats } from '../player/PlayerStats';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { GameNightStats } from './GameNightStats';
 import { GameNightButtons, SingleGameButtons } from './GameStatsButtons';
-import {
-  createChartConfig,
-  transformPlayersToCumulativeChartData,
-} from '@/lib/chartHelpers';
 
 export function GameStats() {
   const mainColor = useAtomValue(mainColorAtom);

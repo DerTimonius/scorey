@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import {
-  calculateGameNightPoints,
-  calculateTotalGameNightPoints,
-  getGameNightStats,
-} from '../../src/lib/utils';
 import type {
   CompletedGame,
   GameNight,
   Player,
   ScoringMode,
 } from '../../src/lib/types';
+import {
+  calculateGameNightPoints,
+  calculateTotalGameNightPoints,
+  getGameNightStats,
+} from '../../src/lib/utils';
 
 const createPlayer = (id: string, name: string): Player => ({
   id,
