@@ -22,7 +22,10 @@
   "game-stats": {
     "how-it-happened": "Wie es dazu kam",
     "player-score": "- {{playerName}}: {{playerScore}} Punkte",
-    "winner-message": "Und gewonnen hat {{winnerName}} mit {{winnerScore}} Punkten!"
+    "winner-and": "Und gewonnen",
+    "winner-is": "hat",
+    "winner-points": "Punkten",
+    "winner-with": "mit"
   },
   "increase-by": "Erhöhen um",
   "mode-selector": {

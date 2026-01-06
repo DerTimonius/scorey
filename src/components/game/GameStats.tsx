@@ -1,5 +1,8 @@
 import { useAtom, useAtomValue } from 'jotai/react';
+import { motion } from 'motion/react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { easeOut } from '@/lib/animations';
 import {
   gameAtom,
   gameNightAtom,
@@ -15,6 +18,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import type { ChartConfig } from '../ui/chart';
 import { GameNightStats } from './GameNightStats';
 import { GameNightButtons, SingleGameButtons } from './GameStatsButtons';
+import { WinnerMessage } from './WinnerMessage';
 
 function transformPlayersToCumulativeChartData(
   players: Player[],
@@ -73,6 +77,10 @@ export function GameStats() {
   const [players, setPlayers] = useAtom(playerAtom);
   const [gameNight, setGameNight] = useAtom(gameNightAtom);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
   if (!game || !game.finished || !players.length) return;
 
   const sortedPlayers = players.toSorted((a, b) =>
@@ -116,59 +124,94 @@ export function GameStats() {
       <h1 className="text-center font-display font-extrabold text-5xl md:text-6xl">
         {game.name}
       </h1>
-      <Card
-        className="w-[80vw]"
-        color={mainColor}
-        data-test-id="game-stats-card"
+      <motion.div
+        initial={{ scale: 0.7, opacity: 0.5 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={easeOut}
       >
-        <CardHeader>
-          <CardTitle
-            className="text-center font-display text-5xl"
-            data-test-id="winner-message"
-          >
-            {t('game:game-stats.winner-message', {
-              winnerName: winner.name,
-              winnerScore: winner.currVal,
-            })}
-          </CardTitle>
-          <CardDescription className="mt-6">
-            {sortedPlayers.slice(1).map((p) => (
-              <p key={p.id} className="text-center font-semibold text-lg">
-                {t('game:game-stats.player-score', {
-                  playerName: p.name,
-                  playerScore: p.currVal,
-                })}
-              </p>
-            ))}
-          </CardDescription>
-        </CardHeader>
-        <div
-          className={cn('flex flex-col items-center justify-around gap-2 px-3')}
+        <Card
+          className="w-[80vw]"
+          color={mainColor}
+          data-test-id="game-stats-card"
         >
-          <h3 className="mb-2 text-center font-bold text-2xl">
-            {t('game:game-stats.how-it-happened')}
-          </h3>
-          <GameChart
-            chartConfig={createChartConfig(players)}
-            data={transformPlayersToCumulativeChartData(players)}
-            players={players}
-          />
-          <div
+          <CardHeader>
+            <CardTitle
+              className="mx-auto max-w-3/4 text-center font-display text-5xl"
+              data-test-id="winner-message"
+            >
+              <motion.span
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ ...easeOut, delay: 0.3 }}
+              >
+                <WinnerMessage
+                  winnerName={winner.name}
+                  score={winner.currVal}
+                />
+              </motion.span>
+            </CardTitle>
+            <CardDescription className="mt-6">
+              {sortedPlayers.slice(1).map((p, idx) => (
+                <motion.p
+                  key={p.id}
+                  className="text-center font-semibold text-lg"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ ...easeOut, delay: 4.5 + 0.2 * idx }}
+                >
+                  {t('game:game-stats.player-score', {
+                    playerName: p.name,
+                    playerScore: p.currVal,
+                  })}
+                </motion.p>
+              ))}
+            </CardDescription>
+          </CardHeader>
+          <motion.div
             className={cn(
-              'mt-4 grid w-full grid-cols-1 gap-2',
-              players.length <= 4
-                ? 'md:grid-cols-2'
-                : players.length <= 8
-                  ? 'md:grid-cols-4'
-                  : 'md:grid-cols-6',
+              'flex flex-col items-center justify-around gap-2 px-3',
             )}
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{
+              ...easeOut,
+              delay: 5.4,
+              duration: 0.5,
+            }}
           >
-            {sortedPlayers.map((p) => (
-              <PlayerStats key={p.id} player={p} />
-            ))}
-          </div>
-        </div>
-      </Card>
+            <h3 className="mb-2 text-center font-bold text-2xl">
+              {t('game:game-stats.how-it-happened')}
+            </h3>
+            <GameChart
+              chartConfig={createChartConfig(players)}
+              data={transformPlayersToCumulativeChartData(players)}
+              players={players}
+            />
+            <div
+              className={cn(
+                'mt-4 grid w-full grid-cols-1 gap-2',
+                players.length <= 4
+                  ? 'md:grid-cols-2'
+                  : players.length <= 8
+                    ? 'md:grid-cols-4'
+                    : 'md:grid-cols-6',
+              )}
+            >
+              {sortedPlayers.map((p, idx) => (
+                <motion.div
+                  key={p.id}
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: '0px 0px -20px 0px' }}
+                  transition={{ duration: 0.3, delay: 0.5 + 0.2 * idx }}
+                >
+                  <PlayerStats player={p} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </Card>
+      </motion.div>
       {gameNight ? <GameNightStats /> : null}
       <div className="mb-12 flex flex-row justify-center gap-8">
         {gameNight ? (

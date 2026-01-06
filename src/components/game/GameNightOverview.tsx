@@ -1,6 +1,8 @@
-import { useAtom, useAtomValue } from 'jotai/react';
-import { useMemo } from 'react';
+import { useAtom, useAtomValue } from 'jotai';
+import { motion } from 'motion/react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { easeOut } from '@/lib/animations';
 import { gameNightAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import type { GameNight } from '@/lib/types';
 import {
@@ -11,6 +13,7 @@ import {
 import { GameChart } from '../charts/GameChart';
 import { Button } from '../ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { WinnerMessage } from './WinnerMessage';
 
 interface GameNightChartDataItem {
   round: string;
@@ -93,7 +96,11 @@ export function GameNightOverview() {
     return players.sort((a, b) => totalPoints[b.id] - totalPoints[a.id]);
   }, [players, totalPoints]);
 
-  if (!gameNight || !gameNight.isFinished) return null;
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
+  if (!gameNight || !gameNight.isFinished || !sortedPlayers.length) return null;
 
   const overallWinner = sortedPlayers[0];
 
@@ -104,53 +111,84 @@ export function GameNightOverview() {
 
   return (
     <div className="flex min-h-min flex-col items-center gap-8 py-12">
-      <h1
+      <motion.h1
         className="text-center font-display font-extrabold text-5xl md:text-6xl"
         data-test-id="game-night-title"
+        initial={{ scale: 0.7, opacity: 0.5 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={easeOut}
       >
         {t('game:game-night.total-ranking')}
-      </h1>
-      <Card
-        className="w-[80vw]"
-        color={mainColor}
-        data-test-id="game-night-overview"
+      </motion.h1>
+      <motion.div
+        initial={{ scale: 0.7, opacity: 0.5 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={easeOut}
       >
-        <CardHeader>
-          <CardTitle
-            className="text-center font-display text-5xl"
-            data-test-id="winner-message"
-          >
-            {t('game:game-stats.winner-message', {
-              winnerName: overallWinner.name,
-              winnerScore: totalPoints[overallWinner.id],
-            })}
-          </CardTitle>
-          <CardDescription className="mt-6">
-            {sortedPlayers.slice(1).map((p) => (
-              <p key={p.id} className="text-center font-semibold text-lg">
-                {t('game:game-stats.player-score', {
-                  playerName: p.name,
-                  playerScore: totalPoints[p.id],
-                })}
-              </p>
-            ))}
-          </CardDescription>
-        </CardHeader>
-        <div
-          className={cn('flex flex-col items-center justify-around gap-2 px-3')}
+        <Card
+          className="w-[80vw]"
+          color={mainColor}
+          data-test-id="game-night-overview"
         >
-          <h3 className="mb-2 text-center font-bold text-2xl">
-            {t('game:game-stats.how-it-happened')}
-          </h3>
+          <CardHeader>
+            <CardTitle
+              className="mx-auto max-w-3/4 text-center font-display text-5xl"
+              data-test-id="winner-message"
+            >
+              <motion.span
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ ...easeOut, delay: 0.3 }}
+              >
+                <WinnerMessage
+                  winnerName={overallWinner.name}
+                  score={totalPoints[overallWinner.id]}
+                />
+              </motion.span>
+            </CardTitle>
+            <CardDescription className="mt-6">
+              {sortedPlayers.slice(1).map((p, idx) => (
+                <motion.p
+                  key={p.id}
+                  className="text-center font-semibold text-lg"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ ...easeOut, delay: 4.5 + 0.2 * idx }}
+                >
+                  {t('game:game-stats.player-score', {
+                    playerName: p.name,
+                    playerScore: totalPoints[p.id],
+                  })}
+                </motion.p>
+              ))}
+            </CardDescription>
+          </CardHeader>
+          <motion.div
+            className={cn(
+              'flex flex-col items-center justify-around gap-2 px-3',
+            )}
+            initial={{ scale: 0.7, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{
+              ...easeOut,
+              delay: 5.4,
+              duration: 0.5,
+            }}
+          >
+            <h3 className="mb-2 text-center font-bold text-2xl">
+              {t('game:game-stats.how-it-happened')}
+            </h3>
 
-          <GameChart
-            chartConfig={createChartConfig(sortedPlayers)}
-            data={chartData}
-            players={players}
-            gameNight
-          />
-        </div>
-      </Card>
+            <GameChart
+              chartConfig={createChartConfig(sortedPlayers)}
+              data={chartData}
+              players={players}
+              gameNight
+              animationDelay={3400}
+            />
+          </motion.div>
+        </Card>
+      </motion.div>
       <div className="mb-12 flex flex-row justify-center gap-8">
         <Button
           data-test-id="new-game-night-button"
