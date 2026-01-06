@@ -52,7 +52,7 @@ test('basic game creation and flow', async ({ page }) => {
   await expect(page.getByTestId('finish-game-dialog')).toBeVisible();
   await page.getByTestId('confirm-finish-game').click();
 
-  await checkWinnerMessage(page, 'And the winner is Jane with 28 points!');
+  await checkWinnerMessage(page, 'And the winner with 28 points is Jane');
   await expect(page.getByTestId('game-chart')).toBeVisible();
   await expect(page.getByTestId(/^player-chart/)).toHaveCount(2);
 

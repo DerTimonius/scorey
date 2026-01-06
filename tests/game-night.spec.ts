@@ -70,7 +70,7 @@ test('play two games in game night and see stats', async ({ page }) => {
   await page.getByTestId('finish-game-button').click();
   await page.getByTestId('confirm-finish-game').click();
 
-  await checkWinnerMessage(page, 'And the winner is Alice with 10 points!');
+  await checkWinnerMessage(page, 'And the winner with 10 points is Alice');
   await page.getByTestId('next-game-button').click();
   await page.getByTestId('confirm-next-game').click();
 
@@ -130,7 +130,7 @@ test('finish game night and see overview with chart', async ({ page }) => {
   await page.getByTestId('confirm-finish-game-night').click();
 
   await expect(page.getByTestId('game-night-overview')).toBeVisible();
-  await checkWinnerMessage(page, 'And the winner is Bob with 20 points!');
+  await checkWinnerMessage(page, 'And the winner with 20 points is Bob');
   await expect(page.getByTestId('game-night-title')).toHaveText(
     'Game Night Rankings',
   );
@@ -182,5 +182,5 @@ test('game night with winner-only scoring', async ({ page }) => {
   await page.getByTestId('confirm-finish-game-night').click();
 
   await expect(page.getByTestId('game-night-overview')).toBeVisible();
-  await checkWinnerMessage(page, 'And the winner is Alice with 1 points!');
+  await checkWinnerMessage(page, 'And the winner with 1 points is Alice');
 });

@@ -22,7 +22,10 @@
   "game-stats": {
     "how-it-happened": "How it happened",
     "player-score": "- {{playerName}}: {{playerScore}} points",
-    "winner-message": "And the winner is <name>{{winnerName}}</name> with <score /> points!"
+    "winner-and": "And the winner",
+    "winner-is": "is",
+    "winner-points": "points",
+    "winner-with": "with"
   },
   "increase-by": "Increase by",
   "mode-selector": {

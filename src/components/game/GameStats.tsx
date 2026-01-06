@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from 'jotai/react';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { easeOut } from '@/lib/animations';
 import {
   gameAtom,
@@ -11,7 +11,6 @@ import {
 } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { AnimatedName, AnimatedScore } from '../animation/Animations';
 import { GameChart, type GameChartDataItem } from '../charts/GameChart';
 import { Layout } from '../layout/Layout';
 import { PlayerStats } from '../player/PlayerStats';
@@ -19,6 +18,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import type { ChartConfig } from '../ui/chart';
 import { GameNightStats } from './GameNightStats';
 import { GameNightButtons, SingleGameButtons } from './GameStatsButtons';
+import { WinnerMessage } from './WinnerMessage';
 
 function transformPlayersToCumulativeChartData(
   players: Player[],
@@ -136,7 +136,7 @@ export function GameStats() {
         >
           <CardHeader>
             <CardTitle
-              className="text-center font-display text-5xl"
+              className="mx-auto max-w-3/4 text-center font-display text-5xl"
               data-test-id="winner-message"
             >
               <motion.span
@@ -144,15 +144,9 @@ export function GameStats() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ ...easeOut, delay: 0.3 }}
               >
-                <Trans
-                  i18nKey="game:game-stats.winner-message"
-                  values={{
-                    winnerName: winner.name,
-                  }}
-                  components={{
-                    name: <AnimatedName />,
-                    score: <AnimatedScore value={winner.currVal} />,
-                  }}
+                <WinnerMessage
+                  winnerName={winner.name}
+                  score={winner.currVal}
                 />
               </motion.span>
             </CardTitle>
@@ -163,7 +157,7 @@ export function GameStats() {
                   className="text-center font-semibold text-lg"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ ...easeOut, delay: 2.5 + 0.2 * idx }}
+                  transition={{ ...easeOut, delay: 4.5 + 0.2 * idx }}
                 >
                   {t('game:game-stats.player-score', {
                     playerName: p.name,
@@ -181,7 +175,7 @@ export function GameStats() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{
               ...easeOut,
-              delay: 3.4,
+              delay: 5.4,
               duration: 0.5,
             }}
           >

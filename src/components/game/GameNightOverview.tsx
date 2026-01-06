@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useEffect, useMemo } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { easeOut } from '@/lib/animations';
 import { gameNightAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import type { GameNight } from '@/lib/types';
@@ -10,10 +10,10 @@ import {
   calculateTotalGameNightPoints,
   cn,
 } from '@/lib/utils';
-import { AnimatedName, AnimatedScore } from '../animation/Animations';
 import { GameChart } from '../charts/GameChart';
 import { Button } from '../ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { WinnerMessage } from './WinnerMessage';
 
 interface GameNightChartDataItem {
   round: string;
@@ -132,7 +132,7 @@ export function GameNightOverview() {
         >
           <CardHeader>
             <CardTitle
-              className="text-center font-display text-5xl"
+              className="mx-auto max-w-3/4 text-center font-display text-5xl"
               data-test-id="winner-message"
             >
               <motion.span
@@ -140,17 +140,9 @@ export function GameNightOverview() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ ...easeOut, delay: 0.3 }}
               >
-                <Trans
-                  i18nKey="game:game-stats.winner-message"
-                  values={{
-                    winnerName: overallWinner.name,
-                  }}
-                  components={{
-                    name: <AnimatedName />,
-                    score: (
-                      <AnimatedScore value={totalPoints[overallWinner.id]} />
-                    ),
-                  }}
+                <WinnerMessage
+                  winnerName={overallWinner.name}
+                  score={totalPoints[overallWinner.id]}
                 />
               </motion.span>
             </CardTitle>
@@ -161,7 +153,7 @@ export function GameNightOverview() {
                   className="text-center font-semibold text-lg"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ ...easeOut, delay: 2.5 + 0.2 * idx }}
+                  transition={{ ...easeOut, delay: 4.5 + 0.2 * idx }}
                 >
                   {t('game:game-stats.player-score', {
                     playerName: p.name,
@@ -179,7 +171,7 @@ export function GameNightOverview() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{
               ...easeOut,
-              delay: 3.4,
+              delay: 5.4,
               duration: 0.5,
             }}
           >
