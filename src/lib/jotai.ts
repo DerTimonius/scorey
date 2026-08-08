@@ -15,3 +15,6 @@ export const gameNightAtom = atomWithStorage<GameNight | null>(
   null,
 );
 export const showGameNightFormAtom = atom(false);
+
+export const showSpecialTrackingAtom = atom(false);
+export const trackingSpecialGameAtom = atom<'fugitive'>();

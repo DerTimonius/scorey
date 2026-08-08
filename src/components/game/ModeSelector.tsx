@@ -1,17 +1,19 @@
-import { useAtom } from 'jotai/react';
+import { useSetAtom } from 'jotai/react';
 import { useTranslation } from 'react-i18next';
 import {
   gameNightAtom,
   showGameFormAtom,
   showGameNightFormAtom,
+  showSpecialTrackingAtom,
 } from '@/lib/jotai';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
 export function ModeSelector() {
   const { t } = useTranslation();
-  const setShowForm = useAtom(showGameFormAtom)[1];
-  const setShowGameNightForm = useAtom(showGameNightFormAtom)[1];
-  const setGameNight = useAtom(gameNightAtom)[1];
+  const setShowForm = useSetAtom(showGameFormAtom);
+  const setShowGameNightForm = useSetAtom(showGameNightFormAtom);
+  const setGameNight = useSetAtom(gameNightAtom);
+  const setSpecialTracking = useSetAtom(showSpecialTrackingAtom);
 
   const handleSingleGame = () => {
     setGameNight(null);
@@ -20,6 +22,10 @@ export function ModeSelector() {
 
   const handleGameNight = () => {
     setShowGameNightForm(true);
+  };
+
+  const handleSpecialTracking = () => {
+    setSpecialTracking(true);
   };
 
   return (
@@ -56,6 +62,20 @@ export function ModeSelector() {
             </CardTitle>
             <CardDescription className="text-center">
               {t('game:mode-selector.game-night-desc')}
+            </CardDescription>
+          </CardHeader>
+        </Card>
+        <Card
+          className="w-96 cursor-pointer transition-all hover:scale-105"
+          color="lime"
+          onClick={handleSpecialTracking}
+        >
+          <CardHeader>
+            <CardTitle className="text-center text-2xl">
+              {t('special:labels:title')}
+            </CardTitle>
+            <CardDescription className="text-center">
+              {t('special:labels:description')}
             </CardDescription>
           </CardHeader>
         </Card>

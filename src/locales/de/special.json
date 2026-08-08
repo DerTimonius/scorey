@@ -1,0 +1,13 @@
+{
+  "labels": {
+    "title": "Spezielle Games",
+    "description": "Wenn normales Punktezählen nicht ausreicht"
+  },
+  "fugitive": {
+    "is-hideout": "Ist {{label}} ein Versteck?",
+    "hideout": "Hier ist ein Versteck",
+    "no-hideout": "Hier ist kein Versteck",
+    "not-sure": "Gefragt, aber nicht sicher",
+    "no-knowledge": "Nicht sicher"
+  }
+}

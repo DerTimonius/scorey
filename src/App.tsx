@@ -8,11 +8,13 @@ import { GameState } from './components/game/GameState';
 import { GameStats } from './components/game/GameStats';
 import { ModeSelector } from './components/game/ModeSelector';
 import { Layout } from './components/layout/Layout';
+import { SpecialTrackingGames } from './components/special/SpecialTrackingGames';
 import {
   gameAtom,
   gameNightAtom,
   showGameFormAtom,
   showGameNightFormAtom,
+  showSpecialTrackingAtom,
 } from './lib/jotai';
 
 function App() {
@@ -20,6 +22,11 @@ function App() {
   const gameNight = useAtomValue(gameNightAtom);
   const showForm = useAtomValue(showGameFormAtom);
   const showGameNightForm = useAtomValue(showGameNightFormAtom);
+  const showSpecialTracking = useAtomValue(showSpecialTrackingAtom);
+
+  if (showSpecialTracking) {
+    return <SpecialTrackingGames />;
+  }
 
   if (game) {
     return game.finished ? <GameStats /> : <GameState />;

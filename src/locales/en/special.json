@@ -1,0 +1,13 @@
+{
+  "labels": {
+    "title": "Special Games",
+    "description": "For when normal score tracking is not enough"
+  },
+  "fugitive": {
+    "is-hideout": "Is {{label}} a hideout?",
+    "hideout": "This is a hideout",
+    "no-hideout": "This is no hideout",
+    "not-sure": "Asked, but still not sure",
+    "no-knowledge": "Not sure"
+  }
+}
