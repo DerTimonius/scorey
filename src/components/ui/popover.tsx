@@ -1,24 +1,21 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type * as React from 'react';
+
 import { DEFAULT_COLOR } from '@/lib/constants';
 import type { VariantColor } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
-function Popover({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
+function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
-function PopoverTrigger({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
+function PopoverTrigger({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
 }
 
 const popoverVariants = cva(
-  'z-50 w-72 rounded-base border-2 border-border p-4 text-foreground outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-popover-content-transform-origin)',
+  'z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-base border-2 border-border p-4 text-foreground outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
   {
     variants: {
       color: {
@@ -53,8 +50,7 @@ function PopoverContent({
   sideOffset = 4,
   color,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content> &
-  VariantProps<typeof popoverVariants>) {
+}: React.ComponentProps<typeof PopoverPrimitive.Content> & VariantProps<typeof popoverVariants>) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content

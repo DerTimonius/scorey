@@ -2,15 +2,12 @@ import { useAtom, useAtomValue } from 'jotai/react';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
-import {
-  gameAtom,
-  gameNightAtom,
-  mainColorAtom,
-  playerAtom,
-} from '@/lib/jotai';
+import { gameAtom, gameNightAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import type { CompletedGame } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
 import { Layout } from '../layout/Layout';
 import { PlayerCard } from '../player/PlayerCard';
 import {
@@ -71,9 +68,7 @@ export function GameState() {
 
   const handleResetGame = () => {
     if (!game) return;
-    setPlayers(
-      players.map((p) => ({ ...p, rounds: [], currVal: game.startValue })),
-    );
+    setPlayers(players.map((p) => ({ ...p, rounds: [], currVal: game.startValue })));
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: would rerender indefinitely
@@ -83,9 +78,7 @@ export function GameState() {
       (game.endsAtRound && minLength === game.roundToEnd) ||
       (game.endsAtScore.ends &&
         players.some((p) => p.currVal >= Number(game.scoreToEnd)) &&
-        (game.endsAtScore.sameRound
-          ? players.every((p) => p.rounds.length === minLength)
-          : true))
+        (game.endsAtScore.sameRound ? players.every((p) => p.rounds.length === minLength) : true))
     ) {
       handleFinishGame();
     }
@@ -96,18 +89,13 @@ export function GameState() {
   return (
     <Layout>
       <div className="flex flex-col items-center gap-3 px-4 pt-4 sm:px-6">
-        <h1 className="font-display font-extrabold text-5xl md:text-6xl">
-          {game.name}
-        </h1>
-        <h2 className="font-bold text-xl md:text-2xl">
+        <h1 className="font-display text-5xl font-extrabold md:text-6xl">{game.name}</h1>
+        <h2 className="text-xl font-bold md:text-2xl">
           {t('state:round-number', { roundNum: minLength + 1 })}{' '}
           {game.endsAtRound
             ? t('state:rounds-to-go', {
                 roundsToGo: game.roundToEnd - minLength,
-              }).replace(
-                'Runden',
-                game.roundToEnd - minLength === 1 ? 'Runde' : 'Runden',
-              )
+              }).replace('Runden', game.roundToEnd - minLength === 1 ? 'Runde' : 'Runden')
             : null}
         </h2>
         {game.endsAtRound ? (
@@ -132,9 +120,7 @@ export function GameState() {
             id="enforce-round"
             onCheckedChange={() => setEnforceRounds(!enforceRounds)}
           />
-          <Label htmlFor="enforce-round">
-            {t('state:enforce-rounds-label')}
-          </Label>
+          <Label htmlFor="enforce-round">{t('state:enforce-rounds-label')}</Label>
         </div>
 
         <div className="flex items-center space-x-2 px-12 md:px-0">
@@ -149,11 +135,7 @@ export function GameState() {
         </div>
         <div className="space-x-4">
           <EditGameForm />
-          <QuickOverview
-            gameNight={gameNight}
-            gameName={game.name}
-            players={players}
-          />
+          <QuickOverview gameNight={gameNight} gameName={game.name} players={players} />
         </div>
       </div>
 
@@ -193,15 +175,10 @@ export function GameState() {
               {t('game:finish-game.button')}
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent
-            color={mainColor}
-            data-test-id="finish-game-dialog"
-          >
+          <AlertDialogContent color={mainColor} data-test-id="finish-game-dialog">
             <AlertDialogHeader>
               <AlertDialogTitle>{t('game:finish-game.title')}</AlertDialogTitle>
-              <AlertDialogDescription>
-                {t('game:finish-game.description')}
-              </AlertDialogDescription>
+              <AlertDialogDescription>{t('game:finish-game.description')}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{t('action:cancel')}</AlertDialogCancel>
@@ -222,15 +199,10 @@ export function GameState() {
               {t('game:reset-game.button')}
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent
-            color={mainColor}
-            data-test-id="reset-game-dialog"
-          >
+          <AlertDialogContent color={mainColor} data-test-id="reset-game-dialog">
             <AlertDialogHeader>
               <AlertDialogTitle>{t('game:reset-game.title')}</AlertDialogTitle>
-              <AlertDialogDescription>
-                {t('game:reset-game.description')}
-              </AlertDialogDescription>
+              <AlertDialogDescription>{t('game:reset-game.description')}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel data-test-id="cancel-reset-game">

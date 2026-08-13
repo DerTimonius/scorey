@@ -4,10 +4,12 @@ import { Pen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { easeIn, easeOut } from '@/lib/animations';
 import { playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
 import { Button } from '../ui/button';
 import { Card, CardFooter, CardHeader } from '../ui/card';
 import { Input } from '../ui/input';
@@ -19,11 +21,7 @@ interface PlayerCardProps {
   showStats: boolean;
 }
 
-export function PlayerCard({
-  player,
-  hasMoreRounds,
-  showStats,
-}: PlayerCardProps) {
+export function PlayerCard({ player, hasMoreRounds, showStats }: PlayerCardProps) {
   const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(player.name);
@@ -33,9 +31,7 @@ export function PlayerCard({
   const setPlayers = useSetAtom(playerAtom);
 
   const handleUpdateName = () => {
-    setPlayers((prev) =>
-      prev.map((p) => (p.id === player.id ? { ...player, name } : p)),
-    );
+    setPlayers((prev) => prev.map((p) => (p.id === player.id ? { ...player, name } : p)));
     setIsEditing(false);
   };
 
@@ -44,9 +40,7 @@ export function PlayerCard({
     const rounds = [...player.rounds, amount];
 
     setPlayers((prev) =>
-      prev.map((p) =>
-        p.id === player.id ? { ...player, rounds, currVal: newVal } : p,
-      ),
+      prev.map((p) => (p.id === player.id ? { ...player, rounds, currVal: newVal } : p)),
     );
   };
 
@@ -55,9 +49,7 @@ export function PlayerCard({
     const rounds = [...player.rounds, amount * -1];
 
     setPlayers((prev) =>
-      prev.map((p) =>
-        p.id === player.id ? { ...player, rounds, currVal: newVal } : p,
-      ),
+      prev.map((p) => (p.id === player.id ? { ...player, rounds, currVal: newVal } : p)),
     );
   };
 
@@ -73,9 +65,7 @@ export function PlayerCard({
     const currVal = rounds.reduce((acc, val) => acc + val, 0);
 
     setPlayers((prev) =>
-      prev.map((p) =>
-        p.id === player.id ? { ...player, rounds, currVal } : p,
-      ),
+      prev.map((p) => (p.id === player.id ? { ...player, rounds, currVal } : p)),
     );
   };
 
@@ -94,13 +84,13 @@ export function PlayerCard({
       <CardHeader>
         <div
           data-slot="card-title"
-          className="ap-2 grid grid-cols-3 font-heading text-2xl leading-none"
+          className="ap-2 grid grid-cols-3 text-2xl leading-none font-heading"
         >
           {/* If in edit mode, show input; otherwise show player name */}
           {isEditing ? (
             <>
               <Input
-                className="col-start-2 w-48 place-self-center self-center text-center font-extrabold text-2xl"
+                className="col-start-2 w-48 place-self-center self-center text-center text-2xl font-extrabold"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -127,9 +117,7 @@ export function PlayerCard({
             </>
           ) : (
             <>
-              <div className="col-start-2 place-self-center self-center">
-                {player.name}
-              </div>
+              <div className="col-start-2 place-self-center self-center">{player.name}</div>
               <Button
                 color={player.color}
                 variant="ghost"
@@ -138,21 +126,17 @@ export function PlayerCard({
                 className="max-w-min"
               >
                 <Pen aria-hidden />
-                <span className="sr-only">
-                  {t('form:player-name.edit', { name: player.name })}
-                </span>
+                <span className="sr-only">{t('form:player-name.edit', { name: player.name })}</span>
               </Button>
             </>
           )}
         </div>
       </CardHeader>
-      <div
-        className={cn('flex flex-col items-center justify-around gap-2 px-3')}
-      >
+      <div className={cn('flex flex-col items-center justify-around gap-2 px-3')}>
         <div className="flex flex-col items-center">
           <p className="font-semibold">{t('state:current-score')}</p>
           <NumberFlow
-            className="font-extrabold text-4xl"
+            className="text-4xl font-extrabold"
             data-test-id={`current-score-${player.name}`}
             value={player.currVal}
           />
@@ -170,7 +154,7 @@ export function PlayerCard({
             </label>
             <div className="flex items-center justify-between px-2">
               <Input
-                className="w-32 text-center font-extrabold text-4xl"
+                className="w-32 text-center text-4xl font-extrabold"
                 id="value"
                 data-test-id="score-input"
                 ref={inputRef}
@@ -186,11 +170,7 @@ export function PlayerCard({
                 type="number"
                 autoFocus
               />
-              <Button
-                color={player.color}
-                onClick={handleSubmit}
-                variant="ghost"
-              >
+              <Button color={player.color} onClick={handleSubmit} variant="ghost">
                 {t('action:save')}
               </Button>
               <Button

@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
 import type { CompletedGame, GameNight, Player, ScoringMode } from './types';
 
 export function cn(...inputs: ClassValue[]) {
@@ -68,11 +69,7 @@ export function calculateTotalGameNightPoints(
   });
 
   gameNight.completedGames.forEach((game) => {
-    const gamePoints = calculateGameNightPoints(
-      game,
-      players,
-      gameNight.scoringMode,
-    );
+    const gamePoints = calculateGameNightPoints(game, players, gameNight.scoringMode);
     Object.entries(gamePoints).forEach(([playerId, points]) => {
       totalPoints[playerId] += points;
     });
@@ -88,10 +85,7 @@ export function getGameNightStats(
     return [];
   }
 
-  const totalPoints = calculateTotalGameNightPoints(
-    gameNight,
-    gameNight.players,
-  );
+  const totalPoints = calculateTotalGameNightPoints(gameNight, gameNight.players);
 
   const wins: { [playerId: string]: number } = {};
   gameNight.players.forEach((player) => {

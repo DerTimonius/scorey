@@ -4,8 +4,10 @@ import { Cog } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
+
 import { gameAtom, mainColorAtom } from '@/lib/jotai';
 import { WinningConditionEnum } from '@/lib/types';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,14 +20,7 @@ import {
 } from '../ui/alert-dialog';
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
@@ -98,9 +93,7 @@ export function EditGameForm() {
               <AlertDialogTitle>{t('game:edit-game.title')}</AlertDialogTitle>
             </AlertDialogHeader>
             <div>
-              <h3 className="mb-4 font-medium text-lg">
-                {t('form:options.index')}
-              </h3>
+              <h3 className="mb-4 text-lg font-medium">{t('form:options.index')}</h3>
               <FormField
                 control={form.control}
                 name="startValue"
@@ -113,9 +106,7 @@ export function EditGameForm() {
                         placeholder="100"
                         type="number"
                         {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value, 10))
-                        }
+                        onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -136,10 +127,7 @@ export function EditGameForm() {
                       >
                         <FormItem className="flex items-center gap-3">
                           <FormControl>
-                            <RadioGroupItem
-                              value="minNumber"
-                              data-test-id="min-number-win"
-                            />
+                            <RadioGroupItem value="minNumber" data-test-id="min-number-win" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             {t('form:options.who-wins.min')}
@@ -147,10 +135,7 @@ export function EditGameForm() {
                         </FormItem>
                         <FormItem className="flex items-center gap-3">
                           <FormControl>
-                            <RadioGroupItem
-                              value="maxNumber"
-                              data-test-id="max-number-win"
-                            />
+                            <RadioGroupItem value="maxNumber" data-test-id="max-number-win" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             {t('form:options.who-wins.max')}
@@ -165,9 +150,7 @@ export function EditGameForm() {
             </div>
 
             <div>
-              <h3 className="mb-4 font-medium text-lg">
-                {t('form:advanced-options.index')}
-              </h3>{' '}
+              <h3 className="mb-4 text-lg font-medium">{t('form:advanced-options.index')}</h3>{' '}
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">
                   <Checkbox
@@ -190,9 +173,7 @@ export function EditGameForm() {
                     render={({ field }) => (
                       <FormItem className="ml-4">
                         <FormLabel>
-                          {t(
-                            'form:advanced-options.round-to-be-finished-label',
-                          )}
+                          {t('form:advanced-options.round-to-be-finished-label')}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -201,11 +182,7 @@ export function EditGameForm() {
                             data-test-id="ends-at-round-input"
                             type="number"
                             {...field}
-                            onChange={(e) =>
-                              field.onChange(
-                                Number.parseInt(e.target.value, 10),
-                              )
-                            }
+                            onChange={(e) => field.onChange(Number.parseInt(e.target.value, 10))}
                           />
                         </FormControl>
                         <FormMessage />
@@ -235,9 +212,7 @@ export function EditGameForm() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            {t(
-                              'form:advanced-options.score-to-be-finished-label',
-                            )}
+                            {t('form:advanced-options.score-to-be-finished-label')}
                           </FormLabel>
                           <FormControl>
                             <Input
@@ -245,11 +220,7 @@ export function EditGameForm() {
                               data-test-id="ends-at-score-input"
                               type="number"
                               {...field}
-                              onChange={(e) =>
-                                field.onChange(
-                                  Number.parseInt(e.target.value, 10),
-                                )
-                              }
+                              onChange={(e) => field.onChange(Number.parseInt(e.target.value, 10))}
                             />
                           </FormControl>
                           <FormMessage />

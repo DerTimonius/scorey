@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { checkWinnerMessage } from './utils';
 
 test('game night mode selection', async ({ page }) => {
@@ -89,9 +90,7 @@ test('play two games in game night and see stats', async ({ page }) => {
   await page.getByTestId('confirm-finish-game').click();
 
   await expect(page.getByTestId('game-night-stats')).toBeVisible();
-  await expect(page.getByTestId('game-night-title')).toHaveText(
-    'Game Night Rankings',
-  );
+  await expect(page.getByTestId('game-night-title')).toHaveText('Game Night Rankings');
 });
 
 test('finish game night and see overview with chart', async ({ page }) => {
@@ -131,9 +130,7 @@ test('finish game night and see overview with chart', async ({ page }) => {
 
   await expect(page.getByTestId('game-night-overview')).toBeVisible();
   await checkWinnerMessage(page, 'And the winner with 20 points is Bob');
-  await expect(page.getByTestId('game-night-title')).toHaveText(
-    'Game Night Rankings',
-  );
+  await expect(page.getByTestId('game-night-title')).toHaveText('Game Night Rankings');
   await expect(page.getByTestId('new-game-night-button')).toBeVisible();
 });
 

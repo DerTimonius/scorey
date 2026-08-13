@@ -20,24 +20,16 @@ test('color changes', async ({ page }) => {
 
   await page.getByTestId('create-game-button').click();
 
-  await expect(page.getByTestId('player-card-Jane')).toContainClass(
-    'bg-amber-background',
-  );
-  await expect(page.getByTestId('player-card-John')).toContainClass(
-    'bg-sky-background',
-  );
+  await expect(page.getByTestId('player-card-Jane')).toContainClass('bg-amber-background');
+  await expect(page.getByTestId('player-card-John')).toContainClass('bg-sky-background');
 
   await page.getByTestId('finish-game-button').click();
   await expect(page.getByTestId('finish-game-dialog')).toBeVisible();
   await page.getByTestId('confirm-finish-game').click();
 
-  await expect(page.getByTestId('game-stats-card')).toContainClass(
-    'bg-purple-background',
-  );
+  await expect(page.getByTestId('game-stats-card')).toContainClass('bg-purple-background');
   await page.getByTestId('global-color-select').click();
   await page.getByTestId('global-color-lime').click();
   await expect(page.locator('nav')).toContainClass('bg-lime-main');
-  await expect(page.getByTestId('game-stats-card')).toContainClass(
-    'bg-lime-background',
-  );
+  await expect(page.getByTestId('game-stats-card')).toContainClass('bg-lime-background');
 });

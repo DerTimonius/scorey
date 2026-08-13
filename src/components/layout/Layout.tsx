@@ -1,12 +1,11 @@
 import type { PropsWithChildren } from 'react';
+
 import { cn } from '@/lib/utils';
+
 import { Footer } from './Footer';
 import { Navbar } from './Navbar';
 
-export function Layout({
-  children,
-  className,
-}: PropsWithChildren & { className?: string }) {
+export function Layout({ children, className }: PropsWithChildren & { className?: string }) {
   return (
     <>
       <Navbar />

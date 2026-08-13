@@ -2,9 +2,11 @@ import { useAtomValue } from 'jotai/react';
 import { Eye } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { mainColorAtom } from '@/lib/jotai';
 import type { GameNight, Player } from '@/lib/types';
 import { cn, getGameNightStats } from '@/lib/utils';
+
 import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
@@ -14,11 +16,7 @@ type QuickOverviewProps = {
   gameName: string;
 };
 
-export function QuickOverview({
-  players,
-  gameNight,
-  gameName,
-}: QuickOverviewProps) {
+export function QuickOverview({ players, gameNight, gameName }: QuickOverviewProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const color = useAtomValue(mainColorAtom);
@@ -37,11 +35,7 @@ export function QuickOverview({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger>
-        <Button
-          variant="ghost"
-          color={color}
-          aria-label={t('game:overview.title')}
-        >
+        <Button variant="ghost" color={color} aria-label={t('game:overview.title')}>
           <Eye className="!size-6" aria-hidden />
         </Button>
       </PopoverTrigger>
@@ -49,9 +43,7 @@ export function QuickOverview({
         {gameNight ? (
           <div className="space-y-4 px-2">
             <section>
-              <h3 className="mb-3 text-center">
-                {t('game:overview.game', { game: gameName })}
-              </h3>
+              <h3 className="mb-3 text-center">{t('game:overview.game', { game: gameName })}</h3>
               <ol className="list-inside list-decimal space-y-1">
                 {sortedPlayers.map((player) => {
                   const hasFewerRounds = player.rounds.length < maxRounds;
@@ -59,10 +51,7 @@ export function QuickOverview({
                   return (
                     <li
                       key={player.id}
-                      className={cn(
-                        'font-medium first:font-bold',
-                        hasFewerRounds && 'opacity-100',
-                      )}
+                      className={cn('font-medium first:font-bold', hasFewerRounds && 'opacity-100')}
                     >
                       <span className="inline-flex w-3/4 justify-between">
                         <span>{player.name}</span>
@@ -85,10 +74,7 @@ export function QuickOverview({
                 return (
                   <li
                     key={player.id}
-                    className={cn(
-                      'font-medium first:font-bold',
-                      hasFewerRounds && 'opacity-100',
-                    )}
+                    className={cn('font-medium first:font-bold', hasFewerRounds && 'opacity-100')}
                   >
                     <span className="inline-flex w-3/4 justify-between">
                       <span>{player.name}</span>

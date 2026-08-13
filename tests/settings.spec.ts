@@ -18,30 +18,22 @@ test('game creation with endsAtRound option and flow', async ({ page }) => {
 
   for (let i = 0; i < 9; i++) {
     await page.getByTestId('plus-button-Jane').click();
-    await page
-      .getByTestId('score-input')
-      .fill(Math.floor(Math.random() * 50 + 25).toString());
+    await page.getByTestId('score-input').fill(Math.floor(Math.random() * 50 + 25).toString());
     await page.keyboard.press('Enter');
 
     await page.getByTestId('plus-button-John').click();
-    await page
-      .getByTestId('score-input')
-      .fill(Math.floor(Math.random() * 50 + 25).toString());
+    await page.getByTestId('score-input').fill(Math.floor(Math.random() * 50 + 25).toString());
     await page.keyboard.press('Enter');
   }
 
   await expect(page.getByTestId('game-chart')).not.toBeVisible();
 
   await page.getByTestId('plus-button-Jane').click();
-  await page
-    .getByTestId('score-input')
-    .fill(Math.floor(Math.random() * 50 + 25).toString());
+  await page.getByTestId('score-input').fill(Math.floor(Math.random() * 50 + 25).toString());
   await page.keyboard.press('Enter');
 
   await page.getByTestId('plus-button-John').click();
-  await page
-    .getByTestId('score-input')
-    .fill(Math.floor(Math.random() * 50 + 25).toString());
+  await page.getByTestId('score-input').fill(Math.floor(Math.random() * 50 + 25).toString());
   await page.keyboard.press('Enter');
 
   await expect(page.getByTestId('game-chart')).toBeVisible();

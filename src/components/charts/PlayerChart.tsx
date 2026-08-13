@@ -1,12 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer } from '@/components/ui/chart';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
@@ -20,20 +14,11 @@ interface PlayerChartProps {
   color: Color;
 }
 
-export function PlayerChart({
-  dataTestId,
-  label,
-  data,
-  chartConfig,
-  color,
-}: PlayerChartProps) {
+export function PlayerChart({ dataTestId, label, data, chartConfig, color }: PlayerChartProps) {
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   return (
-    <Card
-      className="w-full bg-secondary-background text-foreground"
-      data-test-id={dataTestId}
-    >
+    <Card className="w-full bg-secondary-background text-foreground" data-test-id={dataTestId}>
       <CardHeader>
         <CardTitle className="text-sm">{label}</CardTitle>
       </CardHeader>
@@ -52,18 +37,11 @@ export function PlayerChart({
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value: string) =>
-                t('state:round-number', { roundNum: value })
-              }
+              tickFormatter={(value: string) => t('state:round-number', { roundNum: value })}
             />
             {!isMobile ? <YAxis /> : null}
             <Bar dataKey="val" fill={`var(--chart-${color})`} radius={8}>
-              <LabelList
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
-              />
+              <LabelList position="top" offset={12} className="fill-foreground" fontSize={12} />
             </Bar>
           </BarChart>
         </ChartContainer>

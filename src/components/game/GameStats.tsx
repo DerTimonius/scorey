@@ -2,15 +2,12 @@ import { useAtom, useAtomValue } from 'jotai/react';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { easeOut } from '@/lib/animations';
-import {
-  gameAtom,
-  gameNightAtom,
-  mainColorAtom,
-  playerAtom,
-} from '@/lib/jotai';
+import { gameAtom, gameNightAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
 import { GameChart, type GameChartDataItem } from '../charts/GameChart';
 import { Layout } from '../layout/Layout';
 import { PlayerStats } from '../player/PlayerStats';
@@ -20,9 +17,7 @@ import { GameNightStats } from './GameNightStats';
 import { GameNightButtons, SingleGameButtons } from './GameStatsButtons';
 import { WinnerMessage } from './WinnerMessage';
 
-function transformPlayersToCumulativeChartData(
-  players: Player[],
-): GameChartDataItem[] {
+function transformPlayersToCumulativeChartData(players: Player[]): GameChartDataItem[] {
   if (!players || players.length === 0) {
     return [];
   }
@@ -84,17 +79,13 @@ export function GameStats() {
   if (!game || !game.finished || !players.length) return;
 
   const sortedPlayers = players.toSorted((a, b) =>
-    game.winningCondition === 'maxNumber'
-      ? b.currVal - a.currVal
-      : a.currVal - b.currVal,
+    game.winningCondition === 'maxNumber' ? b.currVal - a.currVal : a.currVal - b.currVal,
   );
   const winner = sortedPlayers[0];
 
   const handleNewRound = () => {
     setGame((prev) => (prev ? { ...prev, finished: false } : null));
-    setPlayers((prev) =>
-      prev.map((p) => ({ ...p, rounds: [], currVal: game.startValue ?? 0 })),
-    );
+    setPlayers((prev) => prev.map((p) => ({ ...p, rounds: [], currVal: game.startValue ?? 0 })));
   };
 
   const handleKeepPlayers = () => {
@@ -121,19 +112,13 @@ export function GameStats() {
 
   return (
     <Layout className="min-h-min py-12">
-      <h1 className="text-center font-display font-extrabold text-5xl md:text-6xl">
-        {game.name}
-      </h1>
+      <h1 className="text-center font-display text-5xl font-extrabold md:text-6xl">{game.name}</h1>
       <motion.div
         initial={{ scale: 0.7, opacity: 0.5 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={easeOut}
       >
-        <Card
-          className="w-[80vw]"
-          color={mainColor}
-          data-test-id="game-stats-card"
-        >
+        <Card className="w-[80vw]" color={mainColor} data-test-id="game-stats-card">
           <CardHeader>
             <CardTitle
               className="mx-auto max-w-3/4 text-center font-display text-5xl"
@@ -144,17 +129,14 @@ export function GameStats() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ ...easeOut, delay: 0.3 }}
               >
-                <WinnerMessage
-                  winnerName={winner.name}
-                  score={winner.currVal}
-                />
+                <WinnerMessage winnerName={winner.name} score={winner.currVal} />
               </motion.span>
             </CardTitle>
             <CardDescription className="mt-6">
               {sortedPlayers.slice(1).map((p, idx) => (
                 <motion.p
                   key={p.id}
-                  className="text-center font-semibold text-lg"
+                  className="text-center text-lg font-semibold"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ ...easeOut, delay: 4.5 + 0.2 * idx }}
@@ -168,9 +150,7 @@ export function GameStats() {
             </CardDescription>
           </CardHeader>
           <motion.div
-            className={cn(
-              'flex flex-col items-center justify-around gap-2 px-3',
-            )}
+            className={cn('flex flex-col items-center justify-around gap-2 px-3')}
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{
@@ -179,7 +159,7 @@ export function GameStats() {
               duration: 0.5,
             }}
           >
-            <h3 className="mb-2 text-center font-bold text-2xl">
+            <h3 className="mb-2 text-center text-2xl font-bold">
               {t('game:game-stats.how-it-happened')}
             </h3>
             <GameChart

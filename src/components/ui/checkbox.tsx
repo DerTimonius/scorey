@@ -2,12 +2,13 @@ import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Check } from 'lucide-react';
 import type * as React from 'react';
+
 import { DEFAULT_COLOR } from '@/lib/constants';
 import type { VariantColor } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 const checkboxVariants = cva(
-  'peer size-4 shrink-0 outline-2 outline-border ring-offset-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:text-white',
+  'peer size-4 shrink-0 ring-offset-white outline-2 outline-border focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:text-white',
   {
     variants: {
       color: {
@@ -40,8 +41,7 @@ function Checkbox({
   className,
   color,
   ...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root> &
-  VariantProps<typeof checkboxVariants>) {
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & VariantProps<typeof checkboxVariants>) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"

@@ -1,12 +1,13 @@
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type * as React from 'react';
+
 import { DEFAULT_COLOR } from '@/lib/constants';
 import type { VariantColor } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 const switchVariants = cva(
-  'peer inline-flex h-6 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-border bg-secondary-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-white',
+  'peer inline-flex h-6 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-border bg-secondary-background transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-white',
   {
     variants: {
       color: {
@@ -39,8 +40,7 @@ function Switch({
   className,
   color,
   ...props
-}: React.ComponentProps<typeof SwitchPrimitive.Root> &
-  VariantProps<typeof switchVariants>) {
+}: React.ComponentProps<typeof SwitchPrimitive.Root> & VariantProps<typeof switchVariants>) {
   return (
     <SwitchPrimitive.Root
       data-slot="switch"
@@ -50,7 +50,7 @@ function Switch({
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
         className={cn(
-          'pointer-events-none block h-4 w-4 rounded-full bg-white border-2 border-border ring-0 transition-transform data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-1',
+          'pointer-events-none block h-4 w-4 rounded-full border-2 border-border bg-white ring-0 transition-transform data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-1',
         )}
       />
     </SwitchPrimitive.Root>
