@@ -30,14 +30,14 @@ function transformPlayersToCumulativeChartData(players: Player[]): GameChartData
   const chartData: GameChartDataItem[] = [];
   const cumulativeScores: { [playerName: string]: number } = {};
 
-  players.forEach((player) => {
+  for (const player of players) {
     cumulativeScores[player.name] = 0;
-  });
+  }
 
   for (let i = 0; i < maxRounds; i++) {
     const dataItem: GameChartDataItem = { round: (i + 1).toString() };
 
-    players.forEach((player) => {
+    for (const player of players) {
       const name = player.name;
       const scoreForThisRound = player.rounds[i];
 
@@ -47,7 +47,7 @@ function transformPlayersToCumulativeChartData(players: Player[]): GameChartData
       } else {
         dataItem[name] = cumulativeScores[name];
       }
-    });
+    }
     chartData.push(dataItem);
   }
 

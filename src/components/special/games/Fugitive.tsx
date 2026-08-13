@@ -22,7 +22,7 @@ export function TrackFugitive() {
         <div className="grid grid-cols-4 gap-4 md:grid-cols-6">
           {Array.from({ length: 42 }).map((_, idx) => (
             <FugitiveButton
-              // biome-ignore lint/suspicious/noArrayIndexKey: save
+              // oxlint-disable-next-line react/no-array-index-key
               key={`fugitive-no-${idx}`}
               label={String(idx + 1)}
             />

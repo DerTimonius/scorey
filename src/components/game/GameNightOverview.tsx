@@ -27,27 +27,27 @@ function transformGameNightToChartData(gameNight: GameNight): GameNightChartData
 
   const cumulativeScores: { [playerName: string]: number } = {};
 
-  gameNight.players.forEach((player) => {
+  for (const player of gameNight.players) {
     cumulativeScores[player.name] = 0;
-  });
+  }
 
-  gameNight.completedGames.forEach((game) => {
+  for (const game of gameNight.completedGames) {
     const dataItem: GameNightChartDataItem = {
       round: game.name,
     };
 
     const gamePoints = calculateGameNightPoints(game, gameNight.players, gameNight.scoringMode);
 
-    gameNight.players.forEach((player) => {
+    for (const player of gameNight.players) {
       const name = player.name;
       const points = gamePoints[player.id] ?? 0;
 
       cumulativeScores[name] += points;
       dataItem[name] = cumulativeScores[name];
-    });
+    }
 
     chartData.push(dataItem);
-  });
+  }
 
   return chartData;
 }

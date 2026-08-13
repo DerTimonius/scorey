@@ -61,7 +61,7 @@ export function PlayerCard({ player, hasMoreRounds, showStats }: PlayerCardProps
   };
 
   const handleUndo = () => {
-    const rounds = player.rounds.slice(0, player.rounds.length - 1);
+    const rounds = player.rounds.slice(0, -1);
     const currVal = rounds.reduce((acc, val) => acc + val, 0);
 
     setPlayers((prev) =>
@@ -102,6 +102,7 @@ export function PlayerCard({ player, hasMoreRounds, showStats }: PlayerCardProps
                     setIsEditing(false);
                   }
                 }}
+                // oxlint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
               />
               <Button
@@ -168,6 +169,7 @@ export function PlayerCard({ player, hasMoreRounds, showStats }: PlayerCardProps
                   }
                 }}
                 type="number"
+                // oxlint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
               />
               <Button color={player.color} onClick={handleSubmit} variant="ghost">

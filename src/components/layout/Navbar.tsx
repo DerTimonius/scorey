@@ -14,8 +14,8 @@ export function Navbar() {
   const [game, setGame] = useAtom(gameAtom);
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (lang: 'de' | 'en') => {
-    i18n.changeLanguage(lang);
+  const changeLanguage = async (lang: 'de' | 'en') => {
+    await i18n.changeLanguage(lang);
   };
 
   return (

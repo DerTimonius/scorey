@@ -44,9 +44,9 @@ export function GameState() {
 
     if (gameNight && game) {
       const playerScores: { [playerId: string]: number } = {};
-      players.forEach((player) => {
+      for (const player of players) {
         playerScores[player.id] = player.currVal;
-      });
+      }
 
       const completedGame: CompletedGame = {
         id: Math.random().toString(36).substring(2, 15),
@@ -71,17 +71,17 @@ export function GameState() {
     setPlayers(players.map((p) => ({ ...p, rounds: [], currVal: game.startValue })));
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: would rerender indefinitely
   useEffect(() => {
     if (!game) return;
     if (
       (game.endsAtRound && minLength === game.roundToEnd) ||
       (game.endsAtScore.ends &&
-        players.some((p) => p.currVal >= Number(game.scoreToEnd)) &&
+        players.some((p) => p.currVal >= game.scoreToEnd) &&
         (game.endsAtScore.sameRound ? players.every((p) => p.rounds.length === minLength) : true))
     ) {
       handleFinishGame();
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [game, players, minLength]);
 
   if (!game) return;

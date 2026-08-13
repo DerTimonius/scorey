@@ -23,7 +23,8 @@
       {
         "cases": {
           "camelCase": true,
-          "pascalCase": true
+          "pascalCase": true,
+          "kebabCase": true
         },
         "ignore": ["^*.(yml|config.*|d.ts)$"]
       }

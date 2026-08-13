@@ -11,6 +11,7 @@ const resources = {
   en,
 };
 
+// oxlint-disable-next-line typescript/no-floating-promises
 i18n
   .use(Backend)
   .use(LanguageDetector)
