@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { checkWinnerMessage } from './utils';
 
 test('basic info', async ({ page }) => {

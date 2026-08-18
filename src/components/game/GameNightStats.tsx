@@ -1,9 +1,11 @@
 import { useAtomValue } from 'jotai/react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
+
 import { easeOut } from '@/lib/animations';
 import { gameAtom, gameNightAtom, mainColorAtom } from '@/lib/jotai';
 import { cn, getGameNightStats } from '@/lib/utils';
+
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
 export function GameNightStats() {
@@ -29,16 +31,8 @@ export function GameNightStats() {
   if (!game || !gameNight) return null;
 
   return (
-    <motion.div
-      variants={motionVariants}
-      initial="offscreen"
-      whileInView="onscreen"
-    >
-      <Card
-        className="my-8 w-[80vw]"
-        color={mainColor}
-        data-test-id="game-night-stats"
-      >
+    <motion.div variants={motionVariants} initial="offscreen" whileInView="onscreen">
+      <Card className="my-8 w-[80vw]" color={mainColor} data-test-id="game-night-stats">
         <CardHeader>
           <CardTitle
             className="text-center font-display text-3xl md:text-4xl"
@@ -52,12 +46,8 @@ export function GameNightStats() {
             })}
           </CardDescription>
         </CardHeader>
-        <div
-          className={cn(
-            'flex flex-col items-center justify-around gap-4 px-6 py-4',
-          )}
-        >
-          <h3 className="mb-2 text-center font-bold text-2xl">
+        <div className={cn('flex flex-col items-center justify-around gap-4 px-6 py-4')}>
+          <h3 className="mb-2 text-center text-2xl font-bold">
             {t('game:game-night.total-points')}
           </h3>
           <motion.ol
@@ -70,7 +60,7 @@ export function GameNightStats() {
               <motion.li
                 key={player.id}
                 className={cn(
-                  'grid grid-cols-[2fr_1fr_1fr] rounded-lg bg-opacity-20 p-3 first:font-bold',
+                  'bg-opacity-20 grid grid-cols-[2fr_1fr_1fr] rounded-lg p-3 first:font-bold',
                 )}
                 initial={{ scale: 0.4, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
@@ -82,15 +72,11 @@ export function GameNightStats() {
               >
                 <span className="flex items-center gap-3">{player.name}</span>
                 <p className="font-semibold">
-                  <span className="font-light text-sm">
-                    {t('state:current-score')}:
-                  </span>{' '}
+                  <span className="text-sm font-light">{t('state:current-score')}:</span>{' '}
                   {player.totalPoints}
                 </p>
                 <p>
-                  <span className="font-light text-sm">
-                    {t('game:game-night.wins')}:
-                  </span>{' '}
+                  <span className="text-sm font-light">{t('game:game-night.wins')}:</span>{' '}
                   {player.wins}
                 </p>
               </motion.li>

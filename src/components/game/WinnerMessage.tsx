@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { bounce, easeOut } from '@/lib/animations';
 
 type WinnerMessageProps = {
@@ -48,7 +49,7 @@ export function WinnerMessage({ winnerName, score }: WinnerMessageProps) {
       </motion.span>
       <span> </span>
       <motion.span
-        className="font-bold text-6xl"
+        className="text-6xl font-bold"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ ...bounce, delay: 3.4 }}
@@ -76,7 +77,7 @@ function AnimatedPoints({ score }: { score: number }) {
 
   return (
     <motion.span
-      className="font-bold text-6xl"
+      className="text-6xl font-bold"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ ...bounce, delay: 1.6 }}

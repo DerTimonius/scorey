@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
+
 import { Card, CardContent } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -39,10 +40,7 @@ export function GameChart({
   if (!data.length || !players.length) return;
 
   return (
-    <Card
-      className="bg-secondary-background text-foreground"
-      data-test-id="game-chart"
-    >
+    <Card className="bg-secondary-background text-foreground" data-test-id="game-chart">
       <CardContent>
         <ChartContainer
           className={cn('min-w-[60vw] sm:min-w-[65vw]', containerClasses)}
@@ -73,10 +71,7 @@ export function GameChart({
             />
             {!isMobile ? <YAxis /> : null}
             <Legend iconType="plainline" />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent labelKey="round" />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent labelKey="round" />} />
             {players.map((player, idx) => {
               return (
                 <Line

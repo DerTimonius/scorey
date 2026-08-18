@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
+
 import { playerFormAnimation } from '@/lib/animations';
 import { getMainFromColor } from '@/lib/colorHelper';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
@@ -15,38 +16,16 @@ import {
   playerAtom,
   showGameNightFormAtom,
 } from '@/lib/jotai';
-import {
-  ColorEnum,
-  colorsArray,
-  type Player,
-  ScoringModeEnum,
-} from '@/lib/types';
+import { ColorEnum, colorsArray, type Player, ScoringModeEnum } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '../ui/tooltip';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 const playerSchema = v.object({
   name: v.pipe(v.string(), v.minLength(1, 'form:player-name.required')),
@@ -65,10 +44,7 @@ export function GameNightForm() {
   const setGameNight = useSetAtom(gameNightAtom);
 
   const formSchema = v.object({
-    players: v.pipe(
-      v.array(playerSchema),
-      v.minLength(1, t('form:at-least-one-player-required')),
-    ),
+    players: v.pipe(v.array(playerSchema), v.minLength(1, t('form:at-least-one-player-required'))),
     scoringMode: ScoringModeEnum,
   });
 
@@ -115,20 +91,14 @@ export function GameNightForm() {
   }
 
   return (
-    <Card
-      className="my-12 max-w-[85vw] px-4 py-3"
-      color={mainColor}
-      data-test-id="game-night-form"
-    >
+    <Card className="my-12 max-w-[85vw] px-4 py-3" color={mainColor} data-test-id="game-night-form">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">
-          {t('game:game-night.title')}
-        </CardTitle>
+        <CardTitle className="text-center text-2xl">{t('game:game-night.title')}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div>
-            <h3 className="mb-4 font-medium text-lg">{t('form:players')}</h3>
+            <h3 className="mb-4 text-lg font-medium">{t('form:players')}</h3>
             <AnimatePresence>
               {fields.map((field, index) => (
                 <motion.div
@@ -136,11 +106,7 @@ export function GameNightForm() {
                   key={field.id}
                   {...playerFormAnimation(reduceMotion)}
                   onAnimationComplete={(def) => {
-                    if (
-                      typeof def === 'object' &&
-                      'x' in def &&
-                      index === fields.length - 1
-                    ) {
+                    if (typeof def === 'object' && 'x' in def && index === fields.length - 1) {
                       remove(index);
                     }
                   }}
@@ -180,10 +146,7 @@ export function GameNightForm() {
                       <FormItem className="flex items-end space-x-2 pb-4">
                         <div className="grid flex-1 gap-1">
                           <FormLabel>{t('color:color')}</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger
                                 className="w-32 md:w-[180px]"
@@ -227,13 +190,8 @@ export function GameNightForm() {
                     disabled={index === 0}
                     onClick={() => remove(index)}
                   >
-                    <span className="hidden md:block">
-                      {t('action:remove')}
-                    </span>
-                    <TrashIcon
-                      className="block md:hidden"
-                      aria-label={t('action:remove')}
-                    />
+                    <span className="hidden md:block">{t('action:remove')}</span>
+                    <TrashIcon className="block md:hidden" aria-label={t('action:remove')} />
                   </Button>
                 </motion.div>
               ))}
@@ -252,38 +210,31 @@ export function GameNightForm() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">
+            <h3 className="mb-4 text-lg font-medium">
               {t('game:scoring-system.title')}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info aria-hidden size={18} className="mt-1 ml-2" />
                   </TooltipTrigger>
-                  <TooltipContent
-                    color={mainColor}
-                    className="w-[40vw] space-y-3 p-4"
-                  >
-                    <h4 className="text-center font-semibold text-lg underline">
+                  <TooltipContent color={mainColor} className="w-[40vw] space-y-3 p-4">
+                    <h4 className="text-center text-lg font-semibold underline">
                       {t('game:scoring-system.about')}
                     </h4>
                     <p>{t('game:scoring-system.description')}</p>
                     <ul className="space-y-2 pl-4">
                       <li className="space-y-1">
-                        <p className="font-normal text-md">Winner takes all!</p>
-                        <p className="text-xs">
-                          {t('game:scoring-system.winner-only')}
-                        </p>
+                        <p className="text-md font-normal">Winner takes all!</p>
+                        <p className="text-xs">{t('game:scoring-system.winner-only')}</p>
                       </li>
                       <li className="space-y-1">
-                        <p className="font-normal text-md">
+                        <p className="text-md font-normal">
                           {t('game:scoring-system.ranked.title')}
                         </p>
-                        <p className="text-xs">
-                          {t('game:scoring-system.ranked.description')}
-                        </p>
+                        <p className="text-xs">{t('game:scoring-system.ranked.description')}</p>
                       </li>
                       <li className="space-y-1">
-                        <p className="font-normal text-md">
+                        <p className="text-md font-normal">
                           {t('game:scoring-system.game-points.title')}
                         </p>
                         <p className="text-xs">
@@ -308,21 +259,13 @@ export function GameNightForm() {
                     >
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="winner-only"
-                            data-test-id="winner-only-scoring"
-                          />
+                          <RadioGroupItem value="winner-only" data-test-id="winner-only-scoring" />
                         </FormControl>
-                        <FormLabel className="font-normal">
-                          Winner takes all!
-                        </FormLabel>
+                        <FormLabel className="font-normal">Winner takes all!</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="ranked"
-                            data-test-id="ranked-scoring"
-                          />
+                          <RadioGroupItem value="ranked" data-test-id="ranked-scoring" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('game:scoring-system.ranked.title')}
@@ -330,10 +273,7 @@ export function GameNightForm() {
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="game-points"
-                            data-test-id="game-points-scoring"
-                          />
+                          <RadioGroupItem value="game-points" data-test-id="game-points-scoring" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('game:scoring-system.game-points.title')}
@@ -348,11 +288,7 @@ export function GameNightForm() {
           </div>
 
           <CardAction className="flex justify-end gap-4">
-            <Button
-              color={mainColor}
-              data-test-id="start-game-night-button"
-              type="submit"
-            >
+            <Button color={mainColor} data-test-id="start-game-night-button" type="submit">
               {t('game:game-night.start-game-night')}
             </Button>
             <Button

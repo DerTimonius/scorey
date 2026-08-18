@@ -7,13 +7,9 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI
-    ? 'list'
-    : [['html', { outputFolder: 'playwright/report/' }]],
+  reporter: process.env.CI ? 'list' : [['html', { outputFolder: 'playwright/report/' }]],
   use: {
-    baseURL: process.env.CI
-      ? process.env.PLAYWRIGHT_TEST_BASE_URL
-      : 'http://localhost:5173',
+    baseURL: process.env.CI ? process.env.PLAYWRIGHT_TEST_BASE_URL : 'http://localhost:5173',
     screenshot: 'only-on-failure',
     testIdAttribute: 'data-test-id',
     trace: 'on-first-retry',

@@ -3,19 +3,14 @@ import { useAtomValue, useSetAtom } from 'jotai/react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
+
 import { gameAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import { WinningConditionEnum } from '@/lib/types';
+
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
 import { Checkbox } from '../ui/checkbox';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
@@ -85,9 +80,7 @@ export function GameNightGameForm() {
       scoreToEnd: endsAtScore ? (scoreToEnd ?? 100) : 0,
     });
 
-    setPlayers((prev) =>
-      prev.map((p) => ({ ...p, rounds: [], currVal: startValue ?? 0 })),
-    );
+    setPlayers((prev) => prev.map((p) => ({ ...p, rounds: [], currVal: startValue ?? 0 })));
   }
 
   return (
@@ -97,9 +90,7 @@ export function GameNightGameForm() {
       data-test-id="game-night-game-form"
     >
       <CardHeader>
-        <CardTitle className="text-center text-2xl">
-          {t('form:game-info')}
-        </CardTitle>
+        <CardTitle className="text-center text-2xl">{t('form:game-info')}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -113,9 +104,7 @@ export function GameNightGameForm() {
                   <Input
                     data-test-id="game-name-input"
                     placeholder={
-                      gamenamePlaceholders[
-                        Math.floor(Math.random() * gamenamePlaceholders.length)
-                      ]
+                      gamenamePlaceholders[Math.floor(Math.random() * gamenamePlaceholders.length)]
                     }
                     {...field}
                   />
@@ -126,9 +115,7 @@ export function GameNightGameForm() {
           />
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">
-              {t('form:options.index')}
-            </h3>
+            <h3 className="mb-4 text-lg font-medium">{t('form:options.index')}</h3>
             <FormField
               control={form.control}
               name="startValue"
@@ -141,9 +128,7 @@ export function GameNightGameForm() {
                       placeholder="100"
                       type="number"
                       {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value, 10))
-                      }
+                      onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -164,10 +149,7 @@ export function GameNightGameForm() {
                     >
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="minNumber"
-                            data-test-id="min-number-win"
-                          />
+                          <RadioGroupItem value="minNumber" data-test-id="min-number-win" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.min')}
@@ -175,10 +157,7 @@ export function GameNightGameForm() {
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="maxNumber"
-                            data-test-id="max-number-win"
-                          />
+                          <RadioGroupItem value="maxNumber" data-test-id="max-number-win" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.max')}
@@ -193,9 +172,7 @@ export function GameNightGameForm() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">
-              {t('form:advanced-options.index')}
-            </h3>{' '}
+            <h3 className="mb-4 text-lg font-medium">{t('form:advanced-options.index')}</h3>{' '}
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <Checkbox
@@ -218,9 +195,7 @@ export function GameNightGameForm() {
                   name="roundToEnd"
                   render={({ field }) => (
                     <FormItem className="ml-4">
-                      <FormLabel>
-                        {t('form:advanced-options.round-to-be-finished-label')}
-                      </FormLabel>
+                      <FormLabel>{t('form:advanced-options.round-to-be-finished-label')}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="10"
@@ -228,9 +203,7 @@ export function GameNightGameForm() {
                           data-test-id="ends-at-round-input"
                           type="number"
                           {...field}
-                          onChange={(e) =>
-                            field.onChange(Number.parseInt(e.target.value, 10))
-                          }
+                          onChange={(e) => field.onChange(Number.parseInt(e.target.value, 10))}
                         />
                       </FormControl>
                       <FormMessage />
@@ -260,9 +233,7 @@ export function GameNightGameForm() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          {t(
-                            'form:advanced-options.score-to-be-finished-label',
-                          )}
+                          {t('form:advanced-options.score-to-be-finished-label')}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -270,11 +241,7 @@ export function GameNightGameForm() {
                             data-test-id="ends-at-score-input"
                             type="number"
                             {...field}
-                            onChange={(e) =>
-                              field.onChange(
-                                Number.parseInt(e.target.value, 10),
-                              )
-                            }
+                            onChange={(e) => field.onChange(Number.parseInt(e.target.value, 10))}
                           />
                         </FormControl>
                         <FormMessage />
@@ -301,11 +268,7 @@ export function GameNightGameForm() {
           </div>
 
           <CardAction className="flex justify-end gap-4">
-            <Button
-              color="blue"
-              data-test-id="create-game-night-game-button"
-              type="submit"
-            >
+            <Button color="blue" data-test-id="create-game-night-game-button" type="submit">
               {t('form:create-game')}
             </Button>
           </CardAction>

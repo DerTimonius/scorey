@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useEffect } from 'react';
+
 import { bounce } from '@/lib/animations';
 
 export function AnimatedName({ children }: React.PropsWithChildren) {

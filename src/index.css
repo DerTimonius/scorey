@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "@fontsource/rampart-one";
-@import "@fontsource-variable/victor-mono";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource/rampart-one';
+@import '@fontsource-variable/victor-mono';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -85,8 +85,8 @@
 }
 
 @theme inline {
-  --font-display: "Rampart One", sans-serif;
-  --font-sans: "Victor Mono Variable", sans-serif;
+  --font-display: 'Rampart One', sans-serif;
+  --font-sans: 'Victor Mono Variable', sans-serif;
 
   --color-cyan-main: var(--cyan-main);
   --color-cyan-background: var(--cyan-background);
@@ -176,7 +176,7 @@
 @layer base {
   body {
     background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" patternUnits="userSpaceOnUse" xmlns="http://www.w3.org/2000/svg"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%23e0e0e0" stroke-width="0.5"/></svg>');
-    @apply text-foreground font-base;
+    @apply font-base text-foreground;
   }
 
   h1,

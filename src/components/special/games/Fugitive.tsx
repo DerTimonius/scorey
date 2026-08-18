@@ -2,13 +2,10 @@ import { useSetAtom } from 'jotai';
 import { Check } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { trackingSpecialGameAtom } from '@/lib/jotai';
 import { cn } from '@/lib/utils';
 
@@ -21,13 +18,11 @@ export function TrackFugitive() {
   return (
     <Layout>
       <div className="flex flex-col items-center gap-10 px-4 pt-4 sm:px-6">
-        <h1 className="font-display font-extrabold text-5xl md:text-6xl">
-          Fugitive
-        </h1>
+        <h1 className="font-display text-5xl font-extrabold md:text-6xl">Fugitive</h1>
         <div className="grid grid-cols-4 gap-4 md:grid-cols-6">
           {Array.from({ length: 42 }).map((_, idx) => (
             <FugitiveButton
-              // biome-ignore lint/suspicious/noArrayIndexKey: save
+              // oxlint-disable-next-line react/no-array-index-key
               key={`fugitive-no-${idx}`}
               label={String(idx + 1)}
             />
@@ -41,11 +36,7 @@ export function TrackFugitive() {
   );
 }
 
-type FugitiveButtonState =
-  | 'not-sure'
-  | 'hideout'
-  | 'no-hideout'
-  | 'no-knowledge';
+type FugitiveButtonState = 'not-sure' | 'hideout' | 'no-hideout' | 'no-knowledge';
 function FugitiveButton({ label }: { label: string }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);

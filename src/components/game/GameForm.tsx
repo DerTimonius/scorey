@@ -5,43 +5,22 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as v from 'valibot';
+
 import { playerFormAnimation } from '@/lib/animations';
 import { getMainFromColor } from '@/lib/colorHelper';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
-import {
-  gameAtom,
-  mainColorAtom,
-  playerAtom,
-  showGameFormAtom,
-} from '@/lib/jotai';
-import {
-  ColorEnum,
-  colorsArray,
-  type Player,
-  WinningConditionEnum,
-} from '@/lib/types';
+import { gameAtom, mainColorAtom, playerAtom, showGameFormAtom } from '@/lib/jotai';
+import { ColorEnum, colorsArray, type Player, WinningConditionEnum } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
 import { Button } from '../ui/button';
 import { Card, CardAction, CardHeader, CardTitle } from '../ui/card';
 import { Checkbox } from '../ui/checkbox';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 const gamenamePlaceholders = [
   'Flip 7',
@@ -72,10 +51,7 @@ export function GameForm() {
 
   const formSchema = v.object({
     gameName: v.pipe(v.string(), v.minLength(1, t('form:game-name.required'))),
-    players: v.pipe(
-      v.array(playerSchema),
-      v.minLength(1, t('form:at-least-one-player-required')),
-    ),
+    players: v.pipe(v.array(playerSchema), v.minLength(1, t('form:at-least-one-player-required'))),
     startValue: v.number(),
     winningCondition: WinningConditionEnum,
     endsAtScore: v.boolean(),
@@ -142,7 +118,7 @@ export function GameForm() {
     return (
       <>
         <div className="flex flex-col gap-4">
-          <h1 className="font-bold font-display text-8xl">Scorey</h1>
+          <h1 className="font-display text-8xl font-bold">Scorey</h1>
           <p data-test-id="tagline">{t('game:tagline')}</p>
         </div>
         <Button
@@ -157,15 +133,9 @@ export function GameForm() {
   }
 
   return (
-    <Card
-      className="my-12 max-w-[85vw] px-4 py-3"
-      color={mainColor}
-      data-test-id="game-form"
-    >
+    <Card className="my-12 max-w-[85vw] px-4 py-3" color={mainColor} data-test-id="game-form">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">
-          {t('form:game-info')}
-        </CardTitle>
+        <CardTitle className="text-center text-2xl">{t('form:game-info')}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -179,9 +149,7 @@ export function GameForm() {
                   <Input
                     data-test-id="game-name-input"
                     placeholder={
-                      gamenamePlaceholders[
-                        Math.floor(Math.random() * gamenamePlaceholders.length)
-                      ]
+                      gamenamePlaceholders[Math.floor(Math.random() * gamenamePlaceholders.length)]
                     }
                     {...field}
                   />
@@ -192,7 +160,7 @@ export function GameForm() {
           />
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">{t('form:players')}</h3>
+            <h3 className="mb-4 text-lg font-medium">{t('form:players')}</h3>
             <AnimatePresence initial={false}>
               {fields.map((field, index) => (
                 <motion.div
@@ -200,11 +168,7 @@ export function GameForm() {
                   key={field.id}
                   {...playerFormAnimation(reduceMotion)}
                   onAnimationComplete={(def) => {
-                    if (
-                      typeof def === 'object' &&
-                      'x' in def &&
-                      index === fields.length - 1
-                    ) {
+                    if (typeof def === 'object' && 'x' in def && index === fields.length - 1) {
                       remove(index);
                     }
                   }}
@@ -244,10 +208,7 @@ export function GameForm() {
                       <FormItem className="flex items-end space-x-2 pb-4">
                         <div className="grid flex-1 gap-1">
                           <FormLabel>{t('color:color')}</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger
                                 className="w-32 md:w-[180px]"
@@ -291,13 +252,8 @@ export function GameForm() {
                     onClick={() => remove(index)}
                     disabled={index === 0}
                   >
-                    <span className="hidden md:block">
-                      {t('action:remove')}
-                    </span>
-                    <TrashIcon
-                      className="block md:hidden"
-                      aria-label={t('action:remove')}
-                    />
+                    <span className="hidden md:block">{t('action:remove')}</span>
+                    <TrashIcon className="block md:hidden" aria-label={t('action:remove')} />
                   </Button>
                 </motion.div>
               ))}
@@ -316,9 +272,7 @@ export function GameForm() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">
-              {t('form:options.index')}
-            </h3>
+            <h3 className="mb-4 text-lg font-medium">{t('form:options.index')}</h3>
             <FormField
               control={form.control}
               name="startValue"
@@ -331,9 +285,7 @@ export function GameForm() {
                       placeholder="100"
                       type="number"
                       {...field}
-                      onChange={(e) =>
-                        field.onChange(parseInt(e.target.value, 10))
-                      }
+                      onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -354,10 +306,7 @@ export function GameForm() {
                     >
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="minNumber"
-                            data-test-id="min-number-win"
-                          />
+                          <RadioGroupItem value="minNumber" data-test-id="min-number-win" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.min')}
@@ -365,10 +314,7 @@ export function GameForm() {
                       </FormItem>
                       <FormItem className="flex items-center gap-3">
                         <FormControl>
-                          <RadioGroupItem
-                            value="maxNumber"
-                            data-test-id="max-number-win"
-                          />
+                          <RadioGroupItem value="maxNumber" data-test-id="max-number-win" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           {t('form:options.who-wins.max')}
@@ -383,9 +329,7 @@ export function GameForm() {
           </div>
 
           <div>
-            <h3 className="mb-4 font-medium text-lg">
-              {t('form:advanced-options.index')}
-            </h3>{' '}
+            <h3 className="mb-4 text-lg font-medium">{t('form:advanced-options.index')}</h3>{' '}
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <Checkbox
@@ -408,9 +352,7 @@ export function GameForm() {
                   name="roundToEnd"
                   render={({ field }) => (
                     <FormItem className="ml-4">
-                      <FormLabel>
-                        {t('form:advanced-options.round-to-be-finished-label')}
-                      </FormLabel>
+                      <FormLabel>{t('form:advanced-options.round-to-be-finished-label')}</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="10"
@@ -418,9 +360,7 @@ export function GameForm() {
                           data-test-id="ends-at-round-input"
                           type="number"
                           {...field}
-                          onChange={(e) =>
-                            field.onChange(Number.parseInt(e.target.value, 10))
-                          }
+                          onChange={(e) => field.onChange(Number.parseInt(e.target.value, 10))}
                         />
                       </FormControl>
                       <FormMessage />
@@ -451,9 +391,7 @@ export function GameForm() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          {t(
-                            'form:advanced-options.score-to-be-finished-label',
-                          )}
+                          {t('form:advanced-options.score-to-be-finished-label')}
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -461,11 +399,7 @@ export function GameForm() {
                             data-test-id="ends-at-score-input"
                             type="number"
                             {...field}
-                            onChange={(e) =>
-                              field.onChange(
-                                Number.parseInt(e.target.value, 10),
-                              )
-                            }
+                            onChange={(e) => field.onChange(Number.parseInt(e.target.value, 10))}
                           />
                         </FormControl>
                         <FormMessage />
@@ -492,11 +426,7 @@ export function GameForm() {
           </div>
 
           <CardAction className="flex justify-end gap-4">
-            <Button
-              color={mainColor}
-              data-test-id="create-game-button"
-              type="submit"
-            >
+            <Button color={mainColor} data-test-id="create-game-button" type="submit">
               {t('form:create-game')}
             </Button>
             <Button variant="secondary" onClick={() => setShowForm(false)}>

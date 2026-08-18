@@ -1,6 +1,8 @@
 import { useAtomValue } from 'jotai/react';
 import { useTranslation } from 'react-i18next';
+
 import { mainColorAtom } from '@/lib/jotai';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,9 +42,7 @@ export function SingleGameButtons({
       <AlertDialogContent color={mainColor} data-test-id="new-game-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle>{t('game:new-game.title')}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {t('game:new-game.description')}
-          </AlertDialogDescription>
+          <AlertDialogDescription>{t('game:new-game.description')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex justify-end gap-3 sm:flex-col">
           <AlertDialogAction
@@ -123,14 +123,9 @@ export function GameNightButtons({
             {t('game:game-night.finish-game-night')}
           </Button>
         </AlertDialogTrigger>
-        <AlertDialogContent
-          color={mainColor}
-          data-test-id="finish-game-night-dialog"
-        >
+        <AlertDialogContent color={mainColor} data-test-id="finish-game-night-dialog">
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {t('game:game-night.final-results')}
-            </AlertDialogTitle>
+            <AlertDialogTitle>{t('game:game-night.final-results')}</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-end gap-3 sm:flex-col">
             <AlertDialogAction

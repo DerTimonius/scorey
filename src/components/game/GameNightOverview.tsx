@@ -2,14 +2,12 @@ import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { easeOut } from '@/lib/animations';
 import { gameNightAtom, mainColorAtom, playerAtom } from '@/lib/jotai';
 import type { GameNight } from '@/lib/types';
-import {
-  calculateGameNightPoints,
-  calculateTotalGameNightPoints,
-  cn,
-} from '@/lib/utils';
+import { calculateGameNightPoints, calculateTotalGameNightPoints, cn } from '@/lib/utils';
+
 import { GameChart } from '../charts/GameChart';
 import { Button } from '../ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
@@ -20,9 +18,7 @@ interface GameNightChartDataItem {
   [playerName: string]: string | number;
 }
 
-function transformGameNightToChartData(
-  gameNight: GameNight,
-): GameNightChartDataItem[] {
+function transformGameNightToChartData(gameNight: GameNight): GameNightChartDataItem[] {
   if (!gameNight || gameNight.completedGames.length === 0) {
     return [];
   }
@@ -31,31 +27,27 @@ function transformGameNightToChartData(
 
   const cumulativeScores: { [playerName: string]: number } = {};
 
-  gameNight.players.forEach((player) => {
+  for (const player of gameNight.players) {
     cumulativeScores[player.name] = 0;
-  });
+  }
 
-  gameNight.completedGames.forEach((game) => {
+  for (const game of gameNight.completedGames) {
     const dataItem: GameNightChartDataItem = {
       round: game.name,
     };
 
-    const gamePoints = calculateGameNightPoints(
-      game,
-      gameNight.players,
-      gameNight.scoringMode,
-    );
+    const gamePoints = calculateGameNightPoints(game, gameNight.players, gameNight.scoringMode);
 
-    gameNight.players.forEach((player) => {
+    for (const player of gameNight.players) {
       const name = player.name;
       const points = gamePoints[player.id] ?? 0;
 
       cumulativeScores[name] += points;
       dataItem[name] = cumulativeScores[name];
-    });
+    }
 
     chartData.push(dataItem);
-  });
+  }
 
   return chartData;
 }
@@ -112,7 +104,7 @@ export function GameNightOverview() {
   return (
     <div className="flex min-h-min flex-col items-center gap-8 py-12">
       <motion.h1
-        className="text-center font-display font-extrabold text-5xl md:text-6xl"
+        className="text-center font-display text-5xl font-extrabold md:text-6xl"
         data-test-id="game-night-title"
         initial={{ scale: 0.7, opacity: 0.5 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -125,11 +117,7 @@ export function GameNightOverview() {
         animate={{ scale: 1, opacity: 1 }}
         transition={easeOut}
       >
-        <Card
-          className="w-[80vw]"
-          color={mainColor}
-          data-test-id="game-night-overview"
-        >
+        <Card className="w-[80vw]" color={mainColor} data-test-id="game-night-overview">
           <CardHeader>
             <CardTitle
               className="mx-auto max-w-3/4 text-center font-display text-5xl"
@@ -150,7 +138,7 @@ export function GameNightOverview() {
               {sortedPlayers.slice(1).map((p, idx) => (
                 <motion.p
                   key={p.id}
-                  className="text-center font-semibold text-lg"
+                  className="text-center text-lg font-semibold"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ ...easeOut, delay: 4.5 + 0.2 * idx }}
@@ -164,9 +152,7 @@ export function GameNightOverview() {
             </CardDescription>
           </CardHeader>
           <motion.div
-            className={cn(
-              'flex flex-col items-center justify-around gap-2 px-3',
-            )}
+            className={cn('flex flex-col items-center justify-around gap-2 px-3')}
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{
@@ -175,7 +161,7 @@ export function GameNightOverview() {
               duration: 0.5,
             }}
           >
-            <h3 className="mb-2 text-center font-bold text-2xl">
+            <h3 className="mb-2 text-center text-2xl font-bold">
               {t('game:game-stats.how-it-happened')}
             </h3>
 
@@ -190,11 +176,7 @@ export function GameNightOverview() {
         </Card>
       </motion.div>
       <div className="mb-12 flex flex-row justify-center gap-8">
-        <Button
-          data-test-id="new-game-night-button"
-          onClick={handleNewGame}
-          color={mainColor}
-        >
+        <Button data-test-id="new-game-night-button" onClick={handleNewGame} color={mainColor}>
           {t('game:new-game.button')}
         </Button>
       </div>

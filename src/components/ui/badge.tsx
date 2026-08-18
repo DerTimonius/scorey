@@ -1,13 +1,13 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-
 import type * as React from 'react';
+
 import { DEFAULT_COLOR } from '@/lib/constants';
 import type { VariantColor } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center justify-center rounded-base border-2 border-border px-2.5 py-0.5 text-xs font-base w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] overflow-hidden text-foreground',
+  'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-base border-2 border-border px-2.5 py-0.5 text-xs font-base whitespace-nowrap text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [&>svg]:pointer-events-none [&>svg]:size-3',
   {
     variants: {
       color: {
@@ -47,13 +47,7 @@ function Badge({
   }) {
   const Comp = asChild ? Slot : 'span';
 
-  return (
-    <Comp
-      data-slot="badge"
-      className={cn(badgeVariants({ color }), className)}
-      {...props}
-    />
-  );
+  return <Comp data-slot="badge" className={cn(badgeVariants({ color }), className)} {...props} />;
 }
 
 export { Badge, badgeVariants };
